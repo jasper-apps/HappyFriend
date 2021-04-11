@@ -1,4 +1,4 @@
-package com.yterletskyi.happy_friend.ui.friends
+package com.yterletskyi.happy_friend.features.friends
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

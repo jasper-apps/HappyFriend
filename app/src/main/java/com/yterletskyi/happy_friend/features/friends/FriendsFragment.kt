@@ -1,4 +1,4 @@
-package com.yterletskyi.happy_friend.ui.calendar
+package com.yterletskyi.happy_friend.features.friends
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yterletskyi.happy_friend.R
 
-class CalendarFragment : Fragment() {
+class FriendsFragment : Fragment() {
 
-    private lateinit var calendarViewModel: CalendarViewModel
+    private lateinit var friendsViewModel: FriendsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        calendarViewModel =
-                ViewModelProvider(this).get(CalendarViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_calendar, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        calendarViewModel.text.observe(viewLifecycleOwner, Observer {
+        friendsViewModel =
+                ViewModelProvider(this).get(FriendsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        friendsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

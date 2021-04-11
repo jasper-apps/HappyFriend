@@ -1,4 +1,4 @@
-package com.yterletskyi.happy_friend.ui.friends
+package com.yterletskyi.happy_friend.features.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yterletskyi.happy_friend.R
 
-class FriendsFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private lateinit var friendsViewModel: FriendsViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        friendsViewModel =
-                ViewModelProvider(this).get(FriendsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        friendsViewModel.text.observe(viewLifecycleOwner, Observer {
+        settingsViewModel =
+                ViewModelProvider(this).get(SettingsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_settings, container, false)
+        val textView: TextView = root.findViewById(R.id.text_notifications)
+        settingsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

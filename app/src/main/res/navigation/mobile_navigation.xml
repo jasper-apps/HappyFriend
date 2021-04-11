@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/navigation_friends"
-        android:name="com.yterletskyi.happy_friend.ui.friends.FriendsFragment"
+        android:name="com.yterletskyi.happy_friend.features.friends.FriendsFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.yterletskyi.happy_friend.ui.calendar.CalendarFragment"
+        android:name="com.yterletskyi.happy_friend.features.calendar.CalendarFragment"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.yterletskyi.happy_friend.ui.settings.SettingsFragment"
+        android:name="com.yterletskyi.happy_friend.features.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>
