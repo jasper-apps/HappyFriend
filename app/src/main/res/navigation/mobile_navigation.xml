@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_friends"
         android:name="com.yterletskyi.happy_friend.features.friends.ui.FriendsFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_friends" />
 
     <fragment
         android:id="@+id/navigation_calendar"

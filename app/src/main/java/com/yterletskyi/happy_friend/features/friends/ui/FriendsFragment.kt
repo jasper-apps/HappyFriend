@@ -2,26 +2,39 @@ package com.yterletskyi.happy_friend.features.friends.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.yterletskyi.happy_friend.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
+import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
+import com.yterletskyi.happy_friend.databinding.FragmentFriendsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FriendsFragment : Fragment(R.layout.fragment_home) {
+class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
+    FragmentFriendsBinding::inflate
+) {
 
     private val viewModel by viewModels<FriendsViewModel>()
+    private lateinit var rvItemsAdapter: RecyclerDelegationAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.friends.observe(viewLifecycleOwner, Observer {
-            val text: String = it.map { it.firstName }.reduce { acc, friend -> "$acc $friend" }
-            view.findViewById<TextView>(R.id.text_home).text = text
+        with(binding.rvItems) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = RecyclerDelegationAdapter(context).apply {
+                addDelegate(
+                    FriendsAdapterDelegate()
+                )
+                rvItemsAdapter = this
+            }
+        }
 
+        viewModel.friends.observe(viewLifecycleOwner, Observer {
+            rvItemsAdapter.setItems(it)
         })
+
     }
 
 }
