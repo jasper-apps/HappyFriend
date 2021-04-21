@@ -44,7 +44,7 @@ class FakeFriendsDataSource @Inject constructor() : FriendsDataSource {
     )
 }
 
-class PhoneContactsDataSource(
+class PhoneContactsDataSource @Inject constructor(
     private val context: Context
 ) : FriendsDataSource {
 
@@ -58,7 +58,7 @@ class PhoneContactsDataSource(
 
     override fun getFriends(): Flow<List<Friend>> = flow {
         val friends = context.contentResolver.query(
-            ContactsContract.Contacts.CONTENT_URI,
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             PROJECTION,
             null,
             null,
@@ -74,32 +74,10 @@ class PhoneContactsDataSource(
         emit(friends)
     }
 
-//    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> = CursorLoader(
-//        context,
-//        ContactsContract.Contacts.CONTENT_URI,
-//        PROJECTION,
-//        null,
-//        null,
-//        null
-//    )
-//
-//
-//    override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor) {
-//        val friends = generateSequence { if (cursor.moveToNext()) cursor else null }
-//            .map {
-//                cursorToFriend(it)
-//            }
-//            .toList()
-//    }
-//
-//    override fun onLoaderReset(loader: Loader<Cursor>) {
-//        TODO("Not yet implemented")
-//    }
-
     private fun cursorToFriend(cursor: Cursor): Friend = Friend(
         id = cursor.getLong(0),
-        firstName = cursor.getString(1),
-        lastName = cursor.getString(1),
+        firstName = cursor.getString(1).split(' ')[0],
+        lastName = cursor.getString(1).split(' ')[1],
         birthday = LocalDate.now()
     )
 

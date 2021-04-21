@@ -1,7 +1,10 @@
 package com.yterletskyi.happy_friend.features.friends.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,9 +34,16 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             }
         }
 
-        viewModel.friends.observe(viewLifecycleOwner, Observer {
-            rvItemsAdapter.setItems(it)
-        })
+        val callback = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                viewModel.friends.observe(viewLifecycleOwner, Observer {
+                    rvItemsAdapter.setItems(it)
+                })
+            } else {
+                Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
+            }
+        }
+        callback.launch(Manifest.permission.READ_CONTACTS)
 
     }
 

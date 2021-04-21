@@ -1,22 +1,28 @@
 package com.yterletskyi.happy_friend.features.friends.di
 
-import com.yterletskyi.happy_friend.features.friends.data.FakeFriendsDataSource
+import android.content.Context
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
+import com.yterletskyi.happy_friend.features.friends.data.PhoneContactsDataSource
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractorImpl
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class FriendsDi {
+class FriendsDi {
 
-    @Binds
-    abstract fun provideFriendsDataSource(impl: FakeFriendsDataSource): FriendsDataSource
+    @Provides
+    fun provideFriendsDataSource(@ApplicationContext context: Context): FriendsDataSource {
+        return PhoneContactsDataSource(context)
+    }
 
-    @Binds
-    abstract fun provideFriendsInteractor(impl: FriendsInteractorImpl): FriendsInteractor
+    @Provides
+    fun provideFriendsInteractor(dataSource: FriendsDataSource): FriendsInteractor {
+        return FriendsInteractorImpl(dataSource)
+    }
 
 }

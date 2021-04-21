@@ -15,6 +15,7 @@ class FriendsAdapterDelegate : AdapterDelegate<ItemFriendBinding>(
 
         viewHolder.binding.image.setImageResource(R.drawable.ic_home_black_24dp)
         viewHolder.binding.text.text = item.fullName
+        viewHolder.binding.birthday.text = item.birthday.toString()
     }
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is FriendModelItem

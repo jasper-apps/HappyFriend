@@ -13,6 +13,7 @@ class FriendsViewModel @Inject constructor(
     interactor: FriendsInteractor
 ) : ViewModel() {
 
-    val friends: LiveData<List<FriendModelItem>> = interactor.getFriends()
-        .asLiveData()
+    val friends: LiveData<List<FriendModelItem>> by lazy {
+        interactor.getFriends().asLiveData()
+    }
 }
