@@ -1,10 +1,20 @@
 package com.yterletskyi.happy_friend.features.friends.data
 
+import android.net.Uri
 import java.time.LocalDate
 
 data class Friend(
     val id: Long,
-    val firstName: String,
-    val lastName: String,
+    val name: String,
+    val imageUri: Uri?,
     val birthday: LocalDate
 )
+
+val Friend.initials: String
+    get() = name.split(' ').let { split ->
+        when (split.size) {
+            in -1..0 -> "?"
+            in 0..1 -> "${split[0][0]}"
+            else -> "${split[0][0]}${split[1][0]}"
+        }
+    }

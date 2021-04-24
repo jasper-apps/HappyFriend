@@ -21,8 +21,11 @@ class FriendsDi {
     }
 
     @Provides
-    fun provideFriendsInteractor(dataSource: FriendsDataSource): FriendsInteractor {
-        return FriendsInteractorImpl(dataSource)
+    fun provideFriendsInteractor(
+        @ApplicationContext context: Context,
+        dataSource: FriendsDataSource
+    ): FriendsInteractor {
+        return FriendsInteractorImpl(context, dataSource)
     }
 
 }

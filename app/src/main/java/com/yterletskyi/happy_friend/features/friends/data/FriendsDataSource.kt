@@ -3,6 +3,7 @@ package com.yterletskyi.happy_friend.features.friends.data
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
+import androidx.core.net.toUri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -18,26 +19,26 @@ class FakeFriendsDataSource @Inject constructor() : FriendsDataSource {
         listOf(
             Friend(
                 id = 1,
-                firstName = "Yura",
-                lastName = "Basa",
+                imageUri = null,
+                name = "Yura Basa",
                 birthday = LocalDate.of(1995, 6, 30)
             ),
             Friend(
                 id = 2,
-                firstName = "Ostap",
-                lastName = "Holub",
+                imageUri = null,
+                name = "Ostap Holub",
                 birthday = LocalDate.of(1997, 2, 6)
             ),
             Friend(
-                id = 1,
-                firstName = "Andrew",
-                lastName = "Yaniv",
+                id = 3,
+                imageUri = null,
+                name = "Andre Yanivw",
                 birthday = LocalDate.of(1997, 1, 10)
             ),
             Friend(
-                id = 1,
-                firstName = "Taras",
-                lastName = "Smakula",
+                id = 4,
+                imageUri = null,
+                name = "Taras Smakula",
                 birthday = LocalDate.of(1997, 2, 9)
             )
         )
@@ -48,13 +49,13 @@ class PhoneContactsDataSource @Inject constructor(
     private val context: Context
 ) : FriendsDataSource {
 
+    // TODO: 4/24/21 add birthday field
     private val PROJECTION: Array<out String> = arrayOf(
         ContactsContract.Data.CONTACT_ID,
         ContactsContract.Data.DISPLAY_NAME,
+        ContactsContract.Data.PHOTO_THUMBNAIL_URI,
         ContactsContract.Data.LOOKUP_KEY
     )
-
-//    private val flow: MutableStateFlow<List<Friend>> = MutableStateFlow(emptyList())
 
     override fun getFriends(): Flow<List<Friend>> = flow {
         val friends = context.contentResolver.query(
@@ -76,8 +77,8 @@ class PhoneContactsDataSource @Inject constructor(
 
     private fun cursorToFriend(cursor: Cursor): Friend = Friend(
         id = cursor.getLong(0),
-        firstName = cursor.getString(1).split(' ')[0],
-        lastName = cursor.getString(1).split(' ')[1],
+        name = cursor.getString(1),
+        imageUri = cursor.getString(2)?.toUri(),
         birthday = LocalDate.now()
     )
 

@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
 import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
+import com.yterletskyi.happy_friend.common.list.SpaceItemDecoration
+import com.yterletskyi.happy_friend.common.x.dp
 import com.yterletskyi.happy_friend.databinding.FragmentFriendsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +33,9 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
                     FriendsAdapterDelegate()
                 )
                 rvItemsAdapter = this
+                addItemDecoration(
+                    SpaceItemDecoration(space = 8.dp)
+                )
             }
         }
 
