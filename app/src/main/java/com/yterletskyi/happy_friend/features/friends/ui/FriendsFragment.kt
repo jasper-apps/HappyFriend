@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +37,14 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
                 addItemDecoration(
                     SpaceItemDecoration(space = 8.dp)
                 )
+            }
+        }
+
+        with(binding.etSearch) {
+            doAfterTextChanged {
+                it?.let {
+                    viewModel.search(it.toString())
+                }
             }
         }
 

@@ -10,10 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FriendsViewModel @Inject constructor(
-    interactor: FriendsInteractor
+    private val interactor: FriendsInteractor
 ) : ViewModel() {
 
     val friends: LiveData<List<FriendModelItem>> by lazy {
         interactor.getFriends().asLiveData()
     }
+
+    fun search(query: String) = interactor.getFriends(query)
+
 }

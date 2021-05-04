@@ -5,17 +5,17 @@ import android.database.Cursor
 import android.provider.ContactsContract
 import androidx.core.net.toUri
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
 import javax.inject.Inject
 
 interface FriendsDataSource {
-    fun getFriends(): Flow<List<Friend>>
+    fun getFriends(query: String): Flow<List<Friend>>
 }
 
 class FakeFriendsDataSource @Inject constructor() : FriendsDataSource {
-    override fun getFriends(): Flow<List<Friend>> = flowOf(
+    override fun getFriends(query: String): Flow<List<Friend>> = flowOf(
         listOf(
             Friend(
                 id = 1,
@@ -49,20 +49,30 @@ class PhoneContactsDataSource @Inject constructor(
     private val context: Context
 ) : FriendsDataSource {
 
-    // TODO: 4/24/21 add birthday field
-    private val PROJECTION: Array<out String> = arrayOf(
-        ContactsContract.Data.CONTACT_ID,
-        ContactsContract.Data.DISPLAY_NAME,
-        ContactsContract.Data.PHOTO_THUMBNAIL_URI,
-        ContactsContract.Data.LOOKUP_KEY
+    companion object {
+        private const val WHERE_STRING = "display_name LIKE ?"
+
+        // TODO: 4/24/21 add birthday field
+        private val PROJECTION: Array<String> = arrayOf(
+            ContactsContract.Data.CONTACT_ID,
+            ContactsContract.Data.DISPLAY_NAME,
+            ContactsContract.Data.PHOTO_THUMBNAIL_URI,
+            ContactsContract.Data.LOOKUP_KEY
+        )
+    }
+
+    private val flow: MutableStateFlow<List<Friend>> = MutableStateFlow(
+        emptyList()
     )
 
-    override fun getFriends(): Flow<List<Friend>> = flow {
+    override fun getFriends(query: String): Flow<List<Friend>> {
+        val whereParams = arrayOf("%${query}%")
+
         val friends = context.contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             PROJECTION,
-            null,
-            null,
+            WHERE_STRING,
+            whereParams,
             null
         )?.use { cursor ->
             generateSequence { if (cursor.moveToNext()) cursor else null }
@@ -72,7 +82,7 @@ class PhoneContactsDataSource @Inject constructor(
                 .toList()
         } ?: emptyList()
 
-        emit(friends)
+        return flow.also { it.tryEmit(friends) }
     }
 
     private fun cursorToFriend(cursor: Cursor): Friend = Friend(
