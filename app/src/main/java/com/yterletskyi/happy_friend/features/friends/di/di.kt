@@ -1,7 +1,7 @@
 package com.yterletskyi.happy_friend.features.friends.di
 
 import android.content.Context
-import com.yterletskyi.happy_friend.features.friends.data.FakeFriendsDataSource
+import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractorImpl
@@ -15,17 +15,19 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 @InstallIn(ViewModelComponent::class)
 class FriendsDi {
 
-    @Provides
-    fun provideFriendsDataSource(@ApplicationContext context: Context): FriendsDataSource {
-        return FakeFriendsDataSource()
-    }
+//    @Provides
+//    @Singleton
+//    fun provideFriendsDataSource(): FriendsDataSource {
+//        return InMemoryFriendsDataSource()
+//    }
 
     @Provides
     fun provideFriendsInteractor(
         @ApplicationContext context: Context,
-        dataSource: FriendsDataSource
+        friendsDataSource: FriendsDataSource,
+        contactsDataSource: ContactsDataSource,
     ): FriendsInteractor {
-        return FriendsInteractorImpl(context, dataSource)
+        return FriendsInteractorImpl(context, friendsDataSource, contactsDataSource)
     }
 
 }

@@ -5,9 +5,17 @@ import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemContactBinding
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactModelItem
 
-class ContactsAdapterDelegate : AdapterDelegate<ItemContactBinding>(
+class ContactsAdapterDelegate(
+    private val onStarClicked: (Int) -> Unit
+) : AdapterDelegate<ItemContactBinding>(
     ItemContactBinding::inflate
 ) {
+
+    override fun onViewHolderCreated(viewHolder: Holder<ItemContactBinding>) {
+        viewHolder.binding.starBtn.setOnClickListener {
+            onStarClicked(viewHolder.adapterPosition)
+        }
+    }
 
     override fun onBindViewHolder(viewHolder: Holder<ItemContactBinding>, item: ModelItem) {
         item as ContactModelItem

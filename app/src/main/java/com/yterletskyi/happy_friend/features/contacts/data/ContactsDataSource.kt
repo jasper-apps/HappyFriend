@@ -12,7 +12,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 interface ContactsDataSource {
-    fun getContacts(query: String): Flow<List<Contact>>
+    fun getContacts(query: String = ""): Flow<List<Contact>>
 }
 
 class FakeContactsDataSource @Inject constructor() : ContactsDataSource {
@@ -83,7 +83,7 @@ class PhoneContactsDataSource @Inject constructor(
                 .toList()
         } ?: emptyList()
 
-        return flow.also { it.tryEmit(contacts) }
+        return flow.also { it.value = contacts }
     }
 
     private fun cursorToContact(cursor: Cursor): Contact = Contact(

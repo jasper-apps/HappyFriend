@@ -31,7 +31,9 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             layoutManager = LinearLayoutManager(context)
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(
-                    ContactsAdapterDelegate()
+                    ContactsAdapterDelegate(
+                        onStarClicked = viewModel::favoriteContact
+                    )
                 )
                 rvItemsAdapter = this
                 addItemDecoration(

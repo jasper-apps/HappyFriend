@@ -26,7 +26,9 @@ abstract class AdapterDelegate<VB : ViewBinding>(
     open fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         _binding = inflate(inflater, parent, false)
-        return Holder(binding)
+        val holder = Holder(binding)
+        onViewHolderCreated(holder)
+        return holder
     }
 
     open fun onBindViewHolder(
@@ -36,6 +38,8 @@ abstract class AdapterDelegate<VB : ViewBinding>(
     ) {
         onBindViewHolder(viewHolder, item)
     }
+
+    open fun onViewHolderCreated(viewHolder: Holder<VB>) {}
 
     open fun onRecycled(viewHolder: RecyclerView.ViewHolder) {}
 
