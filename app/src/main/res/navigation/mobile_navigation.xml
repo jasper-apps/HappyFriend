@@ -8,7 +8,18 @@
     <fragment
         android:id="@+id/navigation_friends"
         android:name="com.yterletskyi.happy_friend.features.friends.ui.FriendsFragment"
-        tools:layout="@layout/fragment_friends" />
+        tools:layout="@layout/fragment_friends">
+
+        <action
+            android:id="@+id/toContactsScreen"
+            app:destination="@id/contactsScreen" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactsScreen"
+        android:name="com.yterletskyi.happy_friend.features.contacts.ui.ContactsFragment"
+        tools:layout="@layout/fragment_contacts" />
 
     <fragment
         android:id="@+id/navigation_calendar"

@@ -1,8 +1,8 @@
 package com.yterletskyi.happy_friend.features.friends.di
 
 import android.content.Context
+import com.yterletskyi.happy_friend.features.friends.data.FakeFriendsDataSource
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
-import com.yterletskyi.happy_friend.features.friends.data.PhoneContactsDataSource
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractorImpl
 import dagger.Module
@@ -17,7 +17,7 @@ class FriendsDi {
 
     @Provides
     fun provideFriendsDataSource(@ApplicationContext context: Context): FriendsDataSource {
-        return PhoneContactsDataSource(context)
+        return FakeFriendsDataSource()
     }
 
     @Provides

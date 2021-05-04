@@ -17,6 +17,4 @@ class FriendsViewModel @Inject constructor(
         interactor.getFriends().asLiveData()
     }
 
-    fun search(query: String) = interactor.getFriends(query)
-
 }

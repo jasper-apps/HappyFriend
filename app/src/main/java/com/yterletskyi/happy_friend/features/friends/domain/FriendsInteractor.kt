@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface FriendsInteractor {
-    fun getFriends(query: String = ""): Flow<List<FriendModelItem>>
+    fun getFriends(): Flow<List<FriendModelItem>>
 }
 
 class FriendsInteractorImpl @Inject constructor(
@@ -19,7 +19,7 @@ class FriendsInteractorImpl @Inject constructor(
     private val dataSource: FriendsDataSource
 ) : FriendsInteractor {
 
-    override fun getFriends(query: String): Flow<List<FriendModelItem>> = dataSource.getFriends(query)
+    override fun getFriends(): Flow<List<FriendModelItem>> = dataSource.getFriends()
         .map {
             it.map {
                 FriendModelItem(
