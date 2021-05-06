@@ -1,5 +1,6 @@
 package com.yterletskyi.happy_friend.features.contacts.ui
 
+import com.yterletskyi.happy_friend.R
 import com.yterletskyi.happy_friend.common.list.AdapterDelegate
 import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemContactBinding
@@ -20,9 +21,15 @@ class ContactsAdapterDelegate(
     override fun onBindViewHolder(viewHolder: Holder<ItemContactBinding>, item: ModelItem) {
         item as ContactModelItem
 
-        viewHolder.binding.image.setImageDrawable(item.image)
-        viewHolder.binding.text.text = item.fullName
-        viewHolder.binding.birthday.text = item.birthday.toString()
+        with(viewHolder.binding) {
+            image.setImageDrawable(item.image)
+            text.text = item.fullName
+            birthday.text = item.birthday.toString()
+            starBtn.setImageResource(
+                if (item.isFriend) R.drawable.ic_baseline_star_24
+                else R.drawable.ic_baseline_star_outline_24
+            )
+        }
     }
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is ContactModelItem

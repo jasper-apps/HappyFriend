@@ -5,6 +5,7 @@ import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.PhoneContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractor
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractorImpl
+import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,9 +24,10 @@ class ContactsDi {
     @Provides
     fun provideContactsInteractor(
         @ApplicationContext context: Context,
-        dataSource: ContactsDataSource
+        contactsDataSource: ContactsDataSource,
+        friendsDataSource: FriendsDataSource
     ): ContactsInteractor {
-        return ContactsInteractorImpl(context, dataSource)
+        return ContactsInteractorImpl(context, contactsDataSource, friendsDataSource)
     }
 
 }

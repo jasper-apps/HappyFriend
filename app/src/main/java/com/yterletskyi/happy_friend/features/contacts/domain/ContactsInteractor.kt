@@ -6,8 +6,9 @@ import android.net.Uri
 import com.yterletskyi.happy_friend.common.drawable.AvatarDrawable
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.initials
+import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 interface ContactsInteractor {
@@ -16,23 +17,26 @@ interface ContactsInteractor {
 
 class ContactsInteractorImpl @Inject constructor(
     private val context: Context,
-    private val dataSource: ContactsDataSource
+    private val contactsDataSource: ContactsDataSource,
+    private val friendsDataSource: FriendsDataSource
 ) : ContactsInteractor {
 
-    override fun getContacts(query: String): Flow<List<ContactModelItem>> =
-        dataSource.getContacts(query)
-            .map {
-                it.map {
-                    ContactModelItem(
-                        id = it.id,
-                        image = it.imageUri
-                            ?.let { drawableFromUri(it) }
-                            ?: AvatarDrawable(it.initials),
-                        fullName = it.name,
-                        birthday = it.birthday
-                    )
-                }
+    override fun getContacts(query: String): Flow<List<ContactModelItem>> = combine(
+        contactsDataSource.getContacts(query), friendsDataSource.getFriends()
+    ) { contacts, friends ->
+        contacts
+            .map { co ->
+                ContactModelItem(
+                    id = co.id,
+                    image = co.imageUri
+                        ?.let { drawableFromUri(it) }
+                        ?: AvatarDrawable(co.initials),
+                    fullName = co.name,
+                    birthday = co.birthday,
+                    isFriend = friends.find { fr -> fr.contactId == co.id } != null
+                )
             }
+    }
 
     private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)
         .use { Drawable.createFromStream(it, uri.toString()) }

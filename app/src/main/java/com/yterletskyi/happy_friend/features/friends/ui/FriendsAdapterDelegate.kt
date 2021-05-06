@@ -22,9 +22,11 @@ class FriendsAdapterDelegate(
     override fun onBindViewHolder(viewHolder: Holder<ItemFriendBinding>, item: ModelItem) {
         item as FriendModelItem
 
-        viewHolder.binding.image.setImageDrawable(item.image)
-        viewHolder.binding.text.text = item.fullName
-        viewHolder.binding.birthday.text = item.birthday.toString()
+        with(viewHolder.binding) {
+            image.setImageDrawable(item.image)
+            text.text = item.fullName
+            birthday.text = item.birthday.toString()
+        }
     }
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is FriendModelItem
