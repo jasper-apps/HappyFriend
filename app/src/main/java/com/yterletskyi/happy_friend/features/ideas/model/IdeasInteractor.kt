@@ -9,8 +9,11 @@ import java.util.*
 import javax.inject.Inject
 
 interface IdeasInteractor {
+    fun getIdea(id: String): Flow<IdeaModelItem>
     fun getIdeas(friendId: Long): Flow<List<ModelItem>>
     suspend fun addIdea(friendId: Long, ideaModel: IdeaModelItem)
+    suspend fun updateIdea(ideaModel: IdeaModelItem)
+    suspend fun removeIdea(id: String)
 }
 
 class IdeasInteractorImpl @Inject constructor(
@@ -28,6 +31,20 @@ class IdeasInteractorImpl @Inject constructor(
             } + listOf(AddIdeaModelItem)
         }
 
+    override fun getIdea(id: String): Flow<IdeaModelItem> {
+        return dataSource.getIdea(id).map {
+            IdeaModelItem(
+                id = it.id,
+                text = it.text,
+                done = it.done
+            )
+        }
+    }
+
+    override suspend fun updateIdea(ideaModel: IdeaModelItem) {
+        dataSource.updateIdea(ideaModel.id, ideaModel.text, ideaModel.done)
+    }
+
     override suspend fun addIdea(friendId: Long, ideaModel: IdeaModelItem) {
         val idea = Idea(
             id = UUID.randomUUID().toString(),
@@ -37,6 +54,10 @@ class IdeasInteractorImpl @Inject constructor(
             createdAt = System.currentTimeMillis()
         )
         dataSource.addIdea(idea)
+    }
+
+    override suspend fun removeIdea(id: String) {
+        dataSource.removeIdea(id)
     }
 
 }

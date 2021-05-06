@@ -5,9 +5,15 @@ import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemAddIdeaBinding
 import com.yterletskyi.happy_friend.features.ideas.model.AddIdeaModelItem
 
-class AddIdeaAdapterDelegate : AdapterDelegate<ItemAddIdeaBinding>(
+class AddIdeaAdapterDelegate(
+    private val onItemClicked: () -> Unit
+) : AdapterDelegate<ItemAddIdeaBinding>(
     ItemAddIdeaBinding::inflate
 ) {
+
+    override fun onViewHolderCreated(viewHolder: Holder<ItemAddIdeaBinding>) {
+        viewHolder.itemView.setOnClickListener { onItemClicked() }
+    }
 
     override fun onBindViewHolder(viewHolder: Holder<ItemAddIdeaBinding>, item: ModelItem) {
     }

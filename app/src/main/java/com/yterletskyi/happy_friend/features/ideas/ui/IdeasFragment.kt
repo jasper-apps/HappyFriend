@@ -48,14 +48,20 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
 
         with(binding.rvItems) {
             adapter = RecyclerDelegationAdapter(context).apply {
-                addDelegate(IdeasAdapterDelegate())
-                addDelegate(AddIdeaAdapterDelegate())
+                addDelegate(IdeasAdapterDelegate(
+                    onTextChanged = { i, t -> viewModel.updateIdea(i, t) },
+                    onCheckboxChanged = { i, c -> viewModel.updateIdea(i, c) },
+                    onRemoveClicked = { i -> viewModel.removeIdea(i) }
+                ))
+                addDelegate(AddIdeaAdapterDelegate(
+                    onItemClicked = { viewModel.addIdea() }
+                ))
                 rvItemsAdapter = this
             }
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.ideas.observe(viewLifecycleOwner, Observer {
+        viewModel.ideasLiveData.observe(viewLifecycleOwner, Observer {
             rvItemsAdapter.setItems(it)
         })
     }
