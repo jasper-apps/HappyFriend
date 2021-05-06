@@ -18,4 +18,6 @@ data class IdeaModelItem(
     }
 }
 
+fun IdeaModelItem.isEmpty() = text.isEmpty()
+
 object AddIdeaModelItem : ModelItem

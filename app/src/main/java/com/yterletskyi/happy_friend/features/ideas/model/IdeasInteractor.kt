@@ -21,14 +21,22 @@ class IdeasInteractorImpl @Inject constructor(
 ) : IdeasInteractor {
 
     override fun getIdeas(friendId: Long): Flow<List<ModelItem>> = dataSource.getIdeas(friendId)
-        .map {
-            it.map {
+        .map { ideas ->
+            ideas.map {
                 IdeaModelItem(
                     id = it.id,
                     text = it.text,
                     done = it.done
                 )
-            } + listOf(AddIdeaModelItem)
+            }
+        }
+        .map { models ->
+            mutableListOf<ModelItem>().apply {
+                addAll(models)
+                if (models.isEmpty() || !models.last().isEmpty()) {
+                    add(AddIdeaModelItem)
+                }
+            }
         }
 
     override fun getIdea(id: String): Flow<IdeaModelItem> {
