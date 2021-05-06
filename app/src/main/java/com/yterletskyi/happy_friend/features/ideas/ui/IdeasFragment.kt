@@ -49,6 +49,7 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
         with(binding.rvItems) {
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(IdeasAdapterDelegate())
+                addDelegate(AddIdeaAdapterDelegate())
                 rvItemsAdapter = this
             }
             layoutManager = LinearLayoutManager(context)

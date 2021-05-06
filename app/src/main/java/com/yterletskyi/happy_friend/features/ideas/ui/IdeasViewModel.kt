@@ -1,11 +1,10 @@
 package com.yterletskyi.happy_friend.features.ideas.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.yterletskyi.happy_friend.features.ideas.model.IdeaModelItem
+import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.features.ideas.model.IdeasInteractor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -34,11 +33,7 @@ class IdeasViewModel @AssistedInject constructor(
         }
     }
 
-    val ideas: LiveData<List<IdeaModelItem>> = interactor.getIdeas(friendId)
+    val ideas: LiveData<List<ModelItem>> = interactor.getIdeas(friendId)
         .asLiveData()
-
-    init {
-        Log.i("info23", "friend id is $friendId")
-    }
 
 }

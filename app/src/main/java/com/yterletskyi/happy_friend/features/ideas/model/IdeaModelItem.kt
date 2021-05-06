@@ -7,3 +7,5 @@ data class IdeaModelItem(
     val text: String,
     val done: Boolean
 ) : ModelItem
+
+object AddIdeaModelItem : ModelItem
