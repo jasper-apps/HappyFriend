@@ -15,6 +15,7 @@ import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happy_friend.common.list.SpaceItemDecoration
 import com.yterletskyi.happy_friend.common.x.dp
 import com.yterletskyi.happy_friend.databinding.FragmentFriendsBinding
+import com.yterletskyi.happy_friend.features.friends.domain.FriendModelItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +38,9 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             layoutManager = LinearLayoutManager(context)
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(
-                    FriendsAdapterDelegate()
+                    FriendsAdapterDelegate(
+                        onItemClicked = ::showIdeasScreen
+                    )
                 )
                 rvItemsAdapter = this
                 addItemDecoration(
@@ -50,6 +53,13 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             rvItemsAdapter.setItems(it)
         })
 
+    }
+
+    private fun showIdeasScreen(index: Int) {
+        val friend = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
+        findNavController().navigate(
+            FriendsFragmentDirections.toIdeasScreen(friend.id)
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

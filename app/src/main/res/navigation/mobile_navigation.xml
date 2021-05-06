@@ -14,12 +14,33 @@
             android:id="@+id/toContactsScreen"
             app:destination="@id/contactsScreen" />
 
+        <action
+            android:id="@+id/toIdeasScreen"
+            app:destination="@id/ideasScreen">
+
+            <argument
+                android:name="friendId"
+                app:argType="long" />
+
+        </action>
+
     </fragment>
 
     <fragment
         android:id="@+id/contactsScreen"
         android:name="com.yterletskyi.happy_friend.features.contacts.ui.ContactsFragment"
         tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/ideasScreen"
+        android:name="com.yterletskyi.happy_friend.features.ideas.ui.IdeasFragment"
+        tools:layout="@layout/fragment_ideas">
+
+        <argument
+            android:name="friendId"
+            app:argType="long" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_calendar"

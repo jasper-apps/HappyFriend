@@ -15,12 +15,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 @InstallIn(ViewModelComponent::class)
 class FriendsDi {
 
-//    @Provides
-//    @Singleton
-//    fun provideFriendsDataSource(): FriendsDataSource {
-//        return InMemoryFriendsDataSource()
-//    }
-
     @Provides
     fun provideFriendsInteractor(
         @ApplicationContext context: Context,

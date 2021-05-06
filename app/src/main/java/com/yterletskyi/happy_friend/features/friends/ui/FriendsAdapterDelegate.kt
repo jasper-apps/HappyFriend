@@ -5,9 +5,19 @@ import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemFriendBinding
 import com.yterletskyi.happy_friend.features.friends.domain.FriendModelItem
 
-class FriendsAdapterDelegate : AdapterDelegate<ItemFriendBinding>(
+class FriendsAdapterDelegate(
+    private val onItemClicked: (Int) -> Unit
+) : AdapterDelegate<ItemFriendBinding>(
     ItemFriendBinding::inflate
 ) {
+
+    override fun onViewHolderCreated(viewHolder: Holder<ItemFriendBinding>) {
+        with(viewHolder) {
+            binding.root.setOnClickListener {
+                onItemClicked(adapterPosition)
+            }
+        }
+    }
 
     override fun onBindViewHolder(viewHolder: Holder<ItemFriendBinding>, item: ModelItem) {
         item as FriendModelItem
