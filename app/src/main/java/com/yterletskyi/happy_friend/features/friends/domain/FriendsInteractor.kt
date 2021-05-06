@@ -15,6 +15,8 @@ import javax.inject.Inject
 interface FriendsInteractor {
     fun getFriends(): Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
+    suspend fun removeFriend(id: Long)
+    suspend fun isFriend(id: Long): Boolean
 }
 
 class FriendsInteractorImpl @Inject constructor(
@@ -46,6 +48,14 @@ class FriendsInteractorImpl @Inject constructor(
     override suspend fun addFriend(friendModel: FriendModelItem) {
         val friend = Friend(contactId = friendModel.id)
         friendsDataSource.addFriend(friend)
+    }
+
+    override suspend fun removeFriend(id: Long) {
+        friendsDataSource.removeFriend(id)
+    }
+
+    override suspend fun isFriend(id: Long): Boolean {
+        return friendsDataSource.isFriend(id)
     }
 
     private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)

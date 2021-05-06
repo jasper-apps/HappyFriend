@@ -32,7 +32,7 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(
                     ContactsAdapterDelegate(
-                        onStarClicked = viewModel::favoriteContact
+                        onStarClicked = viewModel::toggleFriend
                     )
                 )
                 rvItemsAdapter = this

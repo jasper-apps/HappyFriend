@@ -29,16 +29,22 @@ class ContactsViewModel @Inject constructor(
 
     fun search(query: String) = interactor.getContacts(query)
 
-    fun favoriteContact(index: Int) {
+    fun toggleFriend(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val contact = contactsFlow.value[index]
-            val friend = FriendModelItem(
-                id = contact.id,
-                fullName = contact.fullName,
-                image = contact.image,
-                birthday = contact.birthday
-            )
-            friendsInteractor.addFriend(friend)
+            if (friendsInteractor.isFriend(contact.id)) {
+                friendsInteractor.removeFriend(contact.id)
+            } else {
+                friendsInteractor.addFriend(
+                    FriendModelItem(
+                        id = contact.id,
+                        fullName = contact.fullName,
+                        image = contact.image,
+                        birthday = contact.birthday
+                    )
+                )
+
+            }
         }
     }
 

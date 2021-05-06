@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 interface FriendsDataSource {
     fun getFriends(): Flow<List<Friend>>
     suspend fun addFriend(friend: Friend)
+    suspend fun removeFriend(id: Long)
+    suspend fun isFriend(id: Long): Boolean
 }
 
 class InMemoryFriendsDataSource : FriendsDataSource {
@@ -21,5 +23,16 @@ class InMemoryFriendsDataSource : FriendsDataSource {
             .apply { add(friend) }
         flow.value = newFriends
     }
+
+    override suspend fun removeFriend(id: Long) {
+        val friends = flow.value
+        val newFriends = friends
+            .toMutableList()
+            .apply { removeIf { it.contactId == id } }
+        flow.value = newFriends
+    }
+
+    override suspend fun isFriend(id: Long): Boolean = flow.value
+        .find { it.contactId == id } != null
 
 }
