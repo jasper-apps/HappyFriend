@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +38,8 @@ class ContactsViewModel @Inject constructor(
             } else {
                 friendsInteractor.addFriend(
                     FriendModelItem(
-                        id = contact.id,
+                        id = UUID.randomUUID().toString(),
+                        contactId = contact.id,
                         fullName = contact.fullName,
                         image = contact.image,
                         birthday = contact.birthday

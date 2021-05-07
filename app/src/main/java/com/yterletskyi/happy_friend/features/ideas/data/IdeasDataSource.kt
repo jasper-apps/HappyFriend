@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 
 interface IdeasDataSource {
     fun getIdea(id: String): Flow<Idea>
-    fun getIdeas(friendId: Long): Flow<List<Idea>>
+    fun getIdeas(friendId: String): Flow<List<Idea>>
     suspend fun addIdea(idea: Idea)
     suspend fun updateIdea(id: String, text: String, done: Boolean)
     suspend fun removeIdea(id: String)
@@ -22,7 +22,7 @@ class InMemoryIdeasDataSource : IdeasDataSource {
     override fun getIdea(id: String): Flow<Idea> = flow
         .map { it.single { it.id == id } }
 
-    override fun getIdeas(friendId: Long): Flow<List<Idea>> = flow
+    override fun getIdeas(friendId: String): Flow<List<Idea>> = flow
         .map { it.filter { it.friendId == friendId } }
         .distinctUntilChanged()
 
@@ -59,5 +59,22 @@ class InMemoryIdeasDataSource : IdeasDataSource {
             }
         flow.value = newIdeas
     }
+
+}
+
+class RoomIdeasDataSource(
+    private val ideasDao: IdeasDao
+) : IdeasDataSource {
+
+    override fun getIdea(id: String): Flow<Idea> = ideasDao.getIdea(id)
+
+    override fun getIdeas(friendId: String): Flow<List<Idea>> = ideasDao.getIdeas(friendId)
+
+    override suspend fun addIdea(idea: Idea) = ideasDao.addIdea(idea)
+
+    override suspend fun updateIdea(id: String, text: String, done: Boolean) =
+        ideasDao.updateIdea(id, text, done)
+
+    override suspend fun removeIdea(id: String) = ideasDao.removeIdea(id)
 
 }

@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 interface IdeasInteractor {
     fun getIdea(id: String): Flow<IdeaModelItem>
-    fun getIdeas(friendId: Long): Flow<List<ModelItem>>
-    suspend fun addIdea(friendId: Long, ideaModel: IdeaModelItem)
+    fun getIdeas(friendId: String): Flow<List<ModelItem>>
+    suspend fun addIdea(friendId: String, ideaModel: IdeaModelItem)
     suspend fun updateIdea(ideaModel: IdeaModelItem)
     suspend fun removeIdea(id: String)
 }
@@ -20,7 +20,7 @@ class IdeasInteractorImpl @Inject constructor(
     private val dataSource: IdeasDataSource
 ) : IdeasInteractor {
 
-    override fun getIdeas(friendId: Long): Flow<List<ModelItem>> = dataSource.getIdeas(friendId)
+    override fun getIdeas(friendId: String): Flow<List<ModelItem>> = dataSource.getIdeas(friendId)
         .map { ideas ->
             ideas.map {
                 IdeaModelItem(
@@ -53,7 +53,7 @@ class IdeasInteractorImpl @Inject constructor(
         dataSource.updateIdea(ideaModel.id, ideaModel.text, ideaModel.done)
     }
 
-    override suspend fun addIdea(friendId: Long, ideaModel: IdeaModelItem) {
+    override suspend fun addIdea(friendId: String, ideaModel: IdeaModelItem) {
         val idea = Idea(
             id = UUID.randomUUID().toString(),
             text = ideaModel.text,

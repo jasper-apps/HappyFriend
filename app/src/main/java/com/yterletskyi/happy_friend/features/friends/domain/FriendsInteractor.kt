@@ -10,13 +10,14 @@ import com.yterletskyi.happy_friend.features.friends.data.Friend
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import java.util.*
 import javax.inject.Inject
 
 interface FriendsInteractor {
     fun getFriends(): Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
-    suspend fun removeFriend(id: Long)
-    suspend fun isFriend(id: Long): Boolean
+    suspend fun removeFriend(contactId: Long)
+    suspend fun isFriend(contactId: Long): Boolean
 }
 
 class FriendsInteractorImpl @Inject constructor(
@@ -29,33 +30,40 @@ class FriendsInteractorImpl @Inject constructor(
         friendsDataSource.getFriends(), contactsDataSource.getContacts()
     ) { friends, contacts ->
         friends
-            .mapNotNull { fr ->
-                contacts.find { co -> co.id == fr.contactId }
+            .map { fr ->
+                fr to contacts.find { co -> co.id == fr.contactId }
             }
-            .map {
+            .filter {
+                it.second != null
+            }
+            .map { (fr, co) ->
                 FriendModelItem(
-                    id = it.id,
-                    image = it.imageUri
+                    id = fr.id,
+                    contactId = fr.contactId,
+                    image = co!!.imageUri
                         ?.let { drawableFromUri(it) }
-                        ?: AvatarDrawable(it.initials),
-                    fullName = it.name,
-                    birthday = it.birthday
+                        ?: AvatarDrawable(co.initials),
+                    fullName = co.name,
+                    birthday = co.birthday
                 )
             }
     }
 
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
-        val friend = Friend(contactId = friendModel.id)
+        val friend = Friend(
+            id = UUID.randomUUID().toString(),
+            contactId = friendModel.contactId
+        )
         friendsDataSource.addFriend(friend)
     }
 
-    override suspend fun removeFriend(id: Long) {
-        friendsDataSource.removeFriend(id)
+    override suspend fun removeFriend(contactId: Long) {
+        friendsDataSource.removeFriend(contactId)
     }
 
-    override suspend fun isFriend(id: Long): Boolean {
-        return friendsDataSource.isFriend(id)
+    override suspend fun isFriend(contactId: Long): Boolean {
+        return friendsDataSource.isFriend(contactId)
     }
 
     private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)

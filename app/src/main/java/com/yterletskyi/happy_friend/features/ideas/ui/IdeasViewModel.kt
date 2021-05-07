@@ -14,19 +14,19 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class IdeasViewModel @AssistedInject constructor(
-    @Assisted private val friendId: Long,
+    @Assisted private val friendId: String,
     @Assisted private val interactor: IdeasInteractor
 ) : ViewModel() {
 
     @AssistedFactory
     interface IdeasViewModelAssistedFactory {
-        fun create(friendId: Long, interactor: IdeasInteractor): IdeasViewModel
+        fun create(friendId: String, interactor: IdeasInteractor): IdeasViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: IdeasViewModelAssistedFactory,
-            friendId: Long,
+            friendId: String,
             interactor: IdeasInteractor
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
