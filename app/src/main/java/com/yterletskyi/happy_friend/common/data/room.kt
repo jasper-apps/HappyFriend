@@ -1,4 +1,4 @@
-package com.yterletskyi.happy_friend.data
+package com.yterletskyi.happy_friend.common.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
