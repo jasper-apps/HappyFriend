@@ -4,7 +4,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.yterletskyi.happy_friend.common.list.AdapterDelegate
 import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemIdeaBinding
-import com.yterletskyi.happy_friend.features.ideas.model.IdeaModelItem
+import com.yterletskyi.happy_friend.features.ideas.domain.IdeaModelItem
 
 class IdeasAdapterDelegate(
     private val onTextChanged: (Int, String) -> Unit,

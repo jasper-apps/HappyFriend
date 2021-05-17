@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
 import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happy_friend.databinding.FragmentIdeasBinding
-import com.yterletskyi.happy_friend.features.ideas.model.IdeasInteractor
+import com.yterletskyi.happy_friend.features.ideas.domain.IdeasInteractor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

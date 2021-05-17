@@ -2,8 +2,8 @@ package com.yterletskyi.happy_friend.features.ideas.ui
 
 import androidx.lifecycle.*
 import com.yterletskyi.happy_friend.common.list.ModelItem
-import com.yterletskyi.happy_friend.features.ideas.model.IdeaModelItem
-import com.yterletskyi.happy_friend.features.ideas.model.IdeasInteractor
+import com.yterletskyi.happy_friend.features.ideas.domain.IdeaModelItem
+import com.yterletskyi.happy_friend.features.ideas.domain.IdeasInteractor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

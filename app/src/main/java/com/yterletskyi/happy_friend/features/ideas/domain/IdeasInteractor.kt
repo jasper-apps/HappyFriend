@@ -1,4 +1,4 @@
-package com.yterletskyi.happy_friend.features.ideas.model
+package com.yterletskyi.happy_friend.features.ideas.domain
 
 import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.features.ideas.data.Idea

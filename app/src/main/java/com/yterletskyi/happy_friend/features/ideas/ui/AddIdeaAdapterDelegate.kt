@@ -3,7 +3,7 @@ package com.yterletskyi.happy_friend.features.ideas.ui
 import com.yterletskyi.happy_friend.common.list.AdapterDelegate
 import com.yterletskyi.happy_friend.common.list.ModelItem
 import com.yterletskyi.happy_friend.databinding.ItemAddIdeaBinding
-import com.yterletskyi.happy_friend.features.ideas.model.AddIdeaModelItem
+import com.yterletskyi.happy_friend.features.ideas.domain.AddIdeaModelItem
 
 class AddIdeaAdapterDelegate(
     private val onItemClicked: () -> Unit
