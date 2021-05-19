@@ -6,12 +6,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
 import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happy_friend.databinding.FragmentIdeasBinding
+import com.yterletskyi.happy_friend.features.ideas.domain.IdeasDiffUtil
 import com.yterletskyi.happy_friend.features.ideas.domain.IdeasInteractor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -61,8 +61,12 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.ideasLiveData.observe(viewLifecycleOwner, Observer {
-            rvItemsAdapter.setItems(it)
+        viewModel.ideasLiveData.observe(viewLifecycleOwner, {
+            val diffUtil = IdeasDiffUtil(
+                oldList = rvItemsAdapter.getData(),
+                newList = it
+            )
+            rvItemsAdapter.setItemsWithDiff(it, diffUtil)
         })
     }
 

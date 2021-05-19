@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -39,7 +40,9 @@ class IdeasViewModel @AssistedInject constructor(
     val ideas: StateFlow<List<ModelItem>> = interactor.getIdeas(friendId)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val ideasLiveData: LiveData<List<ModelItem>> = ideas.asLiveData()
+    val ideasLiveData: LiveData<List<ModelItem>> = ideas
+        .distinctUntilChanged { old, new -> old == new }
+        .asLiveData()
 
     fun addIdea() {
         viewModelScope.launch(Dispatchers.IO) {
