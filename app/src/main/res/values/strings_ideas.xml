@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="title_ideas">Ideas</string>
     <string name="placeholder_add_idea">Add an idea</string>
 
 </resources>

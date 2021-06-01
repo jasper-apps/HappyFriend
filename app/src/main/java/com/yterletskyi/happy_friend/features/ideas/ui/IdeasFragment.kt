@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
@@ -59,6 +60,10 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                 rvItemsAdapter = this
             }
             layoutManager = LinearLayoutManager(context)
+        }
+
+        with(binding.toolbar) {
+            onBackClicked = { findNavController().popBackStack() }
         }
 
         viewModel.ideasLiveData.observe(viewLifecycleOwner, {
