@@ -3,6 +3,7 @@
 
     <declare-styleable name="HappyToolbarView">
         <attr name="title" format="string" />
+        <attr name="actionSrc" format="reference" />
     </declare-styleable>
 
 </resources>

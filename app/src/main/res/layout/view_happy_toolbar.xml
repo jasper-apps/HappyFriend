@@ -33,4 +33,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Happy Friend" />
 
+    <ImageButton
+        android:id="@+id/btnAction"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:tint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_baseline_search_24"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

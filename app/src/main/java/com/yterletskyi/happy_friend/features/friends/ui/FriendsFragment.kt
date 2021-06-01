@@ -49,6 +49,10 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             }
         }
 
+        with(binding.toolbar) {
+            onActionClicked = { showSearchFragment() }
+        }
+
         viewModel.friends.observe(viewLifecycleOwner, Observer {
             rvItemsAdapter.setItems(it)
         })

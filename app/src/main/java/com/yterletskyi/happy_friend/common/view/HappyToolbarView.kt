@@ -28,9 +28,28 @@ class HappyToolbarView @JvmOverloads constructor(
             field = value
         }
 
+    var onActionClicked: (() -> Unit)? = null
+        set(value) {
+            with(binding.btnAction) {
+                value
+                    ?.let {
+                        visibility = View.VISIBLE
+                        setOnClickListener { it() }
+                    }
+                    ?: run { visibility = View.GONE }
+            }
+            field = value
+        }
+
     var title: String = ""
         set(value) {
             binding.tvTitle.text = value
+            field = value
+        }
+
+    var actionSrc: Int = 0
+        set(value) {
+            binding.btnAction.setImageResource(value)
             field = value
         }
 
@@ -48,6 +67,7 @@ class HappyToolbarView @JvmOverloads constructor(
 
             try {
                 title = getString(R.styleable.HappyToolbarView_title).orEmpty()
+                actionSrc = getResourceId(R.styleable.HappyToolbarView_actionSrc, 0)
             } finally {
                 recycle()
             }
