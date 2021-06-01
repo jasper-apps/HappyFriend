@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
 import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
@@ -40,6 +41,10 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
                     SpaceItemDecoration(space = 8.dp)
                 )
             }
+        }
+
+        with(binding.toolbar) {
+            onBackClicked = { findNavController().popBackStack() }
         }
 
         with(binding.etSearch) {
