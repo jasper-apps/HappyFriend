@@ -47,11 +47,12 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/starBtn"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_star_outline_24"
+        app:layout_constraintVertical_bias="0"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
         app:tint="@android:color/holo_red_dark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
