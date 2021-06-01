@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -39,7 +40,8 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(
                     FriendsAdapterDelegate(
-                        onItemClicked = ::showIdeasScreen
+                        onItemClicked = ::showIdeasScreen,
+                        onItemLongClicked = ::showActionsDialog
                     )
                 )
                 rvItemsAdapter = this
@@ -84,6 +86,17 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
         findNavController().navigate(
             FriendsFragmentDirections.toContactsScreen()
         )
+    }
+
+    private fun showActionsDialog(index: Int) = context?.let {
+        AlertDialog.Builder(it)
+            .setItems(R.array.friend_actions) { _, which ->
+                when (which) {
+                    0 -> viewModel.removeFriend(index)
+                    else -> throw IllegalArgumentException("Action $which is not supported")
+                }
+            }
+            .show()
     }
 
 }

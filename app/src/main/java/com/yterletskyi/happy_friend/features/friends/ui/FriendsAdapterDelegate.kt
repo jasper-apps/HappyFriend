@@ -6,7 +6,8 @@ import com.yterletskyi.happy_friend.databinding.ItemFriendBinding
 import com.yterletskyi.happy_friend.features.friends.domain.FriendModelItem
 
 class FriendsAdapterDelegate(
-    private val onItemClicked: (Int) -> Unit
+    private val onItemClicked: (Int) -> Unit,
+    private val onItemLongClicked: (Int) -> Unit
 ) : AdapterDelegate<ItemFriendBinding>(
     ItemFriendBinding::inflate
 ) {
@@ -15,6 +16,9 @@ class FriendsAdapterDelegate(
         with(viewHolder) {
             binding.root.setOnClickListener {
                 onItemClicked(adapterPosition)
+            }
+            binding.root.setOnLongClickListener {
+                onItemLongClicked(adapterPosition); true
             }
         }
     }
