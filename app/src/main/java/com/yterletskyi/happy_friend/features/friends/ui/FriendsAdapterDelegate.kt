@@ -29,7 +29,7 @@ class FriendsAdapterDelegate(
         with(viewHolder.binding) {
             image.setImageDrawable(item.image)
             text.text = item.fullName
-            birthday.text = item.birthday.toString()
+            birthday.text = item.birthday?.toString().orEmpty()
         }
     }
 

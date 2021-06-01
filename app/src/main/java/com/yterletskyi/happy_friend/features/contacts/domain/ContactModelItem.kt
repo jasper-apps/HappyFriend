@@ -8,6 +8,6 @@ data class ContactModelItem(
     val id: Long,
     val image: Drawable,
     val fullName: String,
-    val birthday: LocalDate,
+    val birthday: LocalDate?,
     val isFriend: Boolean
 ) : ModelItem

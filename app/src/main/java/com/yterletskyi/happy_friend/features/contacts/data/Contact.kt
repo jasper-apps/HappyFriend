@@ -7,7 +7,7 @@ data class Contact(
     val id: Long,
     val name: String,
     val imageUri: Uri?,
-    val birthday: LocalDate
+    val birthday: LocalDate?
 )
 
 val Contact.initials: String

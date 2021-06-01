@@ -9,5 +9,5 @@ data class FriendModelItem(
     val contactId: Long,
     val image: Drawable,
     val fullName: String,
-    val birthday: LocalDate
+    val birthday: LocalDate?
 ) : ModelItem

@@ -90,7 +90,7 @@ class PhoneContactsDataSource @Inject constructor(
         id = cursor.getLong(0),
         name = cursor.getString(1),
         imageUri = cursor.getString(2)?.toUri(),
-        birthday = LocalDate.now()
+        birthday = null
     )
 
 }
