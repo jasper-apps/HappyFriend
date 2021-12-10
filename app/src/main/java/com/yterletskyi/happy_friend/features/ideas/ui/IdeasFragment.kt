@@ -50,7 +50,7 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
         with(binding.rvItems) {
             adapter = RecyclerDelegationAdapter(context).apply {
                 addDelegate(IdeasAdapterDelegate(
-                    onTextChanged = { i, t -> viewModel.updateIdea(i, t) },
+                    onTextChanged = { i, t -> viewModel.updateIdea(i, t.trim()) },
                     onCheckboxChanged = { i, c -> viewModel.updateIdea(i, c) },
                     onRemoveClicked = { i -> viewModel.removeIdea(i) }
                 ))

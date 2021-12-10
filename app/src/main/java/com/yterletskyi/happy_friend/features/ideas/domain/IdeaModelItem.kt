@@ -5,7 +5,7 @@ import java.util.*
 
 data class IdeaModelItem(
     val id: String,
-    val text: String,
+    val text: CharSequence,
     val done: Boolean
 ) : ModelItem {
 

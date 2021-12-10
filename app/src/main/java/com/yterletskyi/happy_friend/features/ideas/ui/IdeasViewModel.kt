@@ -54,20 +54,24 @@ class IdeasViewModel @AssistedInject constructor(
     fun updateIdea(index: Int, text: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val idea = ideas.value.getOrNull(index)
-            (idea as? IdeaModelItem)?.let {
-                val newIdea = it.copy(text = text)
-                interactor.updateIdea(newIdea)
-            }
+            (idea as? IdeaModelItem)
+                ?.takeIf { it.text != text }
+                ?.let {
+                    val newIdea = it.copy(text = text)
+                    interactor.updateIdea(newIdea)
+                }
         }
     }
 
     fun updateIdea(index: Int, done: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val idea = ideas.value.getOrNull(index)
-            (idea as? IdeaModelItem)?.let {
-                val newIdea = it.copy(done = done)
-                interactor.updateIdea(newIdea)
-            }
+            (idea as? IdeaModelItem)
+                ?.takeIf { it.done != done }
+                ?.let {
+                    val newIdea = it.copy(done = done)
+                    interactor.updateIdea(newIdea)
+                }
         }
     }
 

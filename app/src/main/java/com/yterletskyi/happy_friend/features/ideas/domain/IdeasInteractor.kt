@@ -50,13 +50,13 @@ class IdeasInteractorImpl @Inject constructor(
     }
 
     override suspend fun updateIdea(ideaModel: IdeaModelItem) {
-        dataSource.updateIdea(ideaModel.id, ideaModel.text, ideaModel.done)
+        dataSource.updateIdea(ideaModel.id, ideaModel.text.toString(), ideaModel.done)
     }
 
     override suspend fun addIdea(friendId: String, ideaModel: IdeaModelItem) {
         val idea = Idea(
             id = UUID.randomUUID().toString(),
-            text = ideaModel.text,
+            text = ideaModel.text.toString(),
             done = ideaModel.done,
             friendId = friendId,
             createdAt = System.currentTimeMillis()
