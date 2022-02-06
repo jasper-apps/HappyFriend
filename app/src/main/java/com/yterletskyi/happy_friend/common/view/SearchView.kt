@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import com.yterletskyi.happy_friend.R
 import com.yterletskyi.happy_friend.common.x.dp
@@ -20,9 +21,10 @@ class SearchView @JvmOverloads constructor(
         inputType = EditorInfo.TYPE_CLASS_TEXT
 
         TypedValue().let {
-            context.theme.resolveAttribute(R.attr.textColorPrimary, it, true)
-            setTextColor(it.data)
+            context.theme.resolveAttribute(R.attr.textColorSecondary, it, true)
+            setHintTextColor(it.data)
         }
+        setTextColor(ContextCompat.getColor(context, R.color.black))
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         setPadding(16.dp)
 
