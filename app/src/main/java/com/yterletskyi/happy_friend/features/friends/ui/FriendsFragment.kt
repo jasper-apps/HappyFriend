@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +58,15 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
 
         with(binding.toolbar) {
             onActionClicked = { showSearchFragment() }
+        }
+
+        with(binding.incEmptyState.btnAddFriend) {
+            setOnClickListener { showSearchFragment() }
+        }
+
+        viewModel.showEmptyState.observe(viewLifecycleOwner) {
+            binding.incEmptyState.root.isVisible = it
+            binding.rvItems.isVisible = !it
         }
 
     }

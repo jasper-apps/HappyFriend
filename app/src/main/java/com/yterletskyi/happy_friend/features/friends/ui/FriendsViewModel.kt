@@ -1,9 +1,6 @@
 package com.yterletskyi.happy_friend.features.friends.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.yterletskyi.happy_friend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +13,8 @@ class FriendsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val friends: LiveData<List<FriendModelItem>> = interactor.getFriends().asLiveData()
+
+    val showEmptyState: LiveData<Boolean> = friends.map { it.isEmpty() }
 
     fun removeFriend(index: Int) = viewModelScope.launch {
         val friend = friends.value?.get(index)
