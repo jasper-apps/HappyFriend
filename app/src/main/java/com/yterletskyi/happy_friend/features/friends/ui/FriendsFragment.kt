@@ -50,7 +50,7 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
                 )
                 rvItemsAdapter = this
                 addItemDecoration(
-                    SpaceItemDecoration(space = 8.dp)
+                    SpaceItemDecoration(space = 4.dp)
                 )
             }
         }

@@ -34,7 +34,7 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
                 )
                 rvItemsAdapter = this
                 addItemDecoration(
-                    SpaceItemDecoration(space = 8.dp)
+                    SpaceItemDecoration(space = 4.dp)
                 )
             }
         }
