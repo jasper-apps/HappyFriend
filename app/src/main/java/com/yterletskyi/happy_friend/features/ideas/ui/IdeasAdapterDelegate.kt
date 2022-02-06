@@ -1,5 +1,7 @@
 package com.yterletskyi.happy_friend.features.ideas.ui
 
+import android.graphics.Paint
+import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.yterletskyi.happy_friend.common.list.AdapterDelegate
 import com.yterletskyi.happy_friend.common.list.ModelItem
@@ -21,6 +23,7 @@ class IdeasAdapterDelegate(
             }
             binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 onCheckboxChanged(adapterPosition, isChecked)
+                updateStrikethrough(binding.input, isChecked)
             }
             binding.remove.setOnClickListener {
                 onRemoveClicked(adapterPosition)
@@ -32,12 +35,24 @@ class IdeasAdapterDelegate(
         item as IdeaModelItem
 
         with(viewHolder.binding) {
-            input.setText(item.text)
             checkbox.isChecked = item.done
+            with(input) {
+                setText(item.text)
+                updateStrikethrough(this, item.done)
+            }
         }
     }
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is IdeaModelItem
 
     override fun getViewType(): Int = 1
+
+    private fun updateStrikethrough(view: TextView, isChecked: Boolean) {
+        with(view) {
+            paintFlags =
+                if (isChecked) paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                else paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
+    }
+
 }
