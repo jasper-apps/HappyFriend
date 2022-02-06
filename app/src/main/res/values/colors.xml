@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="amaranth">#E91E63</color>
+    <color name="silver">#BDBDBD</color>
+    <color name="wild_sand">#F6F6F6</color>
+    <color name="mercury">#E8E8E8</color>
+
 </resources>
