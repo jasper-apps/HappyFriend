@@ -1,13 +1,15 @@
 package com.yterletskyi.happy_friend.features.friends.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.R
@@ -35,6 +37,8 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requestPermissions()
+
         with(binding.rvItems) {
             layoutManager = LinearLayoutManager(context)
             adapter = RecyclerDelegationAdapter(context).apply {
@@ -55,10 +59,16 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             onActionClicked = { showSearchFragment() }
         }
 
-        viewModel.friends.observe(viewLifecycleOwner, Observer {
-            rvItemsAdapter.setItems(it)
-        })
+    }
 
+    private fun requestPermissions() {
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                viewModel.friends.observe(viewLifecycleOwner, rvItemsAdapter::setItems)
+            } else {
+                Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
+            }
+        }.launch(Manifest.permission.READ_CONTACTS)
     }
 
     private fun showIdeasScreen(index: Int) {

@@ -1,13 +1,9 @@
 package com.yterletskyi.happy_friend.features.contacts.ui
 
-import android.Manifest
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
@@ -55,18 +51,7 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             }
         }
 
-        val callback = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                viewModel.contacts.observe(viewLifecycleOwner, Observer {
-                    rvItemsAdapter.setItems(it)
-                })
-            } else {
-                Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
-            }
-        }
-        callback.launch(Manifest.permission.READ_CONTACTS)
-
+        viewModel.contacts.observe(viewLifecycleOwner, rvItemsAdapter::setItems)
     }
-
 
 }
