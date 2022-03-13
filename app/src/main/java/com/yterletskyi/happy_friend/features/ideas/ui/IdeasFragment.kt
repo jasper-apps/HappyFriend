@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yterletskyi.happy_friend.App
 import com.yterletskyi.happy_friend.common.binding.BaseBindingFragment
 import com.yterletskyi.happy_friend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happy_friend.databinding.FragmentIdeasBinding
+import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happy_friend.features.ideas.domain.IdeasDiffUtil
 import com.yterletskyi.happy_friend.features.ideas.domain.IdeasInteractor
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,15 +27,23 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
     private val args by navArgs<IdeasFragmentArgs>()
 
     @Inject
-    lateinit var interactor: IdeasInteractor
+    lateinit var app: App
+
+    @Inject
+    lateinit var ideasInteractor: IdeasInteractor
+
+    @Inject
+    lateinit var friendsInteractor: FriendsInteractor
 
     @Inject
     lateinit var myViewModelAssistedFactory: IdeasViewModel.IdeasViewModelAssistedFactory
     private val viewModel by viewModels<IdeasViewModel> {
         IdeasViewModel.provideFactory(
             myViewModelAssistedFactory,
+            app,
             args.friendId,
-            interactor
+            ideasInteractor,
+            friendsInteractor
         )
     }
 
@@ -66,13 +76,17 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
             onBackClicked = { findNavController().popBackStack() }
         }
 
-        viewModel.ideasLiveData.observe(viewLifecycleOwner, {
+        viewModel.title.observe(viewLifecycleOwner) {
+            binding.toolbar.title = it
+        }
+
+        viewModel.ideasLiveData.observe(viewLifecycleOwner) {
             val diffUtil = IdeasDiffUtil(
                 oldList = rvItemsAdapter.getData(),
                 newList = it
             )
             rvItemsAdapter.setItemsWithDiff(it, diffUtil)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

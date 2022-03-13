@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
 import androidx.core.net.toUri
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -47,7 +48,7 @@ class FakeContactsDataSource @Inject constructor() : ContactsDataSource {
 }
 
 class PhoneContactsDataSource @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) : ContactsDataSource {
 
     companion object {

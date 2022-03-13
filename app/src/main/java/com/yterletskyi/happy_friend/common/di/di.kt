@@ -2,6 +2,7 @@ package com.yterletskyi.happy_friend.common.di
 
 import android.content.Context
 import androidx.room.Room
+import com.yterletskyi.happy_friend.App
 import com.yterletskyi.happy_friend.common.data.AppDatabase
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDao
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
@@ -19,6 +20,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object GlobalDi {
+
+    @Provides
+    @Singleton
+    fun provideApp(@ApplicationContext context: Context): App = context as App
 
     @Provides
     @Singleton

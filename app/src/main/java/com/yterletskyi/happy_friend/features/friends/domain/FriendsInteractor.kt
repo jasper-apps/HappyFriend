@@ -8,8 +8,10 @@ import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.initials
 import com.yterletskyi.happy_friend.features.friends.data.Friend
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import java.util.*
 import javax.inject.Inject
 
@@ -18,10 +20,14 @@ interface FriendsInteractor {
     suspend fun addFriend(friendModel: FriendModelItem)
     suspend fun removeFriend(contactId: Long)
     suspend fun isFriend(contactId: Long): Boolean
+
+    fun getFriend(id: String): Flow<FriendModelItem?> = getFriends()
+        .map { it.find { it.id == id } }
+
 }
 
 class FriendsInteractorImpl @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
     private val contactsDataSource: ContactsDataSource
 ) : FriendsInteractor {

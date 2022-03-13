@@ -15,8 +15,6 @@ class IdeasDi {
     @Provides
     fun provideIdeasInteractor(
         ideasDataSource: IdeasDataSource
-    ): IdeasInteractor {
-        return IdeasInteractorImpl(ideasDataSource)
-    }
+    ): IdeasInteractor = IdeasInteractorImpl(ideasDataSource)
 
 }

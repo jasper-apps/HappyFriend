@@ -1,43 +1,63 @@
 package com.yterletskyi.happy_friend.features.ideas.ui
 
 import androidx.lifecycle.*
+import com.yterletskyi.happy_friend.App
+import com.yterletskyi.happy_friend.R
 import com.yterletskyi.happy_friend.common.list.ModelItem
+import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happy_friend.features.ideas.domain.IdeaModelItem
 import com.yterletskyi.happy_friend.features.ideas.domain.IdeasInteractor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class IdeasViewModel @AssistedInject constructor(
+    @Assisted app: App,
     @Assisted private val friendId: String,
-    @Assisted private val interactor: IdeasInteractor
-) : ViewModel() {
+    @Assisted private val ideasInteractor: IdeasInteractor,
+    @Assisted private val friendsInteractor: FriendsInteractor,
+) : AndroidViewModel(app) {
 
     @AssistedFactory
     interface IdeasViewModelAssistedFactory {
-        fun create(friendId: String, interactor: IdeasInteractor): IdeasViewModel
+        fun create(
+            app: App,
+            friendId: String,
+            ideasInteractor: IdeasInteractor,
+            friendsInteractor: FriendsInteractor
+        ): IdeasViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: IdeasViewModelAssistedFactory,
+            app: App,
             friendId: String,
-            interactor: IdeasInteractor
+            ideasInteractor: IdeasInteractor,
+            friendsInteractor: FriendsInteractor
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return assistedFactory.create(friendId, interactor) as T
+                return assistedFactory.create(
+                    app,
+                    friendId,
+                    ideasInteractor,
+                    friendsInteractor
+                ) as T
             }
         }
     }
 
-    val ideas: StateFlow<List<ModelItem>> = interactor.getIdeas(friendId)
+    val title: LiveData<String> = friendsInteractor.getFriend(friendId)
+        .map {
+            it?.fullName ?: app.getString(R.string.title_ideas)
+        }
+        .asLiveData()
+
+    val ideas: StateFlow<List<ModelItem>> = ideasInteractor.getIdeas(friendId)
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val ideasLiveData: LiveData<List<ModelItem>> = ideas
@@ -47,7 +67,7 @@ class IdeasViewModel @AssistedInject constructor(
     fun addIdea() {
         viewModelScope.launch(Dispatchers.IO) {
             val idea = IdeaModelItem.empty()
-            interactor.addIdea(friendId, idea)
+            ideasInteractor.addIdea(friendId, idea)
         }
     }
 
@@ -58,7 +78,7 @@ class IdeasViewModel @AssistedInject constructor(
                 ?.takeIf { it.text != text }
                 ?.let {
                     val newIdea = it.copy(text = text)
-                    interactor.updateIdea(newIdea)
+                    ideasInteractor.updateIdea(newIdea)
                 }
         }
     }
@@ -70,7 +90,7 @@ class IdeasViewModel @AssistedInject constructor(
                 ?.takeIf { it.done != done }
                 ?.let {
                     val newIdea = it.copy(done = done)
-                    interactor.updateIdea(newIdea)
+                    ideasInteractor.updateIdea(newIdea)
                 }
         }
     }
@@ -79,7 +99,7 @@ class IdeasViewModel @AssistedInject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val idea = ideas.value.getOrNull(index)
             (idea as? IdeaModelItem)?.let {
-                interactor.removeIdea(it.id)
+                ideasInteractor.removeIdea(it.id)
             }
         }
     }
