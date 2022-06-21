@@ -3,6 +3,7 @@ package com.yterletskyi.happy_friend.features.contacts.data
 
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.core.net.toUri
@@ -70,27 +71,25 @@ class PhoneContactsDataSource @Inject constructor(
     }
 
     override fun search(query: String) {
-        val contacts = context.contentResolver.query(
-            ContactsContract.Data.CONTENT_URI,
-            PROJECTION_BIRTHDAY,
+        val uri = when {
+            query.isBlank() -> ContactsContract.Contacts.CONTENT_URI
+            else -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, query)
+        }
+        val list = mutableListOf<Contact>()
+        context.contentResolver.query(
+            uri,
+            PROJECTION,
             SELECTION_STRING,
-            emptyArray(),
+            null,
             SORT_ORDER
         )?.use { cursor ->
-            generateSequence { if (cursor.moveToNext()) cursor else null }
-                .map(::cursorToContact)
-                .groupBy { it.id }
-                .map { (_, contacts) ->
-                    contacts
-                        .singleOrNull { it.birthday != null }
-                        ?: contacts.first()
-                }
-                .filter { it.name.contains(query, ignoreCase = true) }
+            while (cursor.moveToNext()) {
+                val contact = cursorToContact(cursor)
+                list.add(contact)
+            }
         }
-            ?.toList()
-            .orEmpty()
 
-        _contactsFlow.value = contacts
+        _contactsFlow.value = list
     }
 
     private fun cursorToContact(cursor: Cursor): Contact {
@@ -98,7 +97,8 @@ class PhoneContactsDataSource @Inject constructor(
             id = cursor.getLong(0),
             name = cursor.getString(1),
             imageUri = cursor.getString(2)?.toUri(),
-            birthday = cursor.getString(3)?.let(birthdayParser::parse),
+//            birthday = cursor.getString(3)?.let(birthdayParser::parse),
+            birthday = null
         )
     }
 
@@ -106,11 +106,10 @@ class PhoneContactsDataSource @Inject constructor(
         const val SELECTION_STRING = "display_name is not null"
         const val SORT_ORDER = "display_name"
 
-        val PROJECTION_BIRTHDAY: Array<String> = arrayOf(
-            ContactsContract.Data.CONTACT_ID,
-            ContactsContract.Data.DISPLAY_NAME,
-            ContactsContract.Data.PHOTO_THUMBNAIL_URI,
-            ContactsContract.CommonDataKinds.Event.START_DATE,
+        val PROJECTION: Array<String> = arrayOf(
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.Contacts.PHOTO_THUMBNAIL_URI,
         )
     }
 }
