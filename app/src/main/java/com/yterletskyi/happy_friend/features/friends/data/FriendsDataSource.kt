@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface FriendsDataSource {
-    fun getFriends(): Flow<List<Friend>>
+    val friendsFlow: Flow<List<Friend>>
     suspend fun addFriend(friend: Friend)
     suspend fun removeFriend(contactId: Long)
     suspend fun isFriend(contactId: Long): Boolean
@@ -12,27 +12,26 @@ interface FriendsDataSource {
 
 class InMemoryFriendsDataSource : FriendsDataSource {
 
-    private val flow: MutableStateFlow<List<Friend>> = MutableStateFlow(emptyList())
-
-    override fun getFriends(): Flow<List<Friend>> = flow
+    private val _friendsFlow: MutableStateFlow<List<Friend>> = MutableStateFlow(emptyList())
+    override val friendsFlow: Flow<List<Friend>> = _friendsFlow
 
     override suspend fun addFriend(friend: Friend) {
-        val friends = flow.value
+        val friends = _friendsFlow.value
         val newFriends = friends
             .toMutableList()
             .apply { add(friend) }
-        flow.value = newFriends
+        _friendsFlow.value = newFriends
     }
 
     override suspend fun removeFriend(contactId: Long) {
-        val friends = flow.value
+        val friends = _friendsFlow.value
         val newFriends = friends
             .toMutableList()
             .apply { removeIf { it.contactId == contactId } }
-        flow.value = newFriends
+        _friendsFlow.value = newFriends
     }
 
-    override suspend fun isFriend(contactId: Long): Boolean = flow.value
+    override suspend fun isFriend(contactId: Long): Boolean = _friendsFlow.value
         .find { it.contactId == contactId } != null
 
 }
@@ -41,7 +40,7 @@ class RoomFriendsDataSource(
     private val friendsDao: FriendsDao
 ) : FriendsDataSource {
 
-    override fun getFriends(): Flow<List<Friend>> = friendsDao.getFriends()
+    override val friendsFlow: Flow<List<Friend>> = friendsDao.getFriends()
 
     override suspend fun addFriend(friend: Friend) = friendsDao.addFriend(friend)
 

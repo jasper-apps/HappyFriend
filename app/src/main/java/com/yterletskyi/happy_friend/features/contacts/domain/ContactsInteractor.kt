@@ -12,17 +12,18 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 interface ContactsInteractor {
-    fun getContacts(query: String = ""): Flow<List<ContactModelItem>>
+    val contactsFlow: Flow<List<ContactModelItem>>
+    fun search(query: String = "")
 }
 
 class ContactsInteractorImpl @Inject constructor(
     private val context: Context,
     private val contactsDataSource: ContactsDataSource,
-    private val friendsDataSource: FriendsDataSource
+    friendsDataSource: FriendsDataSource
 ) : ContactsInteractor {
 
-    override fun getContacts(query: String): Flow<List<ContactModelItem>> = combine(
-        contactsDataSource.getContacts(query), friendsDataSource.getFriends()
+    override val contactsFlow: Flow<List<ContactModelItem>> = combine(
+        contactsDataSource.contactsFlow, friendsDataSource.friendsFlow
     ) { contacts, friends ->
         contacts
             .map { co ->
@@ -38,7 +39,8 @@ class ContactsInteractorImpl @Inject constructor(
             }
     }
 
+    override fun search(query: String) = contactsDataSource.search(query)
+
     private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)
         .use { Drawable.createFromStream(it, uri.toString()) }
-
 }

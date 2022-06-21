@@ -23,12 +23,12 @@ class ContactsViewModel @Inject constructor(
     private val friendsInteractor: FriendsInteractor
 ) : ViewModel() {
 
-    private val contactsFlow: StateFlow<List<ContactModelItem>> = interactor.getContacts()
+    private val contactsFlow: StateFlow<List<ContactModelItem>> = interactor.contactsFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val contacts: LiveData<List<ContactModelItem>> = contactsFlow.asLiveData()
 
-    fun search(query: String) = interactor.getContacts(query)
+    fun search(query: String) = interactor.search(query)
 
     fun toggleFriend(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {

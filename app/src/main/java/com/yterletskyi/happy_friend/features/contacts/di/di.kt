@@ -1,8 +1,10 @@
 package com.yterletskyi.happy_friend.features.contacts.di
 
 import android.content.Context
+import com.yterletskyi.happy_friend.common.BirthdayParser
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.PhoneContactsDataSource
+import com.yterletskyi.happy_friend.features.contacts.data.TimeMeasuredContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractor
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractorImpl
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
@@ -18,8 +20,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 class ContactsDi {
 
     @Provides
-    fun provideContactsDataSource(@ApplicationContext context: Context): ContactsDataSource {
-        return PhoneContactsDataSource(context)
+    fun provideContactsDataSource(
+        @ApplicationContext context: Context,
+        birthdayParser: BirthdayParser
+    ): ContactsDataSource {
+        return TimeMeasuredContactsDataSource(
+            PhoneContactsDataSource(context, birthdayParser)
+        )
     }
 
     @Provides
@@ -31,4 +38,6 @@ class ContactsDi {
         return ContactsInteractorImpl(context, contactsDataSource, friendsDataSource)
     }
 
+    @Provides
+    fun provideBirthdayParser(): BirthdayParser = BirthdayParser()
 }

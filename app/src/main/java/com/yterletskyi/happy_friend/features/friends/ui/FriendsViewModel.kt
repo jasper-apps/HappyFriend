@@ -12,7 +12,7 @@ class FriendsViewModel @Inject constructor(
     private val interactor: FriendsInteractor
 ) : ViewModel() {
 
-    val friends: LiveData<List<FriendModelItem>> = interactor.getFriends().asLiveData()
+    val friends: LiveData<List<FriendModelItem>> = interactor.friendsFlow.asLiveData()
 
     val showEmptyState: LiveData<Boolean> = friends.map { it.isEmpty() }
 

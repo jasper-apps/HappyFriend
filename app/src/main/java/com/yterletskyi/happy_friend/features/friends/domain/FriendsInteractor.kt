@@ -16,12 +16,12 @@ import java.util.*
 import javax.inject.Inject
 
 interface FriendsInteractor {
-    fun getFriends(): Flow<List<FriendModelItem>>
+    val friendsFlow: Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
     suspend fun removeFriend(contactId: Long)
     suspend fun isFriend(contactId: Long): Boolean
 
-    fun getFriend(id: String): Flow<FriendModelItem?> = getFriends()
+    fun getFriend(id: String): Flow<FriendModelItem?> = friendsFlow
         .map { it.find { it.id == id } }
 
 }
@@ -29,11 +29,11 @@ interface FriendsInteractor {
 class FriendsInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
-    private val contactsDataSource: ContactsDataSource
+    contactsDataSource: ContactsDataSource
 ) : FriendsInteractor {
 
-    override fun getFriends(): Flow<List<FriendModelItem>> = combine(
-        friendsDataSource.getFriends(), contactsDataSource.getContacts()
+    override val friendsFlow: Flow<List<FriendModelItem>> = combine(
+        friendsDataSource.friendsFlow, contactsDataSource.contactsFlow
     ) { friends, contacts ->
         friends
             .map { fr ->
@@ -54,7 +54,6 @@ class FriendsInteractorImpl @Inject constructor(
                 )
             }
     }
-
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
         val friend = Friend(
