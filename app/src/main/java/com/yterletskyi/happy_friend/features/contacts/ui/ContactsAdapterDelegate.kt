@@ -24,7 +24,7 @@ class ContactsAdapterDelegate(
         with(viewHolder.binding) {
             image.setImageDrawable(item.image)
             text.text = item.fullName
-            birthday.text = item.birthday?.toString().orEmpty()
+            birthday.text = item.birthday
             starBtn.setImageResource(
                 if (item.isFriend) R.drawable.ic_baseline_favorite_24
                 else R.drawable.ic_baseline_favorite_border_24

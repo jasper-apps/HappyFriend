@@ -3,6 +3,7 @@ package com.yterletskyi.happy_friend.features.friends.domain
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import com.yterletskyi.happy_friend.common.BirthdayFormatter
 import com.yterletskyi.happy_friend.common.drawable.AvatarDrawable
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.initials
@@ -29,7 +30,8 @@ interface FriendsInteractor {
 class FriendsInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
-    contactsDataSource: ContactsDataSource
+    contactsDataSource: ContactsDataSource,
+    private val birthdayFormatter: BirthdayFormatter,
 ) : FriendsInteractor {
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
@@ -50,7 +52,7 @@ class FriendsInteractorImpl @Inject constructor(
                         ?.let { drawableFromUri(it) }
                         ?: AvatarDrawable(co.initials),
                     fullName = co.name,
-                    birthday = co.birthday
+                    birthday = birthdayFormatter.format(co.birthday)
                 )
             }
     }

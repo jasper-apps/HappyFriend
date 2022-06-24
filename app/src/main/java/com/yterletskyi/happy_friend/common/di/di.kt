@@ -3,6 +3,8 @@ package com.yterletskyi.happy_friend.common.di
 import android.content.Context
 import androidx.room.Room
 import com.yterletskyi.happy_friend.App
+import com.yterletskyi.happy_friend.common.BirthdayFormatter
+import com.yterletskyi.happy_friend.common.BirthdayFormatterImpl
 import com.yterletskyi.happy_friend.common.data.AppDatabase
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDao
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
@@ -55,4 +57,8 @@ object GlobalDi {
         return RoomIdeasDataSource(ideasDao)
     }
 
+    @Provides
+    fun provideBirthdayFormatter(): BirthdayFormatter {
+        return BirthdayFormatterImpl()
+    }
 }

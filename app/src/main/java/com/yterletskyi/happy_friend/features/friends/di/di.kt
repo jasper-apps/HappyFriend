@@ -1,6 +1,7 @@
 package com.yterletskyi.happy_friend.features.friends.di
 
 import android.content.Context
+import com.yterletskyi.happy_friend.common.BirthdayFormatter
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happy_friend.features.friends.domain.FriendsInteractor
@@ -21,8 +22,14 @@ class FriendsDi {
         @ApplicationContext context: Context,
         friendsDataSource: FriendsDataSource,
         contactsDataSource: ContactsDataSource,
+        birthdayFormatter: BirthdayFormatter,
     ): FriendsInteractor {
-        return FriendsInteractorImpl(context, friendsDataSource, contactsDataSource)
+        return FriendsInteractorImpl(
+            context,
+            friendsDataSource,
+            contactsDataSource,
+            birthdayFormatter
+        )
     }
 
 }

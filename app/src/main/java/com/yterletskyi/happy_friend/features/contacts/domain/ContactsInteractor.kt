@@ -3,6 +3,7 @@ package com.yterletskyi.happy_friend.features.contacts.domain
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import com.yterletskyi.happy_friend.common.BirthdayFormatter
 import com.yterletskyi.happy_friend.common.drawable.AvatarDrawable
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.initials
@@ -19,7 +20,8 @@ interface ContactsInteractor {
 class ContactsInteractorImpl @Inject constructor(
     private val context: Context,
     private val contactsDataSource: ContactsDataSource,
-    friendsDataSource: FriendsDataSource
+    friendsDataSource: FriendsDataSource,
+    private val birthdayFormatter: BirthdayFormatter,
 ) : ContactsInteractor {
 
     override val contactsFlow: Flow<List<ContactModelItem>> = combine(
@@ -33,7 +35,7 @@ class ContactsInteractorImpl @Inject constructor(
                         ?.let { drawableFromUri(it) }
                         ?: AvatarDrawable(co.initials),
                     fullName = co.name,
-                    birthday = co.birthday,
+                    birthday = birthdayFormatter.format(co.birthday),
                     isFriend = friends.find { fr -> fr.contactId == co.id } != null
                 )
             }
