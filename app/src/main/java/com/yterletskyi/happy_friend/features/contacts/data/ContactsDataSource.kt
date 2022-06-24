@@ -78,13 +78,37 @@ class PhoneContactsDataSource @Inject constructor(
         val list = mutableListOf<Contact>()
         context.contentResolver.query(
             uri,
-            PROJECTION,
-            SELECTION_STRING,
+            arrayOf(
+                ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.Contacts.PHOTO_THUMBNAIL_URI,
+            ),
+            "display_name is not null",
             null,
-            SORT_ORDER
+            "display_name"
         )?.use { cursor ->
             while (cursor.moveToNext()) {
-                val contact = cursorToContact(cursor)
+
+                var contact = cursorToContact(cursor)
+
+                context.contentResolver.query(
+                    ContactsContract.Data.CONTENT_URI,
+                    arrayOf(ContactsContract.CommonDataKinds.Event.START_DATE),
+                    "${ContactsContract.Data.CONTACT_ID}=? AND ${ContactsContract.Data.MIMETYPE}=? AND ${ContactsContract.CommonDataKinds.Event.TYPE}=${ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY}",
+                    arrayOf(
+                        contact.id.toString(),
+                        ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE
+                    ),
+                    null,
+                )?.use {
+                    Log.i("info23", "fetching birthday for ${contact.name}")
+                    while (it.moveToNext()) {
+                        val birthdayStr = it.getString(0)
+                        Log.i("info24", "${contact.name} birthday is: $birthdayStr")
+                        contact = contact.copy(birthday = birthdayParser.parse(birthdayStr))
+                    }
+                }
+
                 list.add(contact)
             }
         }
@@ -102,16 +126,6 @@ class PhoneContactsDataSource @Inject constructor(
         )
     }
 
-    private companion object {
-        const val SELECTION_STRING = "display_name is not null"
-        const val SORT_ORDER = "display_name"
-
-        val PROJECTION: Array<String> = arrayOf(
-            ContactsContract.Contacts._ID,
-            ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.Contacts.PHOTO_THUMBNAIL_URI,
-        )
-    }
 }
 
 @OptIn(ExperimentalTime::class)
