@@ -3,7 +3,7 @@ package com.yterletskyi.happy_friend.features.contacts.di
 import android.content.Context
 import com.yterletskyi.happy_friend.common.BirthdayParser
 import com.yterletskyi.happy_friend.features.contacts.data.ContactsDataSource
-import com.yterletskyi.happy_friend.features.contacts.data.PhoneContactsDataSource2
+import com.yterletskyi.happy_friend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.data.TimeMeasuredContactsDataSource
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractor
 import com.yterletskyi.happy_friend.features.contacts.domain.ContactsInteractorImpl
@@ -25,7 +25,7 @@ class ContactsDi {
         birthdayParser: BirthdayParser
     ): ContactsDataSource {
         return TimeMeasuredContactsDataSource(
-            PhoneContactsDataSource2(context, birthdayParser)
+            FetchBirthdaysOnInitContactsDataSource(context, birthdayParser)
         )
     }
 
