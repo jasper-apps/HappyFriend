@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_friends"
-        android:name="com.yterletskyi.happy_friend.features.friends.ui.FriendsFragment"
+        android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
         tools:layout="@layout/fragment_friends">
 
         <action
@@ -28,12 +28,12 @@
 
     <fragment
         android:id="@+id/contactsScreen"
-        android:name="com.yterletskyi.happy_friend.features.contacts.ui.ContactsFragment"
+        android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
         tools:layout="@layout/fragment_contacts" />
 
     <fragment
         android:id="@+id/ideasScreen"
-        android:name="com.yterletskyi.happy_friend.features.ideas.ui.IdeasFragment"
+        android:name="com.yterletskyi.happyfriend.features.ideas.ui.IdeasFragment"
         tools:layout="@layout/fragment_ideas">
 
         <argument
@@ -44,11 +44,11 @@
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.yterletskyi.happy_friend.features.calendar.CalendarFragment"
+        android:name="com.yterletskyi.happyfriend.features.calendar.CalendarFragment"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.yterletskyi.happy_friend.features.settings.SettingsFragment"
+        android:name="com.yterletskyi.happyfriend.features.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>
