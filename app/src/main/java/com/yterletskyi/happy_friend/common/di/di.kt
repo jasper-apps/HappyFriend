@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.yterletskyi.happy_friend.App
 import com.yterletskyi.happy_friend.common.BirthdayFormatter
-import com.yterletskyi.happy_friend.common.BirthdayFormatterImpl
+import com.yterletskyi.happy_friend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happy_friend.common.data.AppDatabase
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDao
 import com.yterletskyi.happy_friend.features.friends.data.FriendsDataSource
@@ -17,6 +17,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -59,6 +60,6 @@ object GlobalDi {
 
     @Provides
     fun provideBirthdayFormatter(): BirthdayFormatter {
-        return BirthdayFormatterImpl()
+        return LocalizedBirthdayFormatter(Locale.getDefault())
     }
 }
