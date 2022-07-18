@@ -71,12 +71,24 @@ class IdeasViewModel @AssistedInject constructor(
 
     val ideasLiveData: LiveData<List<ModelItem>> = ideas
         .distinctUntilChanged { old, new -> old == new }
+        .map { items ->
+            items.map { item ->
+                if (item is IdeaModelItem && item.id == lastAddedIdea?.id) {
+                    item.copy(focused = true)
+                } else {
+                    item
+                }
+            }
+        }
         .asLiveData()
 
-    fun addIdea() {
+    private var lastAddedIdea: IdeaModelItem? = null
+
+    fun addIdea(text: String = "") {
         viewModelScope.launch(Dispatchers.IO) {
-            val idea = IdeaModelItem.empty()
+            val idea = IdeaModelItem.withText(text)
             ideasInteractor.addIdea(friendId, idea)
+            lastAddedIdea = idea
         }
     }
 
@@ -111,5 +123,10 @@ class IdeasViewModel @AssistedInject constructor(
                 ideasInteractor.removeIdea(it.id)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        lastAddedIdea = null
     }
 }

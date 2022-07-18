@@ -63,12 +63,13 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                     IdeasAdapterDelegate(
                         onTextChanged = { i, t -> viewModel.updateIdea(i, t.trim()) },
                         onCheckboxChanged = { i, c -> viewModel.updateIdea(i, c) },
-                        onRemoveClicked = { i -> viewModel.removeIdea(i) }
+                        onRemoveClicked = { i -> viewModel.removeIdea(i) },
+                        onNewIdeaClicked = viewModel::addIdea
                     )
                 )
                 addDelegate(
                     AddIdeaAdapterDelegate(
-                        onItemClicked = { viewModel.addIdea() }
+                        onItemClicked = viewModel::addIdea
                     )
                 )
                 rvItemsAdapter = this

@@ -3,7 +3,6 @@ package com.yterletskyi.happyfriend.features.ideas.domain
 import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.features.ideas.data.Idea
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDataSource
-import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -27,7 +26,8 @@ class IdeasInteractorImpl @Inject constructor(
                     IdeaModelItem(
                         id = it.id,
                         text = it.text,
-                        done = it.done
+                        done = it.done,
+                        focused = false,
                     )
                 }
             }
@@ -45,7 +45,8 @@ class IdeasInteractorImpl @Inject constructor(
             IdeaModelItem(
                 id = it.id,
                 text = it.text,
-                done = it.done
+                done = it.done,
+                focused = false,
             )
         }
     }
@@ -56,7 +57,7 @@ class IdeasInteractorImpl @Inject constructor(
 
     override suspend fun addIdea(friendId: String, ideaModel: IdeaModelItem) {
         val idea = Idea(
-            id = UUID.randomUUID().toString(),
+            id = ideaModel.id,
             text = ideaModel.text.toString(),
             done = ideaModel.done,
             friendId = friendId,

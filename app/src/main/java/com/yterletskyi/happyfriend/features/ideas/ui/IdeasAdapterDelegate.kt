@@ -5,21 +5,26 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.yterletskyi.happyfriend.common.list.AdapterDelegate
 import com.yterletskyi.happyfriend.common.list.ModelItem
+import com.yterletskyi.happyfriend.common.x.focus
 import com.yterletskyi.happyfriend.databinding.ItemIdeaBinding
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeaModelItem
 
 class IdeasAdapterDelegate(
     private val onTextChanged: (Int, String) -> Unit,
     private val onCheckboxChanged: (Int, Boolean) -> Unit,
-    private val onRemoveClicked: (Int) -> Unit
+    private val onRemoveClicked: (Int) -> Unit,
+    private val onNewIdeaClicked: (String) -> Unit,
 ) : AdapterDelegate<ItemIdeaBinding>(
     ItemIdeaBinding::inflate
 ) {
 
     override fun onViewHolderCreated(viewHolder: Holder<ItemIdeaBinding>) {
         with(viewHolder) {
-            binding.input.doAfterTextChanged {
-                onTextChanged(adapterPosition, binding.input.text.toString())
+            with(binding.input) {
+                doAfterTextChanged {
+                    onTextChanged(adapterPosition, binding.input.text.toString())
+                }
+                onNewIdeaRequested = onNewIdeaClicked
             }
             binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 onCheckboxChanged(adapterPosition, isChecked)
@@ -39,6 +44,7 @@ class IdeasAdapterDelegate(
             with(input) {
                 setText(item.text)
                 updateStrikethrough(this, item.done)
+                if (item.focused) focus()
             }
         }
     }

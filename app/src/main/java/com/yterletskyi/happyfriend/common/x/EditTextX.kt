@@ -8,3 +8,8 @@ fun EditText.setTextNoTextWatcher(watcher: TextWatcher, text: String) {
     setText(text)
     addTextChangedListener(watcher)
 }
+
+fun EditText.focus() {
+    requestFocus()
+    setSelection(text.length)
+}
