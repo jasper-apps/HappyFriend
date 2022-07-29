@@ -73,6 +73,6 @@ class FriendsInteractorImpl @Inject constructor(
         return friendsDataSource.isFriend(contactId)
     }
 
-    private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)
+    private fun drawableFromUri(uri: Uri): Drawable? = context.contentResolver.openInputStream(uri)
         .use { Drawable.createFromStream(it, uri.toString()) }
 }

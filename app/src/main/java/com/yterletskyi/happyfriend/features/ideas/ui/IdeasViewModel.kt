@@ -2,8 +2,7 @@ package com.yterletskyi.happyfriend.features.ideas.ui
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.yterletskyi.happyfriend.App
@@ -12,9 +11,8 @@ import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeaModelItem
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeasInteractor
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,42 +21,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class IdeasViewModel @AssistedInject constructor(
-    @Assisted app: App,
-    @Assisted private val friendId: String,
-    @Assisted private val ideasInteractor: IdeasInteractor,
-    @Assisted private val friendsInteractor: FriendsInteractor
+@HiltViewModel
+class IdeasViewModel @Inject constructor(
+    app: App,
+    private val handle: SavedStateHandle,
+    private val ideasInteractor: IdeasInteractor,
+    private val friendsInteractor: FriendsInteractor
 ) : AndroidViewModel(app) {
 
-    @AssistedFactory
-    interface IdeasViewModelAssistedFactory {
-        fun create(
-            app: App,
-            friendId: String,
-            ideasInteractor: IdeasInteractor,
-            friendsInteractor: FriendsInteractor
-        ): IdeasViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: IdeasViewModelAssistedFactory,
-            app: App,
-            friendId: String,
-            ideasInteractor: IdeasInteractor,
-            friendsInteractor: FriendsInteractor
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return assistedFactory.create(
-                    app,
-                    friendId,
-                    ideasInteractor,
-                    friendsInteractor
-                ) as T
-            }
-        }
-    }
+    private val friendId: String = handle["friendId"]
+        ?: error("friendId is not passed")
 
     val title: LiveData<String> = friendsInteractor.getFriend(friendId)
         .map {

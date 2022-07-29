@@ -24,8 +24,6 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
     FragmentIdeasBinding::inflate
 ) {
 
-    private val args by navArgs<IdeasFragmentArgs>()
-
     @Inject
     lateinit var app: App
 
@@ -35,17 +33,7 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
     @Inject
     lateinit var friendsInteractor: FriendsInteractor
 
-    @Inject
-    lateinit var myViewModelAssistedFactory: IdeasViewModel.IdeasViewModelAssistedFactory
-    private val viewModel by viewModels<IdeasViewModel> {
-        IdeasViewModel.provideFactory(
-            myViewModelAssistedFactory,
-            app,
-            args.friendId,
-            ideasInteractor,
-            friendsInteractor
-        )
-    }
+    private val viewModel by viewModels<IdeasViewModel>()
 
     private lateinit var rvItemsAdapter: RecyclerDelegationAdapter
 

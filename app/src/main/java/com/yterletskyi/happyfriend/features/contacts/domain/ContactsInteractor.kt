@@ -44,6 +44,6 @@ class ContactsInteractorImpl @Inject constructor(
 
     override fun search(query: String) = contactsDataSource.search(query)
 
-    private fun drawableFromUri(uri: Uri): Drawable = context.contentResolver.openInputStream(uri)
+    private fun drawableFromUri(uri: Uri): Drawable? = context.contentResolver.openInputStream(uri)
         .use { Drawable.createFromStream(it, uri.toString()) }
 }
