@@ -10,10 +10,6 @@ fun EditText.setTextNoTextWatcher(watcher: TextWatcher, text: String) {
 }
 
 fun EditText.focus() {
-    focus2()
-}
-
-fun EditText.focus2() {
     requestFocus()
     setSelection(text.length)
 }
