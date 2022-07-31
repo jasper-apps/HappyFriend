@@ -1,0 +1,7 @@
+name: GitHub Actions ktlint
+on: [pull_request]
+jobs:
+  ktlint check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./gradlew --version      
