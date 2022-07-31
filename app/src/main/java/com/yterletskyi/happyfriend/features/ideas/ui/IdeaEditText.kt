@@ -7,7 +7,8 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.yterletskyi.happyfriend.common.x.setTextNoTextWatcher
 
 class IdeaEditText @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null,
+    context: Context,
+    attrs: AttributeSet? = null,
 ) : AppCompatEditText(context, attrs) {
 
     var onNewIdeaRequested: ((String) -> Unit)? = null

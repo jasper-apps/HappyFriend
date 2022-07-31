@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
