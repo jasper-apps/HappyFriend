@@ -51,7 +51,8 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                         onTextChanged = { i, t -> viewModel.updateIdea(i, t.trim()) },
                         onCheckboxChanged = { i, c -> viewModel.updateIdea(i, c) },
                         onRemoveClicked = { i -> viewModel.removeIdea(i) },
-                        onNewIdeaClicked = viewModel::addIdea
+                        onNewIdeaClicked = viewModel::addIdea,
+                        onRemoveIdeaClicked = viewModel::removeIdea
                     )
                 )
                 addDelegate(

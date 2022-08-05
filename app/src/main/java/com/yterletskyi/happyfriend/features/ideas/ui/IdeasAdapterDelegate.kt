@@ -14,6 +14,7 @@ class IdeasAdapterDelegate(
     private val onCheckboxChanged: (Int, Boolean) -> Unit,
     private val onRemoveClicked: (Int) -> Unit,
     private val onNewIdeaClicked: (String) -> Unit,
+    private val onRemoveIdeaClicked: (Int) -> Unit,
 ) : AdapterDelegate<ItemIdeaBinding>(
     ItemIdeaBinding::inflate
 ) {
@@ -25,6 +26,7 @@ class IdeasAdapterDelegate(
                     onTextChanged(adapterPosition, binding.input.text.toString())
                 }
                 onNewIdeaRequested = onNewIdeaClicked
+                onRemoveIdeaRequested = { onRemoveIdeaClicked(adapterPosition) }
             }
             binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 onCheckboxChanged(adapterPosition, isChecked)
