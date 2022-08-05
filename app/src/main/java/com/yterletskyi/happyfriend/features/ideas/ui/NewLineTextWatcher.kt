@@ -4,23 +4,28 @@ import android.text.Editable
 import android.text.TextWatcher
 
 class NewLineTextWatcher(
-    private val onNewLineEntered: (before: String, after: String) -> Unit,
+    private val onNewLineEntered: (before: CharSequence, after: CharSequence) -> Unit,
 ) : TextWatcher {
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        if (before != 0 || s[start] != '\n') return
+        val newLineIndex = s.indexOf('\n')
 
-        val newLineRegex = Regex("\n")
-        val trimmed = s.replace(newLineRegex, "")
-
-        when (start) {
-            0 -> onNewLineEntered("", trimmed) // new line at start
-            s.length - 1 -> onNewLineEntered(trimmed, "") // new line at the end
-            else -> onNewLineEntered(
-                trimmed.substring(0, start),
-                trimmed.substring(start, s.length - 1)
-            ) // new line in the middle
+        if (newLineIndex != -1) {
+            val noNewLineString = removeNewLine(s)
+            when (newLineIndex) {
+                0 -> onNewLineEntered("", noNewLineString) // new line at start
+                s.length - 1 -> onNewLineEntered(noNewLineString, "") // new line at the end
+                else -> onNewLineEntered(
+                    noNewLineString.substring(0, start),
+                    noNewLineString.substring(start, s.length - 1)
+                ) // new line in the middle
+            }
         }
+    }
+
+    private fun removeNewLine(s: CharSequence): CharSequence {
+        val newLineRegex = Regex("\n")
+        return s.replace(newLineRegex, "")
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

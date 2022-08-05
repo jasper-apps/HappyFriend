@@ -14,10 +14,10 @@ class IdeaEditText @JvmOverloads constructor(
     var onNewIdeaRequested: ((String) -> Unit)? = null
     private val watcher = NewLineTextWatcher(::onNewLineAdded)
 
-    private fun onNewLineAdded(before: String, after: String) {
+    private fun onNewLineAdded(before: CharSequence, after: CharSequence) {
         Log.i("info24", "before: [$before] - after: [$after]")
         setTextNoTextWatcher(watcher, before)
-        onNewIdeaRequested?.invoke(after)
+        onNewIdeaRequested?.invoke(after.toString())
     }
 
     override fun onAttachedToWindow() {

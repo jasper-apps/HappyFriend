@@ -3,7 +3,7 @@ package com.yterletskyi.happyfriend.common.x
 import android.text.TextWatcher
 import android.widget.EditText
 
-fun EditText.setTextNoTextWatcher(watcher: TextWatcher, text: String) {
+fun EditText.setTextNoTextWatcher(watcher: TextWatcher, text: CharSequence) {
     removeTextChangedListener(watcher)
     setText(text)
     addTextChangedListener(watcher)
