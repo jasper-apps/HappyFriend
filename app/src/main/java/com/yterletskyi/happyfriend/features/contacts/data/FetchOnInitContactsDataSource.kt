@@ -1,17 +1,18 @@
 package com.yterletskyi.happyfriend.features.contacts.data
 
-import android.content.Context
+import android.content.ContentResolver
 import android.database.Cursor
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.provider.ContactsContract
 import androidx.core.net.toUri
 import com.yterletskyi.happyfriend.common.BirthdayParser
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class FetchOnInitContactsDataSource @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val contentResolver: ContentResolver,
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
 
@@ -27,7 +28,7 @@ class FetchOnInitContactsDataSource @Inject constructor(
     }
 
     private fun queryContacts(): List<Contact>? {
-        return context.contentResolver.query(
+        return contentResolver.query(
             ContactsContract.Data.CONTENT_URI,
             arrayOf(
                 ContactsContract.Data.CONTACT_ID,
@@ -54,8 +55,13 @@ class FetchOnInitContactsDataSource @Inject constructor(
         return Contact(
             id = cursor.getLong(0),
             name = cursor.getString(1),
-            imageUri = cursor.getString(2)?.toUri(),
+            image = cursor.getString(2)
+                ?.toUri()
+                ?.let(::drawableFromUri),
             birthday = cursor.getString(3)?.let(birthdayParser::parse)
         )
     }
+
+    private fun drawableFromUri(uri: Uri): Drawable? = contentResolver.openInputStream(uri)
+        .use { Drawable.createFromStream(it, uri.toString()) }
 }

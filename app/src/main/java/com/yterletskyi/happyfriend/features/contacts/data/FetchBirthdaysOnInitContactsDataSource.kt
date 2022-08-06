@@ -1,27 +1,27 @@
 package com.yterletskyi.happyfriend.features.contacts.data
 
-import android.content.Context
+import android.content.ContentResolver
 import android.database.Cursor
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.core.net.toUri
 import com.yterletskyi.happyfriend.common.BirthdayParser
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val contentResolver: ContentResolver,
+    private val initialContactsFlow: MutableStateFlow<List<Contact>>,
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
 
     private var contactBirthdayMap = queryBirthdays()
 
-    private val _contactsFlow: MutableStateFlow<List<Contact>> = MutableStateFlow(emptyList())
-    override val contactsFlow: Flow<List<Contact>> = _contactsFlow
+    override val contactsFlow: Flow<List<Contact>> = initialContactsFlow
 
     init {
         search("")
@@ -33,7 +33,7 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
             query.isBlank() -> ContactsContract.Contacts.CONTENT_URI
             else -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, query)
         }
-        context.contentResolver.query(
+        contentResolver.query(
             uri,
             arrayOf(
                 ContactsContract.Contacts._ID,
@@ -50,12 +50,12 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
             }
         }
         Log.i("info23", "returned ${list.size} contacts")
-        _contactsFlow.value = list
+        initialContactsFlow.value = list
     }
 
     private fun queryBirthdays(): Map<Long, LocalDate?> {
         val map = mutableMapOf<Long, LocalDate?>()
-        context.contentResolver.query(
+        contentResolver.query(
             ContactsContract.Data.CONTENT_URI,
             arrayOf(
                 ContactsContract.Data.CONTACT_ID,
@@ -81,8 +81,13 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
         return Contact(
             id = id,
             name = cursor.getString(1),
-            imageUri = cursor.getString(2)?.toUri(),
-            birthday = contactBirthdayMap.get(id)
+            image = cursor.getString(2)
+                ?.toUri()
+                ?.let(::drawableFromUri),
+            birthday = contactBirthdayMap[id]
         )
     }
+
+    private fun drawableFromUri(uri: Uri): Drawable? = contentResolver.openInputStream(uri)
+        .use { Drawable.createFromStream(it, uri.toString()) }
 }

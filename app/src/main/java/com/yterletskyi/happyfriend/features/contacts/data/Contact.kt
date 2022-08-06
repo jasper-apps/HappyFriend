@@ -1,12 +1,12 @@
 package com.yterletskyi.happyfriend.features.contacts.data
 
-import android.net.Uri
+import android.graphics.drawable.Drawable
 import java.time.LocalDate
 
 data class Contact(
     val id: Long,
     val name: String,
-    val imageUri: Uri?,
+    val image: Drawable?,
     val birthday: LocalDate?
 )
 

@@ -48,9 +48,7 @@ class FriendsInteractorImpl @Inject constructor(
                 FriendModelItem(
                     id = fr.id,
                     contactId = fr.contactId,
-                    image = co!!.imageUri
-                        ?.let { drawableFromUri(it) }
-                        ?: AvatarDrawable(co.initials),
+                    image = co!!.image ?: AvatarDrawable(co.initials),
                     fullName = co.name,
                     birthday = birthdayFormatter.format(co.birthday)
                 )

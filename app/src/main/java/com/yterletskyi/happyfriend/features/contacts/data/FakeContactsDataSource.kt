@@ -9,25 +9,25 @@ class FakeContactsDataSource : ContactsDataSource {
     private val list = listOf(
         Contact(
             id = 1,
-            imageUri = null,
+            image = null,
             name = "Yura Basa",
             birthday = LocalDate.of(1995, 6, 30)
         ),
         Contact(
             id = 2,
-            imageUri = null,
+            image = null,
             name = "Ostap Holub",
             birthday = LocalDate.of(1997, 2, 6)
         ),
         Contact(
             id = 3,
-            imageUri = null,
+            image = null,
             name = "Andre Yaniv",
             birthday = LocalDate.of(1997, 1, 10)
         ),
         Contact(
             id = 4,
-            imageUri = null,
+            image = null,
             name = "Taras Smakula",
             birthday = LocalDate.of(1997, 2, 9)
         )

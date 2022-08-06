@@ -1,5 +1,6 @@
 package com.yterletskyi.happyfriend.common.di
 
+import android.content.ContentResolver
 import android.content.Context
 import androidx.room.Room
 import com.yterletskyi.happyfriend.App
@@ -61,5 +62,10 @@ object GlobalDi {
     @Provides
     fun provideBirthdayFormatter(): BirthdayFormatter {
         return LocalizedBirthdayFormatter(Locale.getDefault())
+    }
+
+    @Provides
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver {
+        return context.contentResolver
     }
 }

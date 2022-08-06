@@ -1,8 +1,9 @@
 package com.yterletskyi.happyfriend.features.contacts.di
 
-import android.content.Context
+import android.content.ContentResolver
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.BirthdayParser
+import com.yterletskyi.happyfriend.features.contacts.data.Contact
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.TimeMeasuredContactsDataSource
@@ -14,7 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Module
 @InstallIn(ViewModelComponent::class, FragmentComponent::class)
@@ -22,23 +23,26 @@ class ContactsDi {
 
     @Provides
     fun provideContactsDataSource(
-        @ApplicationContext context: Context,
+        contentResolver: ContentResolver,
+        initialContactsFlow: MutableStateFlow<List<Contact>>,
         birthdayParser: BirthdayParser
     ): ContactsDataSource {
         return TimeMeasuredContactsDataSource(
-            FetchBirthdaysOnInitContactsDataSource(context, birthdayParser)
+            FetchBirthdaysOnInitContactsDataSource(
+                contentResolver,
+                initialContactsFlow,
+                birthdayParser
+            )
         )
     }
 
     @Provides
     fun provideContactsInteractor(
-        @ApplicationContext context: Context,
         contactsDataSource: ContactsDataSource,
         friendsDataSource: FriendsDataSource,
         birthdayFormatter: BirthdayFormatter
     ): ContactsInteractor {
         return ContactsInteractorImpl(
-            context,
             contactsDataSource,
             friendsDataSource,
             birthdayFormatter
@@ -47,4 +51,7 @@ class ContactsDi {
 
     @Provides
     fun provideBirthdayParser(): BirthdayParser = BirthdayParser()
+
+    @Provides
+    fun provideContactsFlow(): MutableStateFlow<List<Contact>> = MutableStateFlow(emptyList())
 }
