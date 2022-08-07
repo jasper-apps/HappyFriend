@@ -1,9 +1,6 @@
 package com.yterletskyi.happyfriend.features.ideas.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -80,13 +77,5 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
             )
             rvItemsAdapter.setItemsWithDiff(it, diffUtil)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
     }
 }
