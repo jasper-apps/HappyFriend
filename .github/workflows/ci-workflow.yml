@@ -8,13 +8,13 @@ on:
       - '**.kts'
 
 jobs:
-  check:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
-      - name: run ktlint
+      - name: ktlint check
         run: ./gradlew ktlintCheck
-      - name: run unittest
+      - name: unittest check
         run: ./gradlew test
         continue-on-error: false
