@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: release.apk
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: ${{steps.sign_apk.outputs.signedReleaseFile}}
           if-no-files-found: error
       - name: Upload Mapping
         uses: actions/upload-artifact@master
