@@ -1,0 +1,44 @@
+name: Deploy
+
+# a tag example is v1.0.0
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build and Test
+        uses: ./gradlew build
+  build:
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Generate Release APK
+        run: ./gradlew assembleRelease
+      - name: Sign APK
+        id: sign_apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Upload APK
+        uses: actions/upload-artifact@master
+        with:
+          name: release.apk
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          if-no-files-found: error
+      - name: Upload Mapping
+        uses: actions/upload-artifact@master
+        with:
+          name: mapping.txt
+          path: app/build/outputs/mapping/release/mapping.txt
