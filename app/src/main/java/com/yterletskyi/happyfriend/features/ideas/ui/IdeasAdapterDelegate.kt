@@ -45,11 +45,11 @@ class IdeasAdapterDelegate(
 
         with(viewHolder.binding) {
             checkbox.isChecked = item.done
+            remove.isVisible = item.focused
             with(input) {
                 setText(item.text)
                 updateStrikethrough(this, item.done)
                 if (item.focused) focus()
-                remove.isVisible = item.focused
             }
         }
     }
