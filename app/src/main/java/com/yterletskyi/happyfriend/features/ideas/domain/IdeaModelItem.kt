@@ -1,25 +1,24 @@
 package com.yterletskyi.happyfriend.features.ideas.domain
 
 import com.yterletskyi.happyfriend.common.list.ModelItem
-import java.util.UUID
+import java.util.*
 
 data class IdeaModelItem(
     val id: String,
     val text: CharSequence,
     val done: Boolean,
     val focused: Boolean,
-    val position: String,
+    val position: Long,
 ) : ModelItem {
 
     companion object {
         private fun empty(): IdeaModelItem {
-            val id = UUID.randomUUID().toString()
             return IdeaModelItem(
-                id = id,
+                id = UUID.randomUUID().toString(),
                 text = "",
                 done = false,
                 focused = false,
-                position = id,
+                position = System.currentTimeMillis(),
             )
         }
 

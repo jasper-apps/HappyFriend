@@ -9,7 +9,7 @@ interface IdeasDataSource {
     fun getIdea(id: String): Flow<Idea>
     fun getIdeas(friendId: String): Flow<List<Idea>>
     suspend fun addIdea(idea: Idea)
-    suspend fun updateIdea(id: String, text: String, done: Boolean, position: String)
+    suspend fun updateIdea(id: String, text: String, done: Boolean, position: Long)
     suspend fun removeIdea(id: String)
 }
 
@@ -34,7 +34,7 @@ class InMemoryIdeasDataSource : IdeasDataSource {
         flow.value = newIdeas
     }
 
-    override suspend fun updateIdea(id: String, text: String, done: Boolean, position: String) {
+    override suspend fun updateIdea(id: String, text: String, done: Boolean, position: Long) {
         val ideas = flow.value
         val newIdeas = ideas
             .toMutableList()
@@ -72,7 +72,7 @@ class RoomIdeasDataSource(
 
     override suspend fun addIdea(idea: Idea) = ideasDao.addIdea(idea)
 
-    override suspend fun updateIdea(id: String, text: String, done: Boolean, position: String) =
+    override suspend fun updateIdea(id: String, text: String, done: Boolean, position: Long) =
         ideasDao.updateIdea(id, text, done, position)
 
     override suspend fun removeIdea(id: String) = ideasDao.removeIdea(id)
