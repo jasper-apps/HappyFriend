@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View.OnFocusChangeListener
 import androidx.appcompat.widget.AppCompatEditText
 import com.yterletskyi.happyfriend.common.x.setTextNoTextWatcher
 
@@ -14,7 +15,12 @@ class IdeaEditText @JvmOverloads constructor(
 
     var onNewIdeaRequested: ((String) -> Unit)? = null
     var onRemoveIdeaRequested: (() -> Unit)? = null
+    var onFocusChanged: ((Boolean) -> Unit)? = null
+
     private val newLineWatcher = NewLineTextWatcher(::onNewLineAdded)
+    private val focusChangeListener = OnFocusChangeListener { view, isFocused ->
+        onFocusChanged?.invoke(isFocused)
+    }
 
     private fun onNewLineAdded(before: CharSequence, after: CharSequence) {
         Log.i("info24", "before: [$before] - after: [$after]")
@@ -36,10 +42,12 @@ class IdeaEditText @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         addTextChangedListener(newLineWatcher)
+        onFocusChangeListener = focusChangeListener
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         removeTextChangedListener(newLineWatcher)
+        onFocusChangeListener = null
     }
 }

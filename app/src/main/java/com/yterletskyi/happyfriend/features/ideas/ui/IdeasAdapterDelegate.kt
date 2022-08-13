@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.ideas.ui
 
 import android.graphics.Paint
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.yterletskyi.happyfriend.common.list.AdapterDelegate
 import com.yterletskyi.happyfriend.common.list.ModelItem
@@ -27,6 +28,7 @@ class IdeasAdapterDelegate(
                 }
                 onNewIdeaRequested = onNewIdeaClicked
                 onRemoveIdeaRequested = { onRemoveIdeaClicked(adapterPosition) }
+                onFocusChanged = { binding.remove.isVisible = it }
             }
             binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 onCheckboxChanged(adapterPosition, isChecked)
@@ -43,6 +45,7 @@ class IdeasAdapterDelegate(
 
         with(viewHolder.binding) {
             checkbox.isChecked = item.done
+            remove.isVisible = item.focused
             with(input) {
                 setText(item.text)
                 updateStrikethrough(this, item.done)
