@@ -8,15 +8,20 @@ data class IdeaModelItem(
     val text: CharSequence,
     val done: Boolean,
     val focused: Boolean,
+    val position: String,
 ) : ModelItem {
 
     companion object {
-        fun empty() = IdeaModelItem(
-            id = UUID.randomUUID().toString(),
-            text = "",
-            done = false,
-            focused = false
-        )
+        private fun empty(): IdeaModelItem {
+            val id = UUID.randomUUID().toString()
+            return IdeaModelItem(
+                id = id,
+                text = "",
+                done = false,
+                focused = false,
+                position = id,
+            )
+        }
 
         fun withText(text: String) = empty()
             .copy(text = text)

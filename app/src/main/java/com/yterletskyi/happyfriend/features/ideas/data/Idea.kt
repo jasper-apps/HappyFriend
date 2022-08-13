@@ -1,10 +1,6 @@
 package com.yterletskyi.happyfriend.features.ideas.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 
 @Entity(
@@ -25,5 +21,6 @@ data class Idea(
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "done") val done: Boolean,
     @ColumnInfo(name = "friend_id") val friendId: String,
-    @ColumnInfo(name = "created_at") val createdAt: Long
+    @ColumnInfo(name = "created_at") val createdAt: Long,
+    @ColumnInfo(name = "position") val position: String,
 )

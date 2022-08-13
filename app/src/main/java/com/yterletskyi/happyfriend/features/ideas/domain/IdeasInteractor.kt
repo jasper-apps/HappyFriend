@@ -28,6 +28,7 @@ class IdeasInteractorImpl @Inject constructor(
                         text = it.text,
                         done = it.done,
                         focused = false,
+                        position = it.position,
                     )
                 }
             }
@@ -47,12 +48,18 @@ class IdeasInteractorImpl @Inject constructor(
                 text = it.text,
                 done = it.done,
                 focused = false,
+                position = it.position,
             )
         }
     }
 
     override suspend fun updateIdea(ideaModel: IdeaModelItem) {
-        ideasDataSource.updateIdea(ideaModel.id, ideaModel.text.toString(), ideaModel.done)
+        ideasDataSource.updateIdea(
+            ideaModel.id,
+            ideaModel.text.toString(),
+            ideaModel.done,
+            ideaModel.position,
+        )
     }
 
     override suspend fun addIdea(friendId: String, ideaModel: IdeaModelItem) {
@@ -61,7 +68,8 @@ class IdeasInteractorImpl @Inject constructor(
             text = ideaModel.text.toString(),
             done = ideaModel.done,
             friendId = friendId,
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            position = ideaModel.position,
         )
         ideasDataSource.addIdea(idea)
     }
