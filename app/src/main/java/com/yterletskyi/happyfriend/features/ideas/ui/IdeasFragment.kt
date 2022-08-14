@@ -10,8 +10,10 @@ import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.databinding.FragmentIdeasBinding
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
+import com.yterletskyi.happyfriend.features.ideas.domain.IdeaModelItem
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeasDiffUtil
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeasInteractor
+import com.yterletskyi.happyfriend.features.ideas.ui.drag.MoveIdeaTouchHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,6 +62,14 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                 rvItemsAdapter = this
             }
             layoutManager = LinearLayoutManager(context)
+            MoveIdeaTouchHelper(
+                onIdeaMoved = rvItemsAdapter::swapItems,
+                onDragEnded = {
+                    val ideas = rvItemsAdapter.getData()
+                        .filterIsInstance<IdeaModelItem>()
+                    viewModel.onIdeasMoved(ideas)
+                }
+            ).attachToRecyclerView(this)
         }
 
         with(binding.toolbar) {

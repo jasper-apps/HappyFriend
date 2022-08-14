@@ -18,7 +18,6 @@ import com.yterletskyi.happyfriend.features.friends.data.Friend
     ],
     indices = [
         Index(name = "friend_id_index", unique = false, value = ["friend_id"]),
-        Index(name = "unique_position_index", unique = true, value = ["position"])
     ]
 )
 data class Idea(
