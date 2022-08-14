@@ -56,7 +56,7 @@ class IdeasAdapterDelegate(
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is IdeaModelItem
 
-    override fun getViewType(): Int = 1
+    override fun getViewType(): Int = IDEA_ITEM_VIEW_TYPE
 
     private fun updateStrikethrough(view: TextView, isChecked: Boolean) {
         with(view) {
@@ -64,5 +64,9 @@ class IdeasAdapterDelegate(
                 if (isChecked) paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 else paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
+    }
+
+    companion object {
+        const val IDEA_ITEM_VIEW_TYPE = 1
     }
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.x.dp
+import com.yterletskyi.happyfriend.features.ideas.ui.IdeasAdapterDelegate
 
 class MoveIdeaTouchHelperCallback(
     private val onIdeaMoved: (from: Int, to: Int) -> Unit,
@@ -32,8 +33,8 @@ class MoveIdeaTouchHelperCallback(
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        // TODO: add constants for view types
-        return viewHolder.itemViewType == 1 && target.itemViewType == 1
+        return listOf(viewHolder.itemViewType, target.itemViewType)
+            .all { it == IdeasAdapterDelegate.IDEA_ITEM_VIEW_TYPE }
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
