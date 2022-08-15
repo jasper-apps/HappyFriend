@@ -5,8 +5,13 @@ import android.content.Context
 import androidx.room.Room
 import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
+import com.yterletskyi.happyfriend.common.BirthdayParser
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happyfriend.common.data.AppDatabase
+import com.yterletskyi.happyfriend.features.contacts.data.Contact
+import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
+import com.yterletskyi.happyfriend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
+import com.yterletskyi.happyfriend.features.contacts.data.TimeMeasuredContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.RoomFriendsDataSource
@@ -20,6 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Locale
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -60,12 +66,33 @@ object GlobalDi {
     }
 
     @Provides
-    fun provideBirthdayFormatter(): BirthdayFormatter {
-        return LocalizedBirthdayFormatter(Locale.getDefault())
+    @Singleton
+    fun provideContactsDataSource(
+        contentResolver: ContentResolver,
+        initialContactsFlow: MutableStateFlow<List<Contact>>,
+        birthdayParser: BirthdayParser
+    ): ContactsDataSource {
+        return TimeMeasuredContactsDataSource(
+            FetchBirthdaysOnInitContactsDataSource(
+                contentResolver,
+                initialContactsFlow,
+                birthdayParser
+            )
+        )
     }
 
     @Provides
-    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver {
-        return context.contentResolver
-    }
+    @Singleton
+    fun provideContactsFlow(): MutableStateFlow<List<Contact>> = MutableStateFlow(emptyList())
+
+    @Provides
+    fun provideBirthdayFormatter(): BirthdayFormatter =
+        LocalizedBirthdayFormatter(Locale.getDefault())
+
+    @Provides
+    fun provideBirthdayParser(): BirthdayParser = BirthdayParser()
+
+    @Provides
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
+        context.contentResolver
 }
