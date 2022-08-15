@@ -3,4 +3,7 @@
     <string name="title_friends">Friends</string>
     <string name="empty_state_friends">You haven\'t added any friend yet.\n Browse your contact list to add friends.</string>
     <string name="action_browse">Browse</string>
+
+    <string name="action_friend_removed">Removed</string>
+    <string name="action_undo_remove_friend">UNDO</string>
 </resources>

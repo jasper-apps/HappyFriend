@@ -3,6 +3,7 @@ package com.yterletskyi.happyfriend.features.friends.ui.drag
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
+import androidx.recyclerview.widget.ItemTouchHelper.LEFT
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.x.dp
@@ -11,7 +12,8 @@ import com.yterletskyi.happyfriend.features.friends.ui.FriendsAdapterDelegate
 class FriendsTouchHelperCallback(
     private val onFriendMoved: (from: Int, to: Int) -> Unit,
     private val onDragEnded: () -> Unit,
-) : ItemTouchHelper.SimpleCallback(UP or DOWN, 0) {
+    private val onFriendSwiped: (index: Int) -> Unit,
+) : ItemTouchHelper.SimpleCallback(UP or DOWN, LEFT) {
 
     override fun onMoved(
         recyclerView: RecyclerView,
@@ -34,7 +36,7 @@ class FriendsTouchHelperCallback(
     ): Boolean = viewHolder.itemViewType == FriendsAdapterDelegate.FRIEND_ITEM_VIEW_TYPE
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        // todo: support remove
+        onFriendSwiped(viewHolder.adapterPosition)
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
