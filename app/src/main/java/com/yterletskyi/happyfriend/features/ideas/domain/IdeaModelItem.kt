@@ -1,7 +1,7 @@
 package com.yterletskyi.happyfriend.features.ideas.domain
 
 import com.yterletskyi.happyfriend.common.list.ModelItem
-import java.util.*
+import java.util.UUID
 
 data class IdeaModelItem(
     val id: String,
