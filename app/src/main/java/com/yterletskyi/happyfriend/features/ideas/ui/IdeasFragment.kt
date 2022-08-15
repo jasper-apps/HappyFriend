@@ -5,40 +5,23 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.databinding.FragmentIdeasBinding
-import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeaModelItem
 import com.yterletskyi.happyfriend.features.ideas.domain.IdeasDiffUtil
-import com.yterletskyi.happyfriend.features.ideas.domain.IdeasInteractor
 import com.yterletskyi.happyfriend.features.ideas.ui.drag.MoveIdeaTouchHelper
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
     FragmentIdeasBinding::inflate
 ) {
 
-    @Inject
-    lateinit var app: App
-
-    @Inject
-    lateinit var ideasInteractor: IdeasInteractor
-
-    @Inject
-    lateinit var friendsInteractor: FriendsInteractor
-
     private val viewModel by viewModels<IdeasViewModel>()
 
+    private lateinit var rvItemsTouchHelper: MoveIdeaTouchHelper
     private lateinit var rvItemsAdapter: RecyclerDelegationAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +34,8 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                         onCheckboxChanged = { i, c -> viewModel.updateIdea(i, c) },
                         onRemoveClicked = { i -> viewModel.removeIdea(i) },
                         onNewIdeaClicked = viewModel::addIdea,
-                        onRemoveIdeaClicked = viewModel::removeIdea
+                        onRemoveIdeaClicked = viewModel::removeIdea,
+                        onGripLongClicked = { rvItemsTouchHelper.startDrag(it) },
                     )
                 )
                 addDelegate(
@@ -69,7 +53,10 @@ class IdeasFragment : BaseBindingFragment<FragmentIdeasBinding>(
                         .filterIsInstance<IdeaModelItem>()
                     viewModel.onIdeasMoved(ideas)
                 }
-            ).attachToRecyclerView(this)
+            ).also {
+                it.attachToRecyclerView(this)
+                rvItemsTouchHelper = it
+            }
         }
 
         with(binding.toolbar) {

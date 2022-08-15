@@ -55,6 +55,8 @@ class MoveIdeaTouchHelperCallback(
         onDragEnded()
     }
 
+    override fun isLongPressDragEnabled(): Boolean = false
+
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) =
         throw IllegalStateException("Swipes are not allowed")
 

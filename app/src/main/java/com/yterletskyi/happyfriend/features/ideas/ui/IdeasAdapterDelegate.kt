@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.list.AdapterDelegate
 import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.common.x.focus
@@ -16,6 +17,7 @@ class IdeasAdapterDelegate(
     private val onRemoveClicked: (Int) -> Unit,
     private val onNewIdeaClicked: (String) -> Unit,
     private val onRemoveIdeaClicked: (Int) -> Unit,
+    private val onGripLongClicked: (RecyclerView.ViewHolder) -> Unit,
 ) : AdapterDelegate<ItemIdeaBinding>(
     ItemIdeaBinding::inflate
 ) {
@@ -36,6 +38,10 @@ class IdeasAdapterDelegate(
             }
             binding.remove.setOnClickListener {
                 onRemoveClicked(adapterPosition)
+            }
+            binding.grip.setOnLongClickListener {
+                onGripLongClicked(this)
+                true
             }
         }
     }
