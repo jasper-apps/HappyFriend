@@ -42,7 +42,8 @@ class ContactsViewModel @Inject constructor(
                         contactId = contact.id,
                         fullName = contact.fullName,
                         image = contact.image,
-                        birthday = contact.birthday
+                        birthday = contact.birthday,
+                        position = System.currentTimeMillis(),
                     )
                 )
             }

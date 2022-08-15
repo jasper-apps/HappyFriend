@@ -1,16 +1,11 @@
 package com.yterletskyi.happyfriend.features.friends.domain
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.drawable.AvatarDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
-import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -20,6 +15,7 @@ interface FriendsInteractor {
     val friendsFlow: Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
     suspend fun removeFriend(contactId: Long)
+    suspend fun updateFriend(friendModel: FriendModelItem)
     suspend fun isFriend(contactId: Long): Boolean
 
     fun getFriend(id: String): Flow<FriendModelItem?> = friendsFlow
@@ -27,7 +23,6 @@ interface FriendsInteractor {
 }
 
 class FriendsInteractorImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
     contactsDataSource: ContactsDataSource,
     private val birthdayFormatter: BirthdayFormatter
@@ -50,17 +45,23 @@ class FriendsInteractorImpl @Inject constructor(
                     contactId = fr.contactId,
                     image = co!!.image ?: AvatarDrawable(co.initials),
                     fullName = co.name,
-                    birthday = birthdayFormatter.format(co.birthday)
+                    birthday = birthdayFormatter.format(co.birthday),
+                    position = fr.position,
                 )
             }
     }
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
         val friend = Friend(
-            id = UUID.randomUUID().toString(),
-            contactId = friendModel.contactId
+            id = friendModel.id,
+            contactId = friendModel.contactId,
+            position = friendModel.position,
         )
         friendsDataSource.addFriend(friend)
+    }
+
+    override suspend fun updateFriend(friendModel: FriendModelItem) {
+        friendsDataSource.updateFriend(friendModel.id, friendModel.position)
     }
 
     override suspend fun removeFriend(contactId: Long) {
@@ -70,7 +71,4 @@ class FriendsInteractorImpl @Inject constructor(
     override suspend fun isFriend(contactId: Long): Boolean {
         return friendsDataSource.isFriend(contactId)
     }
-
-    private fun drawableFromUri(uri: Uri): Drawable? = context.contentResolver.openInputStream(uri)
-        .use { Drawable.createFromStream(it, uri.toString()) }
 }

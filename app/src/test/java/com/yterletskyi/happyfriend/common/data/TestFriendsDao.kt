@@ -29,7 +29,8 @@ class TestFriendsDao : TestCase() {
 
     private suspend fun addFriend(): Friend = Friend(
         id = "f1",
-        contactId = 1
+        contactId = 1,
+        position = System.currentTimeMillis(),
     ).also {
         friendsDao.addFriend(it)
     }
@@ -45,6 +46,18 @@ class TestFriendsDao : TestCase() {
 
         assertEquals(1, friends.size)
         assertEquals(f, friends[0])
+    }
+
+    @Test
+    fun testUpdateFriend() = runBlocking {
+        val f = addFriend()
+
+        val newPosition = 741L
+        friendsDao.updateFriend(f.id, newPosition)
+
+        val friends = getFriends()
+        val friendUnderTest = friends.first { it.id == f.id }
+        assertEquals(newPosition, friendUnderTest.position)
     }
 
     @Test
