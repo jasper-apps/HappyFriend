@@ -9,12 +9,11 @@ import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
-@InstallIn(ViewModelComponent::class, FragmentComponent::class)
+@InstallIn(ViewModelComponent::class)
 class FriendsDi {
 
     @Provides
