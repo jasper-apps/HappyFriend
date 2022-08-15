@@ -68,7 +68,7 @@ dependencies {
 
     // Need to use old version due to compile error on Apple M1 chip.
     // See: https://stackoverflow.com/a/62739831/4543133
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
