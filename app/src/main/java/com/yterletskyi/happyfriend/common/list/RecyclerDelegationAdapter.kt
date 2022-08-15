@@ -3,10 +3,10 @@ package com.yterletskyi.happyfriend.common.list
 import android.content.Context
 import android.util.SparseArray
 import android.view.ViewGroup
-import androidx.core.util.set
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import java.util.Collections
 import kotlin.reflect.KClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -172,6 +172,18 @@ open class RecyclerDelegationAdapter(
 
     fun <D : AdapterDelegate<ViewBinding>> getDelegateTyped(kClass: KClass<D>): D? {
         return delegates.filterIsInstance(kClass.java).firstOrNull()
+    }
+
+    fun swapItems(from: Int, to: Int) {
+        if (from < to) {
+            for (i in from until to) {
+                Collections.swap(items, i, i + 1)
+            }
+        } else {
+            for (i in from downTo to + 1) {
+                Collections.swap(items, i, i - 1)
+            }
+        }
     }
 
     fun clearItems() {

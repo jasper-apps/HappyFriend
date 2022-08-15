@@ -17,7 +17,7 @@ import com.yterletskyi.happyfriend.features.friends.data.Friend
         )
     ],
     indices = [
-        Index(name = "friend_id_index", unique = false, value = ["friend_id"])
+        Index(name = "friend_id_index", unique = false, value = ["friend_id"]),
     ]
 )
 data class Idea(
@@ -25,5 +25,6 @@ data class Idea(
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "done") val done: Boolean,
     @ColumnInfo(name = "friend_id") val friendId: String,
-    @ColumnInfo(name = "created_at") val createdAt: Long
+    @ColumnInfo(name = "created_at") val createdAt: Long,
+    @ColumnInfo(name = "position") val position: Long,
 )

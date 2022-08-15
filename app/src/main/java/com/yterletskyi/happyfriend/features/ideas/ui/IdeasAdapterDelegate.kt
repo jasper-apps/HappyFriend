@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.list.AdapterDelegate
 import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.common.x.focus
@@ -16,6 +17,7 @@ class IdeasAdapterDelegate(
     private val onRemoveClicked: (Int) -> Unit,
     private val onNewIdeaClicked: (String) -> Unit,
     private val onRemoveIdeaClicked: (Int) -> Unit,
+    private val onGripLongClicked: (RecyclerView.ViewHolder) -> Unit,
 ) : AdapterDelegate<ItemIdeaBinding>(
     ItemIdeaBinding::inflate
 ) {
@@ -37,6 +39,10 @@ class IdeasAdapterDelegate(
             binding.remove.setOnClickListener {
                 onRemoveClicked(adapterPosition)
             }
+            binding.grip.setOnLongClickListener {
+                onGripLongClicked(this)
+                true
+            }
         }
     }
 
@@ -56,7 +62,7 @@ class IdeasAdapterDelegate(
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is IdeaModelItem
 
-    override fun getViewType(): Int = 1
+    override fun getViewType(): Int = IDEA_ITEM_VIEW_TYPE
 
     private fun updateStrikethrough(view: TextView, isChecked: Boolean) {
         with(view) {
@@ -64,5 +70,9 @@ class IdeasAdapterDelegate(
                 if (isChecked) paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 else paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
+    }
+
+    companion object {
+        const val IDEA_ITEM_VIEW_TYPE = 1
     }
 }

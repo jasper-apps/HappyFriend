@@ -97,6 +97,15 @@ class IdeasViewModel @Inject constructor(
         }
     }
 
+    fun onIdeasMoved(newOrderIdeas: List<IdeaModelItem>) {
+        viewModelScope.launch {
+            newOrderIdeas.forEachIndexed { i, it ->
+                val newIdea = it.copy(position = i.toLong())
+                ideasInteractor.updateIdea(newIdea)
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         lastAddedIdea = null
