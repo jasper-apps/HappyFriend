@@ -11,7 +11,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import java.util.*
+import java.util.UUID
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
@@ -75,7 +75,6 @@ class FriendsInteractorTest {
             val friends = mockkFriendsFlow.value
             friends.any { it.contactId == isFriendSlot.captured }
         }
-
     }
 
     private val contactsDataSource: ContactsDataSource = mockk {
