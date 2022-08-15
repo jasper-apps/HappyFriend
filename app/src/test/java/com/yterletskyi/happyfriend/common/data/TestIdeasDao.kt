@@ -37,7 +37,8 @@ class TestIdeasDao : TestCase() {
         if (!friendsDao.isFriend(contactId)) {
             val f = Friend(
                 id = calcFriendId,
-                contactId = contactId
+                contactId = contactId,
+                position = 0,
             )
             friendsDao.addFriend(f)
         }

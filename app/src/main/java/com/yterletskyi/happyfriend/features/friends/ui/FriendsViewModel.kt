@@ -28,6 +28,11 @@ class FriendsViewModel @Inject constructor(
     }
 
     fun onFriendsMoved(newOrderFriends: List<FriendModelItem>) {
-        // todo: save with positions
+        viewModelScope.launch {
+            newOrderFriends.forEachIndexed { i, it ->
+                val newFriend = it.copy(position = i.toLong())
+                interactor.updateFriend(newFriend)
+            }
+        }
     }
 }

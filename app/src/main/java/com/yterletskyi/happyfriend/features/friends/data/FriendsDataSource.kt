@@ -7,6 +7,7 @@ interface FriendsDataSource {
     val friendsFlow: Flow<List<Friend>>
     suspend fun addFriend(friend: Friend)
     suspend fun removeFriend(contactId: Long)
+    suspend fun updateFriend(id: String, position: Long)
     suspend fun isFriend(contactId: Long): Boolean
 }
 
@@ -20,6 +21,19 @@ class InMemoryFriendsDataSource : FriendsDataSource {
         val newFriends = friends
             .toMutableList()
             .apply { add(friend) }
+        _friendsFlow.value = newFriends
+    }
+
+    override suspend fun updateFriend(id: String, position: Long) {
+        val friends = _friendsFlow.value
+        val oldFriendIndex = friends
+            .indexOfFirst { it.id == id }
+        val newFriend = friends[oldFriendIndex]
+            .copy(position = position)
+
+        val newFriends = friends
+            .toMutableList()
+            .apply { set(oldFriendIndex, newFriend) }
         _friendsFlow.value = newFriends
     }
 
@@ -42,6 +56,10 @@ class RoomFriendsDataSource(
     override val friendsFlow: Flow<List<Friend>> = friendsDao.getFriends()
 
     override suspend fun addFriend(friend: Friend) = friendsDao.addFriend(friend)
+
+    override suspend fun updateFriend(id: String, position: Long) {
+        friendsDao.updateFriend(id, position)
+    }
 
     override suspend fun removeFriend(contactId: Long) = friendsDao.removeFriend(contactId)
 
