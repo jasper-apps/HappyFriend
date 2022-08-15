@@ -46,7 +46,8 @@ class TestIdeasDao : TestCase() {
             text = "unit test idea $contactId",
             done = false,
             friendId = calcFriendId,
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            position = System.currentTimeMillis(),
         )
         ideasDao.addIdea(i)
 
@@ -83,7 +84,8 @@ class TestIdeasDao : TestCase() {
         ideasDao.updateIdea(
             id = i.id,
             text = "updated idea #67",
-            done = true
+            done = true,
+            position = i.position,
         )
         val updated = getIdeas(friendId = i.friendId)
             .single()
