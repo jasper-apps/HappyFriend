@@ -1,5 +1,6 @@
 package com.yterletskyi.happyfriend.features.friends.ui
 
+import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.list.AdapterDelegate
 import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.databinding.ItemFriendBinding
@@ -7,7 +8,7 @@ import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 
 class FriendsAdapterDelegate(
     private val onItemClicked: (Int) -> Unit,
-    private val onItemLongClicked: (Int) -> Unit
+    private val onItemLongClicked: (RecyclerView.ViewHolder) -> Unit
 ) : AdapterDelegate<ItemFriendBinding>(
     ItemFriendBinding::inflate
 ) {
@@ -18,7 +19,8 @@ class FriendsAdapterDelegate(
                 onItemClicked(adapterPosition)
             }
             binding.root.setOnLongClickListener {
-                onItemLongClicked(adapterPosition); true
+                onItemLongClicked(this)
+                true
             }
         }
     }
@@ -35,5 +37,9 @@ class FriendsAdapterDelegate(
 
     override fun isForViewType(item: ModelItem, position: Int): Boolean = item is FriendModelItem
 
-    override fun getViewType(): Int = 1
+    override fun getViewType(): Int = FRIEND_ITEM_VIEW_TYPE
+
+    companion object {
+        const val FRIEND_ITEM_VIEW_TYPE = 1
+    }
 }

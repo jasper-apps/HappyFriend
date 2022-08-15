@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +19,7 @@ import com.yterletskyi.happyfriend.common.list.SpaceItemDecoration
 import com.yterletskyi.happyfriend.common.x.dp
 import com.yterletskyi.happyfriend.databinding.FragmentFriendsBinding
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
+import com.yterletskyi.happyfriend.features.friends.ui.drag.FriendsTouchHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +28,8 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
 ) {
 
     private val viewModel by viewModels<FriendsViewModel>()
+
+    private lateinit var rvItemsTouchHelper: FriendsTouchHelper
     private lateinit var rvItemsAdapter: RecyclerDelegationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +48,24 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
                 addDelegate(
                     FriendsAdapterDelegate(
                         onItemClicked = ::showIdeasScreen,
-                        onItemLongClicked = ::showActionsDialog
+                        onItemLongClicked = { rvItemsTouchHelper.startDrag(it) }
                     )
                 )
                 rvItemsAdapter = this
                 addItemDecoration(
                     SpaceItemDecoration(space = 4.dp)
                 )
+            }
+            FriendsTouchHelper(
+                onFriendMoved = rvItemsAdapter::swapItems,
+                onDragEnded = {
+                    val newList = rvItemsAdapter.getData()
+                        .filterIsInstance<FriendModelItem>()
+                    viewModel.onFriendsMoved(newList)
+                }
+            ).also {
+                it.attachToRecyclerView(this)
+                rvItemsTouchHelper = it
             }
         }
 
@@ -105,16 +118,5 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
         findNavController().navigate(
             FriendsFragmentDirections.toContactsScreen()
         )
-    }
-
-    private fun showActionsDialog(index: Int) = context?.let {
-        AlertDialog.Builder(it)
-            .setItems(R.array.friend_actions) { _, which ->
-                when (which) {
-                    0 -> viewModel.removeFriend(index)
-                    else -> throw IllegalArgumentException("Action $which is not supported")
-                }
-            }
-            .show()
     }
 }

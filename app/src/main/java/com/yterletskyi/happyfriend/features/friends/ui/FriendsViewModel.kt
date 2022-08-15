@@ -26,4 +26,8 @@ class FriendsViewModel @Inject constructor(
             interactor.removeFriend(it.contactId)
         }
     }
+
+    fun onFriendsMoved(newOrderFriends: List<FriendModelItem>) {
+        // todo: save with positions
+    }
 }
