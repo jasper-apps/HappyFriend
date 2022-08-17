@@ -51,6 +51,18 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             }
         }
 
+        with(binding.etSearch) {
+            binding.etClear.visibility = View.INVISIBLE
+            doAfterTextChanged {
+                if(text?.isEmpty() == false) {
+                    binding.etClear.visibility = View.VISIBLE
+                }
+                else {
+                    binding.etClear.visibility = View.INVISIBLE
+                }
+            }
+        }
+
         with(binding.etClear) {
             setOnClickListener {
                 binding.etSearch.setText("")
