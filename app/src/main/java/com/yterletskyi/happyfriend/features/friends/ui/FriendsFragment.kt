@@ -62,15 +62,14 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             FriendsTouchHelper(
                 onFriendMoved = rvItemsAdapter::swapItems,
                 onFriendSwiped = { index ->
-                    val friendModelItem = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
-                    viewModel.scheduleRemoveFriendAt(friendModelItem)
+                    val item = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
+                    viewModel.scheduleRemoveFriendAt(item)
                     Snackbar.make(
                         requireView(),
                         R.string.action_friend_removed,
                         Snackbar.LENGTH_SHORT
                     ).setAction(R.string.action_undo_remove_friend) {
-                        viewModel.cancelRemoveFriendRequest(friendModelItem)
-                        rvItemsAdapter.notifyItemChanged(index)
+                        viewModel.cancelRemoveFriendRequest(item)
                     }.show()
                 },
                 onDragEnded = {

@@ -37,6 +37,14 @@ class FriendsViewModel @Inject constructor(
     private val _friendsLiveData: MutableLiveData<List<FriendModelItem>> = MutableLiveData()
     val friendsLiveData: LiveData<List<FriendModelItem>> = _friendsLiveData
         .map {
+            Log.i("info22", "filtering due to remove queue...")
+            val filtered = it.filter {
+                it.id !in removeFriendRequestMap.keys.map { it.id }
+            }
+            Log.i("info22", "filter result: ${filtered.map { it.fullName }}")
+            filtered
+        }
+        .map {
             Log.i("info22", "oneach at livedata: ${it.map { it.fullName }}")
             it
         }
@@ -62,21 +70,24 @@ class FriendsViewModel @Inject constructor(
     }
 
     fun scheduleRemoveFriendAt(item: FriendModelItem) {
+        Log.i("info22", "removing ${item.fullName}")
+
         _friendsLiveData.value = friends.value
             .toMutableList()
             .apply { remove(item) }
 
-        val removeJob = viewModelScope.launch {
+        removeFriendRequestMap[item] = viewModelScope.launch {
             delay(DELAY_BEFORE_FRIEND_REMOVE)
             removeFriend(item)
             Log.i("info22", "removed")
         }
         Log.i("info22", "removal scheduled")
-        removeFriendRequestMap[item] = removeJob
     }
 
     fun cancelRemoveFriendRequest(item: FriendModelItem) {
-        removeFriendRequestMap[item]?.cancel()
+        removeFriendRequestMap.remove(item)
+            ?.also { it.cancel() }
+
         _friendsLiveData.value = friends.value
         Log.i("info22", "removal canceled")
     }
