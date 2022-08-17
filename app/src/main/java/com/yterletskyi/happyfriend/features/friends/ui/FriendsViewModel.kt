@@ -1,6 +1,5 @@
 package com.yterletskyi.happyfriend.features.friends.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,35 +27,29 @@ class FriendsViewModel @Inject constructor(
     private var removeFriendRequestMap: MutableMap<FriendModelItem, Job> = mutableMapOf()
 
     private val friends: StateFlow<List<FriendModelItem>> = interactor.friendsFlow
-        .onEach {
-            Log.i("info22", "oneach at friends: ${it.map { it.fullName }}")
-            _friendsLiveData.value = it
-        }
+        .onEach { _friendsLiveData.value = it }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     private val _friendsLiveData: MutableLiveData<List<FriendModelItem>> = MutableLiveData()
     val friendsLiveData: LiveData<List<FriendModelItem>> = _friendsLiveData
-        .map {
-            Log.i("info22", "filtering due to remove queue...")
-            val filtered = it.filter {
-                it.id !in removeFriendRequestMap.keys.map { it.id }
+        .map { items ->
+            items.filter {
+                val removePendingIds = removeFriendRequestMap.keys.map { it.id }
+                it.id !in removePendingIds
             }
-            Log.i("info22", "filter result: ${filtered.map { it.fullName }}")
-            filtered
-        }
-        .map {
-            Log.i("info22", "oneach at livedata: ${it.map { it.fullName }}")
-            it
         }
 
-    val showEmptyState: LiveData<Boolean> = friendsLiveData.map { it.isEmpty() }
+    val showEmptyState: LiveData<Boolean> = friendsLiveData
+        .map { it.isEmpty() }
 
     init {
         friends.launchIn(viewModelScope)
     }
 
-    private fun removeFriend(friendModelItem: FriendModelItem) = viewModelScope.launch {
-        interactor.removeFriend(friendModelItem.contactId)
+    private fun removeFriend(friendModelItem: FriendModelItem) {
+        viewModelScope.launch {
+            interactor.removeFriend(friendModelItem.contactId)
+        }
     }
 
     fun onFriendsMoved(newOrderFriends: List<FriendModelItem>) {
@@ -65,13 +58,10 @@ class FriendsViewModel @Inject constructor(
                 val newFriend = it.copy(position = i.toLong())
                 interactor.updateFriend(newFriend)
             }
-            Log.i("info22", "moved")
         }
     }
 
     fun scheduleRemoveFriendAt(item: FriendModelItem) {
-        Log.i("info22", "removing ${item.fullName}")
-
         _friendsLiveData.value = friends.value
             .toMutableList()
             .apply { remove(item) }
@@ -79,9 +69,7 @@ class FriendsViewModel @Inject constructor(
         removeFriendRequestMap[item] = viewModelScope.launch {
             delay(DELAY_BEFORE_FRIEND_REMOVE)
             removeFriend(item)
-            Log.i("info22", "removed")
         }
-        Log.i("info22", "removal scheduled")
     }
 
     fun cancelRemoveFriendRequest(item: FriendModelItem) {
@@ -89,7 +77,6 @@ class FriendsViewModel @Inject constructor(
             ?.also { it.cancel() }
 
         _friendsLiveData.value = friends.value
-        Log.i("info22", "removal canceled")
     }
 
     companion object {

@@ -2,7 +2,6 @@ package com.yterletskyi.happyfriend.features.friends.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -73,14 +72,10 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
                     }.show()
                 },
                 onDragEnded = {
-                    Log.i("info22", "drag ended")
                     val newList = rvItemsAdapter.getData()
                         .filterIsInstance<FriendModelItem>()
                     viewModel.onFriendsMoved(newList)
                 },
-                onSwipeEnded = {
-                    Log.i("info22", "swipe ended")
-                }
             ).also {
                 it.attachToRecyclerView(this)
                 rvItemsTouchHelper = it
