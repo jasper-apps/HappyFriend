@@ -4,8 +4,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 class FriendsTouchHelper(
     onFriendMoved: (from: Int, to: Int) -> Unit,
-    onDragEnded: () -> Unit,
     onFriendSwiped: (index: Int) -> Unit,
+    onSwipeEnded: () -> Unit = {},
+    onDragEnded: () -> Unit = {},
 ) : ItemTouchHelper(
-    FriendsTouchHelperCallback(onFriendMoved, onDragEnded, onFriendSwiped)
+    FriendsTouchHelperCallback(onFriendMoved, onFriendSwiped, onSwipeEnded, onDragEnded)
 )

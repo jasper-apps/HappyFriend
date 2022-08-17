@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.friends.ui
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -60,21 +61,26 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             }
             FriendsTouchHelper(
                 onFriendMoved = rvItemsAdapter::swapItems,
-                onDragEnded = {
-                    val newList = rvItemsAdapter.getData()
-                        .filterIsInstance<FriendModelItem>()
-                    viewModel.onFriendsMoved(newList)
-                },
                 onFriendSwiped = { index ->
-                    viewModel.scheduleRemoveFriendAt(index)
+                    val friendModelItem = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
+                    viewModel.scheduleRemoveFriendAt(friendModelItem)
                     Snackbar.make(
                         requireView(),
                         R.string.action_friend_removed,
                         Snackbar.LENGTH_SHORT
                     ).setAction(R.string.action_undo_remove_friend) {
-                        viewModel.cancelRemoveFriendRequest(index)
+                        viewModel.cancelRemoveFriendRequest(friendModelItem)
                         rvItemsAdapter.notifyItemChanged(index)
                     }.show()
+                },
+                onDragEnded = {
+                    Log.i("info22", "drag ended")
+                    val newList = rvItemsAdapter.getData()
+                        .filterIsInstance<FriendModelItem>()
+                    viewModel.onFriendsMoved(newList)
+                },
+                onSwipeEnded = {
+                    Log.i("info22", "swipe ended")
                 }
             ).also {
                 it.attachToRecyclerView(this)
@@ -99,7 +105,7 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
     private fun requestPermissions() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
-                viewModel.friends.observe(viewLifecycleOwner) {
+                viewModel.friendsLiveData.observe(viewLifecycleOwner) {
                     val differ = FriendsDiffUtil(
                         oldList = rvItemsAdapter.getDataTyped(),
                         newList = it
