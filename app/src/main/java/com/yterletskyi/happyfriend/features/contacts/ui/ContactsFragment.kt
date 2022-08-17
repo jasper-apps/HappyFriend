@@ -51,6 +51,12 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             }
         }
 
+        with(binding.etClear) {
+            setOnClickListener {
+                binding.etSearch.setText("")
+            }
+        }
+
         viewModel.contacts.observe(viewLifecycleOwner, rvItemsAdapter::setItems)
     }
 }
