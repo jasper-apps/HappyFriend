@@ -11,13 +11,12 @@ class SearchView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    private var _binding : ViewContactQueryBinding? = null
-    private val binding : ViewContactQueryBinding get() = _binding!!
+    private var _binding: ViewContactQueryBinding? = null
+    private val binding: ViewContactQueryBinding get() = _binding!!
 
     init {
         val inflater = LayoutInflater.from(context)
         _binding = ViewContactQueryBinding.inflate(inflater, this, true)
-
     }
 
     var etInput = binding.etInput
@@ -27,5 +26,4 @@ class SearchView @JvmOverloads constructor(
         super.onDetachedFromWindow()
         _binding = null
     }
-
 }
