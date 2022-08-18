@@ -44,7 +44,7 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             onBackClicked = { findNavController().popBackStack() }
         }
 
-        with(binding.etSearch) {
+        with(binding.etSearch.etInput) {
             doAfterTextChanged {
                 it?.let {
                     viewModel.search(it.toString())
@@ -52,15 +52,15 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             }
         }
 
-        with(binding.etSearch) {
+        with(binding.etSearch.etInput) {
             doAfterTextChanged {
-                binding.btnClear.isVisible = it?.isEmpty() == false
+                binding.etSearch.btnClear.isVisible = it?.isEmpty() == false
             }
         }
 
-        with(binding.btnClear) {
+        with(binding.etSearch.btnClear) {
             setOnClickListener {
-                binding.etSearch.setText("")
+                binding.etSearch.etInput.setText("")
             }
         }
 

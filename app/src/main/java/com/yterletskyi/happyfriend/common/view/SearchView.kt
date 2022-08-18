@@ -2,30 +2,30 @@ package com.yterletskyi.happyfriend.common.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
-import android.view.inputmethod.EditorInfo
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
-import com.yterletskyi.happyfriend.R
-import com.yterletskyi.happyfriend.common.x.dp
+import android.view.LayoutInflater
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.yterletskyi.happyfriend.databinding.ViewContactQueryBinding
 
 class SearchView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
-) : AppCompatEditText(context, attrs) {
+) : ConstraintLayout(context, attrs) {
+
+    private var _binding : ViewContactQueryBinding? = null
+    private val binding : ViewContactQueryBinding get() = _binding!!
 
     init {
-        setBackgroundResource(R.drawable.background_search_view)
-        setHint(R.string.search_hint_contacts)
-        inputType = EditorInfo.TYPE_CLASS_TEXT
+        val inflater = LayoutInflater.from(context)
+        _binding = ViewContactQueryBinding.inflate(inflater, this, true)
 
-        TypedValue().let {
-            context.theme.resolveAttribute(R.attr.textColorSecondary, it, true)
-            setHintTextColor(it.data)
-        }
-        setTextColor(ContextCompat.getColor(context, R.color.black))
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-        setPadding(16.dp)
     }
+
+    var etInput = binding.etInput
+    var btnClear = binding.btnClear
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        _binding = null
+    }
+
 }
