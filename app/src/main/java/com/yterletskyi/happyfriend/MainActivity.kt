@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.yterletskyi.happyfriend.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val bottomTabIds = listOf(
+    private val bottomTabIds = setOf(
         R.id.contactsScreen,
         R.id.friendsScreen,
         R.id.settingsScreen
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity() {
             }
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
+
+        val appBarConfiguration = AppBarConfiguration(bottomTabIds)
+        view.appBar.setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onDestroy() {

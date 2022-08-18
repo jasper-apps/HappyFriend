@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
@@ -37,10 +36,6 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
                     SpaceItemDecoration(space = 4.dp)
                 )
             }
-        }
-
-        with(binding.toolbar) {
-            onBackClicked = { findNavController().popBackStack() }
         }
 
         with(binding.etSearch) {

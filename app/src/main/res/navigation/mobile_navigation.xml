@@ -6,6 +6,7 @@
     app:startDestination="@+id/friendsScreen">
 
     <fragment
+        android:label="@string/title_contacts"
         android:id="@+id/contactsScreen"
         android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
         tools:layout="@layout/fragment_contacts" />
@@ -22,13 +23,10 @@
     </fragment>
 
     <fragment
+        android:label="@string/title_friends"
         android:id="@+id/friendsScreen"
         android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
         tools:layout="@layout/fragment_friends">
-
-        <action
-            android:id="@+id/toContactsScreen"
-            app:destination="@id/contactsScreen" />
 
         <action
             android:id="@+id/toIdeasScreen"
@@ -43,6 +41,7 @@
     </fragment>
 
     <fragment
+        android:label="@string/title_settings"
         android:id="@+id/settingsScreen"
         android:name="com.yterletskyi.happyfriend.features.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" />

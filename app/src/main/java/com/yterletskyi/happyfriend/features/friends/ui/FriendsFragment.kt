@@ -2,9 +2,6 @@ package com.yterletskyi.happyfriend.features.friends.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,11 +30,6 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
 
     private lateinit var rvItemsTouchHelper: FriendsTouchHelper
     private lateinit var rvItemsAdapter: RecyclerDelegationAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,14 +74,6 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             }
         }
 
-        with(binding.toolbar) {
-            onActionClicked = { showSearchFragment() }
-        }
-
-        with(binding.incEmptyState.btnAddFriend) {
-            setOnClickListener { showSearchFragment() }
-        }
-
         viewModel.showEmptyState.observe(viewLifecycleOwner) {
             binding.incEmptyState.root.isVisible = it
             binding.rvItems.isVisible = !it
@@ -116,26 +100,6 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
         val friend = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
         findNavController().navigate(
             FriendsFragmentDirections.toIdeasScreen(friend.id)
-        )
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.friends_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.search -> {
-                showSearchFragment(); true
-            }
-            else -> false
-        }
-    }
-
-    private fun showSearchFragment() {
-        findNavController().navigate(
-            FriendsFragmentDirections.toContactsScreen()
         )
     }
 }
