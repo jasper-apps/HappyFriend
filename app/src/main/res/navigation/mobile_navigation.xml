@@ -3,10 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_friends">
+    app:startDestination="@+id/friendsScreen">
 
     <fragment
-        android:id="@+id/navigation_friends"
+        android:id="@+id/contactsScreen"
+        android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
+        tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/ideasScreen"
+        android:name="com.yterletskyi.happyfriend.features.ideas.ui.IdeasFragment"
+        tools:layout="@layout/fragment_ideas">
+
+        <argument
+            android:name="friendId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/friendsScreen"
         android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
         tools:layout="@layout/fragment_friends">
 
@@ -27,28 +43,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/contactsScreen"
-        android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
-        tools:layout="@layout/fragment_contacts" />
-
-    <fragment
-        android:id="@+id/ideasScreen"
-        android:name="com.yterletskyi.happyfriend.features.ideas.ui.IdeasFragment"
-        tools:layout="@layout/fragment_ideas">
-
-        <argument
-            android:name="friendId"
-            app:argType="string" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_calendar"
-        android:name="com.yterletskyi.happyfriend.features.calendar.CalendarFragment"
-        tools:layout="@layout/fragment_calendar" />
-
-    <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/settingsScreen"
         android:name="com.yterletskyi.happyfriend.features.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>
