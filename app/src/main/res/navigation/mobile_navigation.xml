@@ -29,6 +29,10 @@
         tools:layout="@layout/fragment_friends">
 
         <action
+            android:id="@+id/toContactsScreen"
+            app:destination="@id/contactsScreen" />
+
+        <action
             android:id="@+id/toIdeasScreen"
             app:destination="@id/ideasScreen">
 

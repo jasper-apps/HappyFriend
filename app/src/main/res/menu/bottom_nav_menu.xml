@@ -2,13 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/contactsScreen"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="@string/title_contacts" />
-
-    <item
         android:id="@+id/friendsScreen"
-        android:icon="@drawable/ic_baseline_star_24"
+        android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/title_friends" />
 
     <item

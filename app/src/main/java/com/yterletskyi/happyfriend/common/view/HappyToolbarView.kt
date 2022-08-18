@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.databinding.ViewHappyToolbarBinding
 
-@Deprecated("Use android toolbar")
 class HappyToolbarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
