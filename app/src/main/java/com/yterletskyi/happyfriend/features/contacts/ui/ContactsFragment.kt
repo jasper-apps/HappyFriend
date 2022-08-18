@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.contacts.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -53,11 +54,7 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
 
         with(binding.etSearch) {
             doAfterTextChanged {
-                if (it?.isEmpty() == false) {
-                    binding.btnClear.visibility = View.VISIBLE
-                } else {
-                    binding.btnClear.visibility = View.GONE
-                }
+                binding.btnClear.isVisible = it?.isEmpty() == false
             }
         }
 
