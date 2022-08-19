@@ -6,4 +6,6 @@
 
     <string name="action_friend_removed">Removed</string>
     <string name="action_undo_remove_friend">UNDO</string>
+
+    <string name="title_my_wishlist_item">My Wishlist</string>
 </resources>
