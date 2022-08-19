@@ -6,7 +6,7 @@ import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
-import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends.MY_WISHLIST_FRIEND_ID
+import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -26,14 +26,16 @@ interface FriendsInteractor {
 class FriendsInteractorImpl @Inject constructor(
     private val friendsDataSource: FriendsDataSource,
     contactsDataSource: ContactsDataSource,
-    private val birthdayFormatter: BirthdayFormatter
+    private val birthdayFormatter: BirthdayFormatter,
+    private val myWishlistController: MyWishlistController,
 ) : FriendsInteractor {
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow
     ) { friends, contacts ->
-        val friendModels = friends
+        // map Contacts to Friends
+        val friendModelItems = friends
             .map { fr ->
                 fr to contacts.find { co -> co.id == fr.contactId }
             }
@@ -52,22 +54,26 @@ class FriendsInteractorImpl @Inject constructor(
             }
             .toMutableList()
 
-        friends
-            .find { it.id == MY_WISHLIST_FRIEND_ID }
-            ?.let { myWishlistFriend ->
-                friendModels.add(
-                    FriendModelItem(
-                        id = myWishlistFriend.id,
-                        contactId = myWishlistFriend.contactId,
-                        image = AvatarDrawable("W"),
-                        fullName = "My Wishlist",
-                        birthday = "",
-                        position = myWishlistFriend.position,
+        // add 'my wishlist' item if needed
+        if (myWishlistController.isMyWishlistEnabled()) {
+            val myWishlistModel = friends
+                .single { it.id == GlobalFriends.MY_WISHLIST_FRIEND_ID }
+            friendModelItems
+                .apply {
+                    add(
+                        FriendModelItem(
+                            id = myWishlistModel.id,
+                            contactId = myWishlistModel.contactId,
+                            image = AvatarDrawable("W"),
+                            fullName = "My Wishlist",
+                            birthday = "",
+                            position = myWishlistModel.position,
+                        )
                     )
-                )
-            }
+                }
+        }
 
-        friendModels.sortedBy { it.position }
+        friendModelItems.sortedBy { it.position }
     }
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
