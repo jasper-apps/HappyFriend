@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.contacts.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -43,11 +44,23 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
             onBackClicked = { findNavController().popBackStack() }
         }
 
-        with(binding.etSearch) {
+        with(binding.etSearch.etInput) {
             doAfterTextChanged {
                 it?.let {
                     viewModel.search(it.toString())
                 }
+            }
+        }
+
+        with(binding.etSearch.etInput) {
+            doAfterTextChanged {
+                binding.etSearch.btnClear.isVisible = it?.isEmpty() == false
+            }
+        }
+
+        with(binding.etSearch.btnClear) {
+            setOnClickListener {
+                binding.etSearch.etInput.setText("")
             }
         }
 
