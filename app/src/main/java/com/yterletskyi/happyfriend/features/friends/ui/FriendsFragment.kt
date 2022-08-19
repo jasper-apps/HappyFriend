@@ -60,22 +60,22 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             }
             FriendsTouchHelper(
                 onFriendMoved = rvItemsAdapter::swapItems,
-                onDragEnded = {
-                    val newList = rvItemsAdapter.getData()
-                        .filterIsInstance<FriendModelItem>()
-                    viewModel.onFriendsMoved(newList)
-                },
                 onFriendSwiped = { index ->
-                    viewModel.scheduleRemoveFriendAt(index)
+                    val item = rvItemsAdapter.getItemTyped<FriendModelItem>(index)
+                    viewModel.scheduleRemoveFriendAt(item)
                     Snackbar.make(
                         requireView(),
                         R.string.action_friend_removed,
                         Snackbar.LENGTH_SHORT
                     ).setAction(R.string.action_undo_remove_friend) {
-                        viewModel.cancelRemoveFriendRequest(index)
-                        rvItemsAdapter.notifyItemChanged(index)
+                        viewModel.cancelRemoveFriendRequest(item)
                     }.show()
-                }
+                },
+                onDragEnded = {
+                    val newList = rvItemsAdapter.getData()
+                        .filterIsInstance<FriendModelItem>()
+                    viewModel.onFriendsMoved(newList)
+                },
             ).also {
                 it.attachToRecyclerView(this)
                 rvItemsTouchHelper = it
@@ -99,7 +99,7 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
     private fun requestPermissions() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
-                viewModel.friends.observe(viewLifecycleOwner) {
+                viewModel.friendsLiveData.observe(viewLifecycleOwner) {
                     val differ = FriendsDiffUtil(
                         oldList = rvItemsAdapter.getDataTyped(),
                         newList = it

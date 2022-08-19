@@ -11,9 +11,12 @@ import com.yterletskyi.happyfriend.features.friends.ui.FriendsAdapterDelegate
 
 class FriendsTouchHelperCallback(
     private val onFriendMoved: (from: Int, to: Int) -> Unit,
-    private val onDragEnded: () -> Unit,
     private val onFriendSwiped: (index: Int) -> Unit,
+    private val onSwipeEnded: () -> Unit,
+    private val onDragEnded: () -> Unit,
 ) : ItemTouchHelper.SimpleCallback(UP or DOWN, LEFT) {
+
+    private var lastActionState: Int = ItemTouchHelper.ACTION_STATE_DRAG
 
     override fun onMoved(
         recyclerView: RecyclerView,
@@ -33,9 +36,13 @@ class FriendsTouchHelperCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ): Boolean = viewHolder.itemViewType == FriendsAdapterDelegate.FRIEND_ITEM_VIEW_TYPE
+    ): Boolean {
+        lastActionState = ItemTouchHelper.ACTION_STATE_DRAG
+        return viewHolder.itemViewType == FriendsAdapterDelegate.FRIEND_ITEM_VIEW_TYPE
+    }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        lastActionState = ItemTouchHelper.ACTION_STATE_SWIPE
         onFriendSwiped(viewHolder.adapterPosition)
     }
 
@@ -51,10 +58,13 @@ class FriendsTouchHelperCallback(
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        viewHolder.itemView.let {
-            ViewCompat.setElevation(it, 0f)
+        ViewCompat.setElevation(viewHolder.itemView, 0f)
+        when (lastActionState) {
+            ItemTouchHelper.ACTION_STATE_DRAG -> onDragEnded()
+            ItemTouchHelper.ACTION_STATE_SWIPE -> onSwipeEnded()
+            else -> throw IllegalArgumentException("unsupported last action: $lastActionState")
         }
-        onDragEnded()
+        lastActionState = ItemTouchHelper.ACTION_STATE_IDLE
     }
 
     companion object {
