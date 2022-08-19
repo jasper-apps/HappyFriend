@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.databinding.FragmentSettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
     FragmentSettingsBinding::inflate
 ) {

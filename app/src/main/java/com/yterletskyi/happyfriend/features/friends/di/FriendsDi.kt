@@ -6,7 +6,6 @@ import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
-import com.yterletskyi.happyfriend.features.settings.domain.AlwaysEnabledMyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import dagger.Module
 import dagger.Provides
@@ -17,11 +16,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 @Module
 @InstallIn(ViewModelComponent::class)
 class FriendsDi {
-
-    @Provides
-    fun provideMyWishlistController(): MyWishlistController {
-        return AlwaysEnabledMyWishlistController()
-    }
 
     @Provides
     fun provideFriendsInteractor(
