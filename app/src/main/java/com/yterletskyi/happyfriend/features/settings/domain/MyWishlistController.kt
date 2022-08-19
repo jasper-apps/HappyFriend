@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.features.friends.domain
+package com.yterletskyi.happyfriend.features.settings.domain
 
 interface MyWishlistController {
     fun isMyWishlistEnabled(): Boolean
