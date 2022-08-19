@@ -6,6 +6,7 @@ import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
+import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends.MY_WISHLIST_FRIEND_ID
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -32,7 +33,7 @@ class FriendsInteractorImpl @Inject constructor(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow
     ) { friends, contacts ->
-        friends
+        val friendModels = friends
             .map { fr ->
                 fr to contacts.find { co -> co.id == fr.contactId }
             }
@@ -49,6 +50,24 @@ class FriendsInteractorImpl @Inject constructor(
                     position = fr.position,
                 )
             }
+            .toMutableList()
+
+        friends
+            .find { it.id == MY_WISHLIST_FRIEND_ID }
+            ?.let { myWishlistFriend ->
+                friendModels.add(
+                    FriendModelItem(
+                        id = myWishlistFriend.id,
+                        contactId = myWishlistFriend.contactId,
+                        image = AvatarDrawable("W"),
+                        fullName = "My Wishlist",
+                        birthday = "",
+                        position = myWishlistFriend.position,
+                    )
+                )
+            }
+
+        friendModels.sortedBy { it.position }
     }
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
