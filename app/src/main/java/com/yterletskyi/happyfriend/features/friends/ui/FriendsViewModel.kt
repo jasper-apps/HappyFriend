@@ -1,16 +1,22 @@
 package com.yterletskyi.happyfriend.features.friends.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.collections.set
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -18,16 +24,31 @@ class FriendsViewModel @Inject constructor(
     private val interactor: FriendsInteractor
 ) : ViewModel() {
 
-    private var removeFriendRequestMap: MutableMap<Int, Job> = mutableMapOf()
+    private var removeFriendRequestMap: MutableMap<FriendModelItem, Job> = mutableMapOf()
 
-    val friends: LiveData<List<FriendModelItem>> = interactor.friendsFlow.asLiveData()
+    private val friends: StateFlow<List<FriendModelItem>> = interactor.friendsFlow
+        .onEach { _friendsLiveData.value = it }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val showEmptyState: LiveData<Boolean> = friends.map { it.isEmpty() }
+    private val _friendsLiveData: MutableLiveData<List<FriendModelItem>> = MutableLiveData()
+    val friendsLiveData: LiveData<List<FriendModelItem>> = _friendsLiveData
+        .map { items ->
+            items.filter {
+                val removePendingIds = removeFriendRequestMap.keys.map { it.id }
+                it.id !in removePendingIds
+            }
+        }
 
-    private fun removeFriend(index: Int) = viewModelScope.launch {
-        val friend = friends.value?.get(index)
-        friend?.let {
-            interactor.removeFriend(it.contactId)
+    val showEmptyState: LiveData<Boolean> = friendsLiveData
+        .map { it.isEmpty() }
+
+    init {
+        friends.launchIn(viewModelScope)
+    }
+
+    private fun removeFriend(friendModelItem: FriendModelItem) {
+        viewModelScope.launch {
+            interactor.removeFriend(friendModelItem.contactId)
         }
     }
 
@@ -40,16 +61,22 @@ class FriendsViewModel @Inject constructor(
         }
     }
 
-    fun scheduleRemoveFriendAt(index: Int) {
-        val removeJob = viewModelScope.launch {
+    fun scheduleRemoveFriendAt(item: FriendModelItem) {
+        _friendsLiveData.value = friends.value
+            .toMutableList()
+            .apply { remove(item) }
+
+        removeFriendRequestMap[item] = viewModelScope.launch {
             delay(DELAY_BEFORE_FRIEND_REMOVE)
-            removeFriend(index)
+            removeFriend(item)
         }
-        removeFriendRequestMap[index] = removeJob
     }
 
-    fun cancelRemoveFriendRequest(index: Int) {
-        removeFriendRequestMap[index]?.cancel()
+    fun cancelRemoveFriendRequest(item: FriendModelItem) {
+        removeFriendRequestMap.remove(item)
+            ?.also { it.cancel() }
+
+        _friendsLiveData.value = friends.value
     }
 
     companion object {
