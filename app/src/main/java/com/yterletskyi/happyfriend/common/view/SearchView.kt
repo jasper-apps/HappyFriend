@@ -4,19 +4,19 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.yterletskyi.happyfriend.databinding.ViewContactQueryBinding
+import com.yterletskyi.happyfriend.databinding.ViewSearchBinding
 
 class SearchView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    private var _binding: ViewContactQueryBinding? = null
-    private val binding: ViewContactQueryBinding get() = _binding!!
+    private var _binding: ViewSearchBinding? = null
+    private val binding: ViewSearchBinding get() = _binding!!
 
     init {
         val inflater = LayoutInflater.from(context)
-        _binding = ViewContactQueryBinding.inflate(inflater, this, true)
+        _binding = ViewSearchBinding.inflate(inflater, this, true)
     }
 
     var etInput = binding.etInput
