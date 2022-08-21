@@ -7,6 +7,7 @@ import com.yterletskyi.happyfriend.features.settings.domain.InternalMyWishlistCo
 import com.yterletskyi.happyfriend.features.settings.domain.MockAppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractor
+import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractorImpl
 import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefsMyWishlistController
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,7 @@ object SettingsDi {
         myWishlistController: InternalMyWishlistController,
         appVersionController: AppVersionController,
     ): SettingsInteractor {
-        return SettingsInteractor(context, myWishlistController, appVersionController)
+        return SettingsInteractorImpl(context, myWishlistController, appVersionController)
     }
 
     @Provides

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.content.res.AppCompatResources
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
+import com.yterletskyi.happyfriend.common.LifecycleComponent
 import com.yterletskyi.happyfriend.common.drawable.AvatarDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-interface FriendsInteractor {
+interface FriendsInteractor : LifecycleComponent {
     val friendsFlow: Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
     suspend fun removeFriend(contactId: Long)
@@ -38,10 +39,15 @@ class FriendsInteractorImpl @Inject constructor(
     private val myWishlistController: MyWishlistController,
 ) : FriendsInteractor {
 
+    override fun initialize() {
+        myWishlistController.initialize()
+    }
+
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
-        contactsDataSource.contactsFlow
-    ) { friends, contacts ->
+        contactsDataSource.contactsFlow,
+        myWishlistController.wishlistFlow
+    ) { friends, contacts, myWishlistEnabled ->
         // map Contacts to Friends
         val friendModelItems = friends
             .map { fr ->
@@ -63,7 +69,7 @@ class FriendsInteractorImpl @Inject constructor(
             .toMutableList()
 
         // add 'my wishlist' item if needed
-        if (myWishlistController.isMyWishlistEnabled()) {
+        if (myWishlistEnabled) {
             val myWishlistModel = friends
                 .single { it.id == GlobalFriends.MY_WISHLIST_FRIEND_ID }
             friendModelItems
@@ -105,5 +111,9 @@ class FriendsInteractorImpl @Inject constructor(
 
     override suspend fun isFriend(contactId: Long): Boolean {
         return friendsDataSource.isFriend(contactId)
+    }
+
+    override fun destroy() {
+        myWishlistController.destroy()
     }
 }

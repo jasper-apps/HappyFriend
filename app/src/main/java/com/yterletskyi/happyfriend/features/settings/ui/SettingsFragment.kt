@@ -23,7 +23,7 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
         with(binding.rvItems) {
             adapter = RecyclerDelegationAdapter(view.context).apply {
                 addDelegate(
-                    SwitchSettingAdapter()
+                    SwitchSettingAdapter(viewModel::changeBooleanSetting)
                 )
                 rvItemsAdapter = this
             }
