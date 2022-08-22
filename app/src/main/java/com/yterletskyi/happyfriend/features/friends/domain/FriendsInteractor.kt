@@ -71,7 +71,7 @@ class FriendsInteractorImpl @Inject constructor(
         // add 'my wishlist' item if needed
         if (myWishlistEnabled) {
             val myWishlistModel = friends
-                .single { it.id == GlobalFriends.MY_WISHLIST_FRIEND_ID }
+                .single { it.id == GlobalFriends.MyWishlist.FRIEND_ID }
             friendModelItems
                 .apply {
                     val title = context.getString(R.string.title_my_wishlist_item)

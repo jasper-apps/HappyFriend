@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.settings.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.settings.domain.AppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.InternalMyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.MockAppVersionController
@@ -24,8 +25,9 @@ object SettingsDi {
         @ApplicationContext context: Context,
         myWishlistController: InternalMyWishlistController,
         appVersionController: AppVersionController,
+        friendsDao: FriendsDao,
     ): SettingsInteractor {
-        return SettingsInteractorImpl(context, myWishlistController, appVersionController)
+        return SettingsInteractorImpl(context, myWishlistController, appVersionController, friendsDao)
     }
 
     @Provides

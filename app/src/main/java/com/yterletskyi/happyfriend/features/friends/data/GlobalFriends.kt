@@ -1,5 +1,9 @@
 package com.yterletskyi.happyfriend.features.friends.data
 
 object GlobalFriends {
-    const val MY_WISHLIST_FRIEND_ID = "my_wishlist"
+    object MyWishlist {
+        const val FRIEND_ID = "my_wishlist"
+        const val CONTACT_ID = -1L
+        const val FRIEND_POSITION = -10L
+    }
 }

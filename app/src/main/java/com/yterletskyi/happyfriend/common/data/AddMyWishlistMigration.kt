@@ -9,11 +9,9 @@ import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 
 class AddMyWishlistMigration : Migration(1, 2) {
 
-    private val myWishlistFriend = Friend(
-        id = GlobalFriends.MY_WISHLIST_FRIEND_ID,
-        contactId = -1,
-        position = -1,
-    )
+    private val myWishlistFriend = with(GlobalFriends.MyWishlist) {
+        Friend(id = FRIEND_ID, contactId = CONTACT_ID, position = FRIEND_POSITION)
+    }
 
     override fun migrate(database: SupportSQLiteDatabase) {
         val contentValues = ContentValues().apply {

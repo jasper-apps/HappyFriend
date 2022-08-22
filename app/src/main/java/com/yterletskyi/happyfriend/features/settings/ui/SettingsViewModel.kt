@@ -3,11 +3,13 @@ package com.yterletskyi.happyfriend.features.settings.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.yterletskyi.happyfriend.features.settings.domain.SettingEnum
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractor
 import com.yterletskyi.happyfriend.features.settings.domain.SwitchModelItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -23,8 +25,10 @@ class SettingsViewModel @Inject constructor(
 
     fun changeBooleanSetting(index: Int, value: Boolean) {
         val item = settingsItems.value?.get(index) ?: return
-        when (item.type) {
-            SettingEnum.MY_WISHLIST -> interactor.enableMyWishlist(value)
+        viewModelScope.launch {
+            when (item.type) {
+                SettingEnum.MY_WISHLIST -> interactor.enableMyWishlist(value)
+            }
         }
     }
 
