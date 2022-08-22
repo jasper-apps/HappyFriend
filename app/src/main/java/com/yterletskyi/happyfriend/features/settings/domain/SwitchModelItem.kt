@@ -7,4 +7,3 @@ data class SwitchModelItem(
     val enabled: Boolean,
     val type: SettingEnum,
 ) : ModelItem
-
