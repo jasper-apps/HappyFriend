@@ -1,5 +1,7 @@
 package com.yterletskyi.happyfriend.features.settings.domain
 
+import com.yterletskyi.happyfriend.BuildConfig
+
 interface AppVersionController {
     fun getAppVersion(): String
 }
@@ -9,5 +11,5 @@ class MockAppVersionController : AppVersionController {
 }
 
 class RealAppVersionController : AppVersionController {
-    override fun getAppVersion(): String = TODO()
+    override fun getAppVersion(): String = BuildConfig.VERSION_NAME
 }

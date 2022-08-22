@@ -7,3 +7,9 @@ data class SwitchModelItem(
     val enabled: Boolean,
     val type: SettingEnum,
 ) : ModelItem
+
+data class VersionModelItem(
+    val title: String,
+    val appVersion: String,
+    val type: SettingEnum
+) : ModelItem
