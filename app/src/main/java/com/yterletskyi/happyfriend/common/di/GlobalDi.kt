@@ -2,6 +2,8 @@ package com.yterletskyi.happyfriend.common.di
 
 import android.content.ContentResolver
 import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import androidx.room.Room
 import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
@@ -34,6 +36,7 @@ object GlobalDi {
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room
             .databaseBuilder(context, AppDatabase::class.java, "happy-friend")
+            .addCallback(PrepopulateMyWishlistFriend())
             .build()
     }
 
@@ -66,4 +69,9 @@ object GlobalDi {
     @Provides
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
         context.contentResolver
+
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+    }
 }

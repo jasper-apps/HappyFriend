@@ -47,6 +47,6 @@
     <fragment
         android:label="@string/title_settings"
         android:id="@+id/settingsScreen"
-        android:name="com.yterletskyi.happyfriend.features.settings.SettingsFragment"
+        android:name="com.yterletskyi.happyfriend.features.settings.ui.SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>

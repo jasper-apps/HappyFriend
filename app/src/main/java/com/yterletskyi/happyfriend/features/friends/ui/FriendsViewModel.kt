@@ -43,6 +43,7 @@ class FriendsViewModel @Inject constructor(
         .map { it.isEmpty() }
 
     init {
+        interactor.initialize()
         friends.launchIn(viewModelScope)
     }
 
@@ -77,6 +78,11 @@ class FriendsViewModel @Inject constructor(
             ?.also { it.cancel() }
 
         _friendsLiveData.value = friends.value
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        interactor.destroy()
     }
 
     companion object {

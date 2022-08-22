@@ -1,15 +1,22 @@
 package com.yterletskyi.happyfriend.features.friends
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import androidx.appcompat.content.res.AppCompatResources
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.features.contacts.data.Contact
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
+import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
+import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.slot
 import java.util.UUID
 import junit.framework.Assert.assertEquals
@@ -20,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -27,7 +35,12 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class FriendsInteractorTest {
 
+    private val context: Context = mockk {
+        every { getString(any()) } returns "mocked_string"
+    }
+
     private val mockkFriendsFlow: MutableStateFlow<List<Friend>> = MutableStateFlow(emptyList())
+    private val mockkMyWishlistFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val friendsDataSource: FriendsDataSource = mockk {
         every { friendsFlow } returns mockkFriendsFlow
@@ -87,11 +100,23 @@ class FriendsInteractorTest {
         every { format(any()) } returns "somehow_formatted_birthday"
     }
 
+    private val myWishlistController: MyWishlistController = mockk(relaxUnitFun = true) {
+        every { wishlistFlow } returns mockkMyWishlistFlow
+    }
+
     private val interactor = FriendsInteractorImpl(
+        context,
         friendsDataSource = friendsDataSource,
         contactsDataSource = contactsDataSource,
         birthdayFormatter = birthdayFormatter,
+        myWishlistController = myWishlistController,
     )
+
+    @Before
+    fun mockParseDrawable() {
+        mockkStatic(AppCompatResources::class)
+        every { AppCompatResources.getDrawable(any(), any()) } returns ColorDrawable(Color.BLACK)
+    }
 
     @Test
     fun `should emit friends at start`() = runBlocking {
@@ -224,6 +249,59 @@ class FriendsInteractorTest {
 
         assertNotNull(friend)
         assertEquals(friendModelItem.id, friend!!.id)
+    }
+
+    @Test
+    fun `should return friends sorted by position`() = runBlocking {
+        // GIVEN
+        val testFriend = TEST_FRIEND_1
+        val testContact = TEST_CONTACT_1
+        val friendModelItem = FriendModelItem(
+            id = testFriend.id,
+            contactId = testFriend.contactId,
+            image = mockk(),
+            fullName = testContact.name,
+            birthday = birthdayFormatter.format(testContact.birthday),
+            position = 212,
+        )
+        val friendModelItem2 = friendModelItem.copy(
+            id = UUID.randomUUID().toString(),
+            contactId = System.currentTimeMillis(),
+            position = 1
+        )
+        val friendModelItem3 = friendModelItem.copy(
+            id = UUID.randomUUID().toString(),
+            contactId = System.currentTimeMillis(),
+            position = 16
+        )
+
+        // WHEN
+        interactor.addFriend(friendModelItem)
+        interactor.addFriend(friendModelItem2)
+        interactor.addFriend(friendModelItem3)
+
+        val friends = interactor.friendsFlow.first()
+
+        // THEN
+        val positions = friends.map { it.position }
+        val isSorted = positions.zipWithNext { a, b -> b > a }.all { true }
+        assertTrue(isSorted)
+    }
+
+    @Test
+    fun `should return MyWishlist friend if enabled`() = runBlocking {
+        // GIVEN
+        mockkMyWishlistFlow.value = true
+        mockkFriendsFlow.value = mockkFriendsFlow.value
+            .toMutableList()
+            .apply { add(GlobalFriends.MyWishlistFriend) }
+
+        // WHEN
+        val friends = interactor.friendsFlow.first()
+
+        // THEN
+        val wishlistFriend = friends.find { it.id == GlobalFriends.MyWishlistFriend.id }
+        assertNotNull(wishlistFriend)
     }
 
     companion object {

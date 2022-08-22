@@ -1,17 +1,26 @@
 package com.yterletskyi.happyfriend.features.friends.domain
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import androidx.appcompat.content.res.AppCompatResources
+import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
+import com.yterletskyi.happyfriend.common.LifecycleComponent
 import com.yterletskyi.happyfriend.common.drawable.AvatarDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
+import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
+import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-interface FriendsInteractor {
+interface FriendsInteractor : LifecycleComponent {
     val friendsFlow: Flow<List<FriendModelItem>>
     suspend fun addFriend(friendModel: FriendModelItem)
     suspend fun removeFriend(contactId: Long)
@@ -23,16 +32,24 @@ interface FriendsInteractor {
 }
 
 class FriendsInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
     contactsDataSource: ContactsDataSource,
-    private val birthdayFormatter: BirthdayFormatter
+    private val birthdayFormatter: BirthdayFormatter,
+    private val myWishlistController: MyWishlistController,
 ) : FriendsInteractor {
+
+    override fun initialize() {
+        myWishlistController.initialize()
+    }
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
-        contactsDataSource.contactsFlow
-    ) { friends, contacts ->
-        friends
+        contactsDataSource.contactsFlow,
+        myWishlistController.wishlistFlow
+    ) { friends, contacts, myWishlistEnabled ->
+        // map Contacts to Friends
+        val friendModelItems = friends
             .map { fr ->
                 fr to contacts.find { co -> co.id == fr.contactId }
             }
@@ -49,6 +66,30 @@ class FriendsInteractorImpl @Inject constructor(
                     position = fr.position,
                 )
             }
+            .toMutableList()
+
+        // add 'my wishlist' item if needed
+        if (myWishlistEnabled) {
+            val myWishlistModel = friends
+                .single { it.id == GlobalFriends.MyWishlistFriend.id }
+            friendModelItems
+                .apply {
+                    val title = context.getString(R.string.title_my_wishlist_item)
+                    val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
+                    add(
+                        FriendModelItem(
+                            id = myWishlistModel.id,
+                            contactId = myWishlistModel.contactId,
+                            image = drawable ?: ColorDrawable(Color.BLACK),
+                            fullName = title,
+                            birthday = "",
+                            position = myWishlistModel.position,
+                        )
+                    )
+                }
+        }
+
+        friendModelItems.sortedBy { it.position }
     }
 
     override suspend fun addFriend(friendModel: FriendModelItem) {
@@ -70,5 +111,9 @@ class FriendsInteractorImpl @Inject constructor(
 
     override suspend fun isFriend(contactId: Long): Boolean {
         return friendsDataSource.isFriend(contactId)
+    }
+
+    override fun destroy() {
+        myWishlistController.destroy()
     }
 }
