@@ -4,14 +4,11 @@ import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 
 class AddMyWishlistMigration : Migration(1, 2) {
 
-    private val myWishlistFriend = with(GlobalFriends.MyWishlist) {
-        Friend(id = FRIEND_ID, contactId = CONTACT_ID, position = FRIEND_POSITION)
-    }
+    private val myWishlistFriend = GlobalFriends.MyWishlistFriend
 
     override fun migrate(database: SupportSQLiteDatabase) {
         val contentValues = ContentValues().apply {

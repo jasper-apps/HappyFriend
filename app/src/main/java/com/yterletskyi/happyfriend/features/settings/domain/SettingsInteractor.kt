@@ -40,8 +40,8 @@ class SettingsInteractorImpl @Inject constructor(
     override suspend fun enableMyWishlist(enable: Boolean) {
         if (!enable) {
             friendsDao.updateFriend(
-                GlobalFriends.MyWishlist.FRIEND_ID,
-                GlobalFriends.MyWishlist.FRIEND_POSITION
+                GlobalFriends.MyWishlistFriend.id,
+                GlobalFriends.MyWishlistFriend.position
             )
         }
         myWishlistController.setMyWishListEnabled(enable)

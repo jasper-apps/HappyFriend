@@ -18,7 +18,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
-import java.util.*
+import java.util.UUID
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
@@ -253,7 +253,7 @@ class FriendsInteractorTest {
 
     @Test
     fun `should return friends sorted by position`() = runBlocking {
-        //GIVEN
+        // GIVEN
         val testFriend = TEST_FRIEND_1
         val testContact = TEST_CONTACT_1
         val friendModelItem = FriendModelItem(
@@ -294,13 +294,13 @@ class FriendsInteractorTest {
         mockkMyWishlistFlow.value = true
         mockkFriendsFlow.value = mockkFriendsFlow.value
             .toMutableList()
-            .apply { add(MY_WISHLIST_FRIEND) }
+            .apply { add(GlobalFriends.MyWishlistFriend) }
 
         // WHEN
         val friends = interactor.friendsFlow.first()
 
         // THEN
-        val wishlistFriend = friends.find { it.id == GlobalFriends.MyWishlist.FRIEND_ID }
+        val wishlistFriend = friends.find { it.id == GlobalFriends.MyWishlistFriend.id }
         assertNotNull(wishlistFriend)
     }
 
@@ -316,8 +316,5 @@ class FriendsInteractorTest {
             image = null,
             birthday = null
         )
-        private val MY_WISHLIST_FRIEND = with(GlobalFriends.MyWishlist) {
-            Friend(id = FRIEND_ID, contactId = CONTACT_ID, position = FRIEND_POSITION)
-        }
     }
 }
