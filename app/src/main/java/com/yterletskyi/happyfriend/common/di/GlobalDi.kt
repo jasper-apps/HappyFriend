@@ -8,7 +8,6 @@ import androidx.room.Room
 import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
-import com.yterletskyi.happyfriend.common.data.AddMyWishlistMigration
 import com.yterletskyi.happyfriend.common.data.AppDatabase
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
@@ -37,7 +36,7 @@ object GlobalDi {
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room
             .databaseBuilder(context, AppDatabase::class.java, "happy-friend")
-            .addMigrations(AddMyWishlistMigration())
+            .addCallback(PrepopulateMyWishlistFriend())
             .build()
     }
 

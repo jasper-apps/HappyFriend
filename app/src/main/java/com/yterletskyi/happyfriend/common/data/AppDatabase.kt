@@ -9,7 +9,7 @@ import com.yterletskyi.happyfriend.features.ideas.data.IdeasDao
 
 @Database(
     entities = [Friend::class, Idea::class],
-    version = 2,
+    version = 1,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val friendsDao: FriendsDao
