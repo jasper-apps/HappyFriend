@@ -25,6 +25,9 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
                 addDelegate(
                     SwitchSettingAdapter(viewModel::changeBooleanSetting)
                 )
+                addDelegate(
+                    TextSettingAdapter()
+                )
                 rvItemsAdapter = this
             }
         }

@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.settings.domain.AppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.InternalMyWishlistController
-import com.yterletskyi.happyfriend.features.settings.domain.MockAppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
+import com.yterletskyi.happyfriend.features.settings.domain.RealAppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractor
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractorImpl
 import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefsMyWishlistController
@@ -42,6 +42,6 @@ object SettingsDi {
 
     @Provides
     fun provideAppVersionController(): AppVersionController {
-        return MockAppVersionController()
+        return RealAppVersionController()
     }
 }

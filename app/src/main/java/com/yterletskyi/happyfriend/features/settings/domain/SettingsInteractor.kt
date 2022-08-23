@@ -3,6 +3,7 @@ package com.yterletskyi.happyfriend.features.settings.domain
 import android.content.Context
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.common.LifecycleComponent
+import com.yterletskyi.happyfriend.common.list.ModelItem
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import javax.inject.Inject
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 interface SettingsInteractor : LifecycleComponent {
-    val items: Flow<List<SwitchModelItem>>
+    val items: Flow<List<ModelItem>>
     suspend fun enableMyWishlist(enable: Boolean)
 }
 
@@ -23,13 +24,18 @@ class SettingsInteractorImpl @Inject constructor(
 
     private val myWishlistFlow = myWishlistController.wishlistFlow
 
-    override val items: Flow<List<SwitchModelItem>> = myWishlistFlow.map {
+    override val items: Flow<List<ModelItem>> = myWishlistFlow.map {
         listOf(
             SwitchModelItem(
                 text = context.getString(R.string.title_my_wishlist_setting),
                 enabled = it,
                 type = SettingEnum.MY_WISHLIST,
             ),
+            VersionModelItem(
+                title = context.getString(R.string.app_version_title),
+                appVersionController.getAppVersion(),
+                SettingEnum.APP_VERSION,
+            )
         )
     }
 
