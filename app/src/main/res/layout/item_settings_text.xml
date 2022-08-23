@@ -12,20 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="8dp"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:textStyle="bold"
         tools:text="@string/app_version_title" />
 
     <TextView
         android:id="@+id/app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="16sp"
         android:layout_marginEnd="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         tools:text="v1.0.0" />
-
 
 </LinearLayout>
