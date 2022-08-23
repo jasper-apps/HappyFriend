@@ -25,11 +25,11 @@ class SettingsViewModel @Inject constructor(
 
     fun changeBooleanSetting(index: Int, value: Boolean) {
         val item = settingsItems.value?.get(index) ?: return
-        item as SwitchModelItem
+        val switchItem = item as? SwitchModelItem ?: return
         viewModelScope.launch {
-            when (item.type) {
+            when (switchItem.type) {
                 SettingEnum.MY_WISHLIST -> interactor.enableMyWishlist(value)
-                else -> {}
+                else -> throw IllegalArgumentException("unsupported item type: ${switchItem.type}")
             }
         }
     }

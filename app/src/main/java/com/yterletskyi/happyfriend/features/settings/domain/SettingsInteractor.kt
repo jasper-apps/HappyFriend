@@ -34,7 +34,7 @@ class SettingsInteractorImpl @Inject constructor(
             VersionModelItem(
                 title = context.getString(R.string.app_version_title),
                 appVersionController.getAppVersion(),
-                SettingEnum.APP_VERSION
+                SettingEnum.APP_VERSION,
             )
         )
     }
