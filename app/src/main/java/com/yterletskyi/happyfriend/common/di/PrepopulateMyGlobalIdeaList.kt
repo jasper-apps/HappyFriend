@@ -8,7 +8,7 @@ import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 
 class PrepopulateMyGlobalIdeaList : RoomDatabase.Callback() {
 
-    private val globalIdea =  GlobalFriends.MyGlobalIdea
+    private val globalIdea = GlobalFriends.MyGlobalIdea
 
     override fun onCreate(db: SupportSQLiteDatabase) {
         val contentValues = ContentValues().apply {
@@ -18,6 +18,4 @@ class PrepopulateMyGlobalIdeaList : RoomDatabase.Callback() {
         }
         db.insert("friend", SQLiteDatabase.CONFLICT_ABORT, contentValues)
     }
-
-
 }

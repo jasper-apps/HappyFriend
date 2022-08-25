@@ -51,7 +51,7 @@ class FriendsInteractorImpl @Inject constructor(
         contactsDataSource.contactsFlow,
         myWishlistController.wishlistFlow,
         globalIdeaController.generalidealist
-    ) { friends, contacts, myWishlistEnabled, myGlobalIdeaEnabled  ->
+    ) { friends, contacts, myWishlistEnabled, myGlobalIdeaEnabled ->
         // map Contacts to Friends
         val friendModelItems = friends
             .map { fr ->
@@ -93,10 +93,10 @@ class FriendsInteractorImpl @Inject constructor(
                 }
         }
 
-        if(myGlobalIdeaEnabled) {
-            val globalIdeaModel = friends.single {it.id == GlobalFriends.MyGlobalIdea.id}
+        if (myGlobalIdeaEnabled) {
+            val globalIdeaModel = friends.single { it.id == GlobalFriends.MyGlobalIdea.id }
             friendModelItems.apply {
-                val title = context.getString(R.string.title_my_general_ideas)
+                val title = context.getString(R.string.title_general_ideas_item)
                 val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
                 add(
                     FriendModelItem(

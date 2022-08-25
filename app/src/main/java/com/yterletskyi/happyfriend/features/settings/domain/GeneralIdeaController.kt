@@ -17,7 +17,7 @@ class SharedPrefGeneralIdeaController(
     private val sharedPreferences: SharedPreferences
 ) : InternalGeneralIdeaController {
 
-    val _generalIdeasFlow: MutableStateFlow<Boolean> = MutableStateFlow(
+    private val _generalIdeasFlow: MutableStateFlow<Boolean> = MutableStateFlow(
         sharedPreferences.getBoolean(KEY, false)
     )
 

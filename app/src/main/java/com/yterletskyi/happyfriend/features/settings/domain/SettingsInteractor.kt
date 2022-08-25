@@ -27,7 +27,7 @@ class SettingsInteractorImpl @Inject constructor(
     private val myWishlistFlow = myWishlistController.wishlistFlow
     private val generalIdeaFlow = generalIdeaController.generalidealist
 
-    override val items: Flow<List<ModelItem>> = combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, GeneralIdeaEnanled ->
+    override val items: Flow<List<ModelItem>> = combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, GeneralIdeaEnabled ->
         listOf(
             SwitchModelItem(
                 text = context.getString(R.string.title_my_wishlist_setting),
@@ -36,7 +36,7 @@ class SettingsInteractorImpl @Inject constructor(
             ),
             SwitchModelItem(
                 text = context.getString(R.string.title_my_general_ideas),
-                enabled = GeneralIdeaEnanled,
+                enabled = GeneralIdeaEnabled,
                 type = SettingEnum.GENERAL_LIST,
             ),
             VersionModelItem(
@@ -63,12 +63,7 @@ class SettingsInteractorImpl @Inject constructor(
     }
 
     override suspend fun enableMyGlobalIdealList(enable: Boolean) {
-        if(!enable) {
-            friendsDao.updateFriend(
-                GlobalFriends.MyGlobalIdea.id,
-                GlobalFriends.MyGlobalIdea.position
-            )
-        }
+
         generalIdeaController.setListEnabled(enable)
     }
 
