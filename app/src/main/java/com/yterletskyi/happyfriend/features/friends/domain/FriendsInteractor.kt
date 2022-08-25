@@ -13,6 +13,7 @@ import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -37,17 +38,20 @@ class FriendsInteractorImpl @Inject constructor(
     contactsDataSource: ContactsDataSource,
     private val birthdayFormatter: BirthdayFormatter,
     private val myWishlistController: MyWishlistController,
+    private val globalIdeaController: GeneralIdeaController
 ) : FriendsInteractor {
 
     override fun initialize() {
         myWishlistController.initialize()
+        globalIdeaController.initialize()
     }
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow,
-        myWishlistController.wishlistFlow
-    ) { friends, contacts, myWishlistEnabled ->
+        myWishlistController.wishlistFlow,
+        globalIdeaController.generalidealist
+    ) { friends, contacts, myWishlistEnabled, myGlobalIdeaEnabled  ->
         // map Contacts to Friends
         val friendModelItems = friends
             .map { fr ->
@@ -89,6 +93,24 @@ class FriendsInteractorImpl @Inject constructor(
                 }
         }
 
+        if(myGlobalIdeaEnabled) {
+            val globalIdeaModel = friends.single {it.id == GlobalFriends.MyGlobalIdea.id}
+            friendModelItems.apply {
+                val title = context.getString(R.string.title_my_general_ideas)
+                val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
+                add(
+                    FriendModelItem(
+                        id = globalIdeaModel.id,
+                        contactId = globalIdeaModel.contactId,
+                        image = drawable ?: ColorDrawable(Color.BLACK),
+                        fullName = title,
+                        birthday = "",
+                        position = globalIdeaModel.position,
+                    )
+                )
+            }
+        }
+
         friendModelItems.sortedBy { it.position }
     }
 
@@ -115,5 +137,6 @@ class FriendsInteractorImpl @Inject constructor(
 
     override fun destroy() {
         myWishlistController.destroy()
+        globalIdeaController.destroy()
     }
 }

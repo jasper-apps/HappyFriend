@@ -6,18 +6,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface GeneralIdeaController : LifecycleComponent {
-    val generalidealist : Flow<Boolean>
+    val generalidealist: Flow<Boolean>
 }
 
 interface InternalGeneralIdeaController : GeneralIdeaController {
     fun setListEnabled(enabled: Boolean)
 }
 
-class SharedPrefGeneralIdeaController(private val sharedPreferences: SharedPreferences
+class SharedPrefGeneralIdeaController(
+    private val sharedPreferences: SharedPreferences
 ) : InternalGeneralIdeaController {
 
     val _generalIdeasFlow: MutableStateFlow<Boolean> = MutableStateFlow(
-    sharedPreferences.getBoolean(KEY, false)
+        sharedPreferences.getBoolean(KEY, false)
     )
 
     override val generalidealist: Flow<Boolean> = _generalIdeasFlow
@@ -47,5 +48,4 @@ class SharedPrefGeneralIdeaController(private val sharedPreferences: SharedPrefe
     companion object {
         private const val KEY = "my_generalidea_enabled_key"
     }
-
 }

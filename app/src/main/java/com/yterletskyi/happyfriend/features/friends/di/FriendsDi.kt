@@ -6,6 +6,7 @@ import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractor
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import dagger.Module
 import dagger.Provides
@@ -24,6 +25,7 @@ class FriendsDi {
         contactsDataSource: ContactsDataSource,
         birthdayFormatter: BirthdayFormatter,
         myWishlistController: MyWishlistController,
+        globalIdeaController: GeneralIdeaController
     ): FriendsInteractor {
         return FriendsInteractorImpl(
             context,
@@ -31,6 +33,7 @@ class FriendsDi {
             contactsDataSource,
             birthdayFormatter,
             myWishlistController,
+            globalIdeaController,
         )
     }
 }

@@ -31,7 +31,7 @@ object SettingsDi {
         generalIdeaController: InternalGeneralIdeaController,
         friendsDao: FriendsDao,
     ): SettingsInteractor {
-        return SettingsInteractorImpl(context, myWishlistController, appVersionController, generalIdeaController ,friendsDao)
+        return SettingsInteractorImpl(context, myWishlistController, appVersionController, generalIdeaController, friendsDao)
     }
 
     @Provides
@@ -40,7 +40,7 @@ object SettingsDi {
     }
 
     @Provides
-    fun provideGlobalIdeasControllerInternal(sharedPreferences: SharedPreferences) : InternalGeneralIdeaController {
+    fun provideGlobalIdeasControllerInternal(sharedPreferences: SharedPreferences): InternalGeneralIdeaController {
         return SharedPrefGeneralIdeaController(sharedPreferences)
     }
 
@@ -50,7 +50,7 @@ object SettingsDi {
     }
 
     @Provides
-    fun provideGeneralIdeasController(generalIdeaController: InternalGeneralIdeaController) : GeneralIdeaController {
+    fun provideGeneralIdeasController(generalIdeaController: InternalGeneralIdeaController): GeneralIdeaController {
         return generalIdeaController
     }
 

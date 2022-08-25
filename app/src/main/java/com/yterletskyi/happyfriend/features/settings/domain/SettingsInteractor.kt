@@ -63,6 +63,12 @@ class SettingsInteractorImpl @Inject constructor(
     }
 
     override suspend fun enableMyGlobalIdealList(enable: Boolean) {
+        if(!enable) {
+            friendsDao.updateFriend(
+                GlobalFriends.MyGlobalIdea.id,
+                GlobalFriends.MyGlobalIdea.position
+            )
+        }
         generalIdeaController.setListEnabled(enable)
     }
 
