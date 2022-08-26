@@ -25,27 +25,28 @@ class SettingsInteractorImpl @Inject constructor(
 ) : SettingsInteractor {
 
     private val myWishlistFlow = myWishlistController.wishlistFlow
-    private val generalIdeaFlow = generalIdeaController.generalidealist
+    private val generalIdeaFlow = generalIdeaController.generalIdeaFlow
 
-    override val items: Flow<List<ModelItem>> = combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, GeneralIdeaEnabled ->
-        listOf(
-            SwitchModelItem(
-                text = context.getString(R.string.title_my_wishlist_setting),
-                enabled = myWishListEnabled,
-                type = SettingEnum.MY_WISHLIST,
-            ),
-            SwitchModelItem(
-                text = context.getString(R.string.title_my_general_ideas),
-                enabled = GeneralIdeaEnabled,
-                type = SettingEnum.GENERAL_LIST,
-            ),
-            VersionModelItem(
-                title = context.getString(R.string.app_version_title),
-                appVersion = appVersionController.getAppVersion(),
-                type = SettingEnum.APP_VERSION,
+    override val items: Flow<List<ModelItem>> =
+        combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, generalIdeaEnabled ->
+            listOf(
+                SwitchModelItem(
+                    text = context.getString(R.string.title_my_wishlist_setting),
+                    enabled = myWishListEnabled,
+                    type = SettingEnum.MY_WISHLIST,
+                ),
+                SwitchModelItem(
+                    text = context.getString(R.string.title_my_general_ideas),
+                    enabled = generalIdeaEnabled,
+                    type = SettingEnum.GENERAL_IDEAS,
+                ),
+                VersionModelItem(
+                    title = context.getString(R.string.app_version_title),
+                    appVersion = appVersionController.getAppVersion(),
+                    type = SettingEnum.APP_VERSION,
+                )
             )
-        )
-    }
+        }
 
     override fun initialize() {
         myWishlistController.initialize()
@@ -63,7 +64,6 @@ class SettingsInteractorImpl @Inject constructor(
     }
 
     override suspend fun enableMyGlobalIdealList(enable: Boolean) {
-
         generalIdeaController.setListEnabled(enable)
     }
 

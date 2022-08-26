@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface GeneralIdeaController : LifecycleComponent {
-    val generalidealist: Flow<Boolean>
+    val generalIdeaFlow: Flow<Boolean>
 }
 
 interface InternalGeneralIdeaController : GeneralIdeaController {
@@ -21,7 +21,7 @@ class SharedPrefGeneralIdeaController(
         sharedPreferences.getBoolean(KEY, false)
     )
 
-    override val generalidealist: Flow<Boolean> = _generalIdeasFlow
+    override val generalIdeaFlow: Flow<Boolean> = _generalIdeasFlow
 
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { prefs: SharedPreferences, key: String ->
@@ -46,6 +46,6 @@ class SharedPrefGeneralIdeaController(
     }
 
     companion object {
-        private const val KEY = "my_generalidea_enabled_key"
+        private const val KEY = "general_idea_enabled_key"
     }
 }

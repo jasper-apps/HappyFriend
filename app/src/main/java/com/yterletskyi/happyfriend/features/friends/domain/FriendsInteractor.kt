@@ -38,20 +38,20 @@ class FriendsInteractorImpl @Inject constructor(
     contactsDataSource: ContactsDataSource,
     private val birthdayFormatter: BirthdayFormatter,
     private val myWishlistController: MyWishlistController,
-    private val globalIdeaController: GeneralIdeaController
+    private val generalIdeaController: GeneralIdeaController
 ) : FriendsInteractor {
 
     override fun initialize() {
         myWishlistController.initialize()
-        globalIdeaController.initialize()
+        generalIdeaController.initialize()
     }
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow,
         myWishlistController.wishlistFlow,
-        globalIdeaController.generalidealist
-    ) { friends, contacts, myWishlistEnabled, myGlobalIdeaEnabled ->
+        generalIdeaController.generalIdeaFlow
+    ) { friends, contacts, myWishlistEnabled, myGeneralIdeaEnabled ->
         // map Contacts to Friends
         val friendModelItems = friends
             .map { fr ->
@@ -93,8 +93,8 @@ class FriendsInteractorImpl @Inject constructor(
                 }
         }
 
-        if (myGlobalIdeaEnabled) {
-            val globalIdeaModel = friends.single { it.id == GlobalFriends.MyGlobalIdea.id }
+        if (myGeneralIdeaEnabled) {
+            val globalIdeaModel = friends.single { it.id == GlobalFriends.MyGeneralIdea.id }
             friendModelItems.apply {
                 val title = context.getString(R.string.title_general_ideas_item)
                 val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
@@ -137,6 +137,6 @@ class FriendsInteractorImpl @Inject constructor(
 
     override fun destroy() {
         myWishlistController.destroy()
-        globalIdeaController.destroy()
+        generalIdeaController.destroy()
     }
 }

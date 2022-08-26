@@ -29,7 +29,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             when (switchItem.type) {
                 SettingEnum.MY_WISHLIST -> interactor.enableMyWishlist(value)
-                SettingEnum.GENERAL_LIST -> interactor.enableMyGlobalIdealList(value)
+                SettingEnum.GENERAL_IDEAS -> interactor.enableMyGlobalIdealList(value)
                 else -> throw IllegalArgumentException("unsupported item type: ${switchItem.type}")
             }
         }
