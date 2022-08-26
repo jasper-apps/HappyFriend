@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="?colorPrimaryVariant">
+    android:background="?colorPrimary">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -44,7 +44,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_baseline_search_24"
+        tools:srcCompat="@drawable/ic_baseline_group_add_24"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
