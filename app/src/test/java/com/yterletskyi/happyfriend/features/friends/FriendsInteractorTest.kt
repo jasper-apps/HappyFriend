@@ -107,7 +107,7 @@ class FriendsInteractorTest {
     }
 
     private val generalIdeasController: GeneralIdeasController = mockk {
-        every { generalIdeaFlow } returns mockkGeneralIdeasFlow
+        every { generalIdeasFlow } returns mockkGeneralIdeasFlow
     }
 
     private val interactor = FriendsInteractorImpl(

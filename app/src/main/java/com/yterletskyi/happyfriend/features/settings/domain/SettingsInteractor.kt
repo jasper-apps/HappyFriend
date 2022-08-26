@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.combine
 interface SettingsInteractor : LifecycleComponent {
     val items: Flow<List<ModelItem>>
     suspend fun enableMyWishlist(enable: Boolean)
-    suspend fun enableMyGlobalIdealList(enable: Boolean)
+    suspend fun enableGeneralIdeas(enable: Boolean)
 }
 
 class SettingsInteractorImpl @Inject constructor(
@@ -25,10 +25,10 @@ class SettingsInteractorImpl @Inject constructor(
 ) : SettingsInteractor {
 
     private val myWishlistFlow = myWishlistController.wishlistFlow
-    private val generalIdeaFlow = generalIdeasController.generalIdeaFlow
+    private val generalIdeasFlow = generalIdeasController.generalIdeasFlow
 
     override val items: Flow<List<ModelItem>> =
-        combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, generalIdeaEnabled ->
+        combine(myWishlistFlow, generalIdeasFlow) { myWishListEnabled, generalIdeaEnabled ->
             listOf(
                 SwitchModelItem(
                     text = context.getString(R.string.title_my_wishlist_setting),
@@ -63,8 +63,8 @@ class SettingsInteractorImpl @Inject constructor(
         myWishlistController.setMyWishListEnabled(enable)
     }
 
-    override suspend fun enableMyGlobalIdealList(enable: Boolean) {
-        generalIdeasController.setListEnabled(enable)
+    override suspend fun enableGeneralIdeas(enable: Boolean) {
+        generalIdeasController.setGeneralIdeasEnabled(enable)
     }
 
     override fun destroy() {
