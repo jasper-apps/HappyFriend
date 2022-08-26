@@ -12,6 +12,7 @@ import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import io.mockk.coEvery
 import io.mockk.every
@@ -41,6 +42,7 @@ class FriendsInteractorTest {
 
     private val mockkFriendsFlow: MutableStateFlow<List<Friend>> = MutableStateFlow(emptyList())
     private val mockkMyWishlistFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val mockkGeneralIdeasFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val friendsDataSource: FriendsDataSource = mockk {
         every { friendsFlow } returns mockkFriendsFlow
@@ -100,8 +102,12 @@ class FriendsInteractorTest {
         every { format(any()) } returns "somehow_formatted_birthday"
     }
 
-    private val myWishlistController: MyWishlistController = mockk(relaxUnitFun = true) {
+    private val myWishlistController: MyWishlistController = mockk {
         every { wishlistFlow } returns mockkMyWishlistFlow
+    }
+
+    private val generalIdeaController: GeneralIdeaController = mockk {
+        every { generalIdeaFlow } returns mockkGeneralIdeasFlow
     }
 
     private val interactor = FriendsInteractorImpl(
@@ -110,6 +116,7 @@ class FriendsInteractorTest {
         contactsDataSource = contactsDataSource,
         birthdayFormatter = birthdayFormatter,
         myWishlistController = myWishlistController,
+        generalIdeaController = generalIdeaController,
     )
 
     @Before
@@ -302,6 +309,22 @@ class FriendsInteractorTest {
         // THEN
         val wishlistFriend = friends.find { it.id == GlobalFriends.MyWishlistFriend.id }
         assertNotNull(wishlistFriend)
+    }
+
+    @Test
+    fun `should return GeneralIdeas friend if enabled`() = runBlocking {
+        // GIVEN
+        mockkGeneralIdeasFlow.value = true
+        mockkFriendsFlow.value = mockkFriendsFlow.value
+            .toMutableList()
+            .apply { add(GlobalFriends.MyGeneralIdea) }
+
+        // WHEN
+        val friends = interactor.friendsFlow.first()
+
+        // THEN
+        val generalIdeasFriend = friends.find { it.id == GlobalFriends.MyGeneralIdea.id }
+        assertNotNull(generalIdeasFriend)
     }
 
     companion object {
