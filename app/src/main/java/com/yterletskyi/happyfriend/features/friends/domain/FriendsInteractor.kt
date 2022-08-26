@@ -50,7 +50,7 @@ class FriendsInteractorImpl @Inject constructor(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow,
         myWishlistController.wishlistFlow,
-        generalIdeasController.generalIdeaFlow
+        generalIdeasController.generalIdeasFlow
     ) { friends, contacts, myWishlistEnabled, myGeneralIdeaEnabled ->
         // map Contacts to Friends
         val friendModelItems = friends
