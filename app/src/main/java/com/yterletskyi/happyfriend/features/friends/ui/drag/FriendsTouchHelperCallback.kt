@@ -62,7 +62,6 @@ class FriendsTouchHelperCallback(
         when (lastActionState) {
             ItemTouchHelper.ACTION_STATE_DRAG -> onDragEnded()
             ItemTouchHelper.ACTION_STATE_SWIPE -> onSwipeEnded()
-            else -> throw IllegalArgumentException("unsupported last action: $lastActionState")
         }
         lastActionState = ItemTouchHelper.ACTION_STATE_IDLE
     }
