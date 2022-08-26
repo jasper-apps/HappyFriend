@@ -25,7 +25,7 @@ class FriendsDi {
         contactsDataSource: ContactsDataSource,
         birthdayFormatter: BirthdayFormatter,
         myWishlistController: MyWishlistController,
-        globalIdeaController: GeneralIdeaController
+        generalIdeaController: GeneralIdeaController
     ): FriendsInteractor {
         return FriendsInteractorImpl(
             context,
@@ -33,7 +33,7 @@ class FriendsDi {
             contactsDataSource,
             birthdayFormatter,
             myWishlistController,
-            globalIdeaController,
+            generalIdeaController,
         )
     }
 }

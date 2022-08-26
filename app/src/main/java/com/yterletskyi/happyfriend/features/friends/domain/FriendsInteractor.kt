@@ -94,18 +94,18 @@ class FriendsInteractorImpl @Inject constructor(
         }
 
         if (myGeneralIdeaEnabled) {
-            val globalIdeaModel = friends.single { it.id == GlobalFriends.MyGeneralIdea.id }
+            val generalIdeasModel = friends.single { it.id == GlobalFriends.GeneralIdeas.id }
             friendModelItems.apply {
                 val title = context.getString(R.string.title_general_ideas_item)
                 val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
                 add(
                     FriendModelItem(
-                        id = globalIdeaModel.id,
-                        contactId = globalIdeaModel.contactId,
+                        id = generalIdeasModel.id,
+                        contactId = generalIdeasModel.contactId,
                         image = drawable ?: ColorDrawable(Color.BLACK),
                         fullName = title,
                         birthday = "",
-                        position = globalIdeaModel.position,
+                        position = generalIdeasModel.position,
                     )
                 )
             }

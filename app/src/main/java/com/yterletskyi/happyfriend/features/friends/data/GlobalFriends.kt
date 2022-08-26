@@ -6,7 +6,7 @@ object GlobalFriends {
         contactId = -1L,
         position = -10L,
     )
-    val MyGeneralIdea = Friend(
+    val GeneralIdeas = Friend(
         id = "general_idea",
         contactId = -2L,
         position = -5L,
