@@ -317,13 +317,13 @@ class FriendsInteractorTest {
         mockkGeneralIdeasFlow.value = true
         mockkFriendsFlow.value = mockkFriendsFlow.value
             .toMutableList()
-            .apply { add(GlobalFriends.MyGeneralIdea) }
+            .apply { add(GlobalFriends.GeneralIdeas) }
 
         // WHEN
         val friends = interactor.friendsFlow.first()
 
         // THEN
-        val generalIdeasFriend = friends.find { it.id == GlobalFriends.MyGeneralIdea.id }
+        val generalIdeasFriend = friends.find { it.id == GlobalFriends.GeneralIdeas.id }
         assertNotNull(generalIdeasFriend)
     }
 
