@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.settings.domain.AppVersionController
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeasController
+import com.yterletskyi.happyfriend.features.settings.domain.InternalGeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.InternalMyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.RealAppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractor
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractorImpl
+import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefGeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefsMyWishlistController
 import dagger.Module
 import dagger.Provides
@@ -25,9 +28,10 @@ object SettingsDi {
         @ApplicationContext context: Context,
         myWishlistController: InternalMyWishlistController,
         appVersionController: AppVersionController,
+        generalIdeasController: InternalGeneralIdeasController,
         friendsDao: FriendsDao,
     ): SettingsInteractor {
-        return SettingsInteractorImpl(context, myWishlistController, appVersionController, friendsDao)
+        return SettingsInteractorImpl(context, myWishlistController, appVersionController, generalIdeasController, friendsDao)
     }
 
     @Provides
@@ -36,8 +40,18 @@ object SettingsDi {
     }
 
     @Provides
+    fun provideGlobalIdeasControllerInternal(sharedPreferences: SharedPreferences): InternalGeneralIdeasController {
+        return SharedPrefGeneralIdeasController(sharedPreferences)
+    }
+
+    @Provides
     fun provideMyWishlistController(myWishlistController: InternalMyWishlistController): MyWishlistController {
         return myWishlistController
+    }
+
+    @Provides
+    fun provideGeneralIdeasController(generalIdeasController: InternalGeneralIdeasController): GeneralIdeasController {
+        return generalIdeasController
     }
 
     @Provides
