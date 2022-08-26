@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.yterletskyi.happyfriend.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +35,23 @@ class MainActivity : AppCompatActivity() {
                 view.navBar.isVisible = destination.id in bottomTabIds
             }
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
-        view.navBar.setupWithNavController(navController)
+        view.navBar.onItemClickListener = { index ->
+            val options = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(
+                    navController.graph.findStartDestination().id,
+                    inclusive = true,
+                    saveState = true
+                )
+                .build()
+
+            when (index) {
+                0 -> navController.navigate(R.id.friendsScreen, null, options)
+                1 -> navController.navigate(R.id.settingsScreen, null, options)
+                else -> throw IllegalArgumentException("unsupported view index: $index")
+            }
+        }
     }
 
     override fun onDestroy() {
