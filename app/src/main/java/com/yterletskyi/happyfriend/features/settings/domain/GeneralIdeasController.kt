@@ -5,17 +5,17 @@ import com.yterletskyi.happyfriend.common.LifecycleComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-interface GeneralIdeaController : LifecycleComponent {
+interface GeneralIdeasController : LifecycleComponent {
     val generalIdeaFlow: Flow<Boolean>
 }
 
-interface InternalGeneralIdeaController : GeneralIdeaController {
+interface InternalGeneralIdeasController : GeneralIdeasController {
     fun setListEnabled(enabled: Boolean)
 }
 
-class SharedPrefGeneralIdeaController(
+class SharedPrefGeneralIdeasController(
     private val sharedPreferences: SharedPreferences
-) : InternalGeneralIdeaController {
+) : InternalGeneralIdeasController {
 
     private val _generalIdeasFlow: MutableStateFlow<Boolean> = MutableStateFlow(
         sharedPreferences.getBoolean(KEY, false)

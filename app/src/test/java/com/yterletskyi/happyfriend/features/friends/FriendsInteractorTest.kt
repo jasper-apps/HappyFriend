@@ -12,7 +12,7 @@ import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsInteractorImpl
-import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import io.mockk.coEvery
 import io.mockk.every
@@ -106,7 +106,7 @@ class FriendsInteractorTest {
         every { wishlistFlow } returns mockkMyWishlistFlow
     }
 
-    private val generalIdeaController: GeneralIdeaController = mockk {
+    private val generalIdeasController: GeneralIdeasController = mockk {
         every { generalIdeaFlow } returns mockkGeneralIdeasFlow
     }
 
@@ -116,7 +116,7 @@ class FriendsInteractorTest {
         contactsDataSource = contactsDataSource,
         birthdayFormatter = birthdayFormatter,
         myWishlistController = myWishlistController,
-        generalIdeaController = generalIdeaController,
+        generalIdeasController = generalIdeasController,
     )
 
     @Before

@@ -13,7 +13,7 @@ import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
-import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -38,19 +38,19 @@ class FriendsInteractorImpl @Inject constructor(
     contactsDataSource: ContactsDataSource,
     private val birthdayFormatter: BirthdayFormatter,
     private val myWishlistController: MyWishlistController,
-    private val generalIdeaController: GeneralIdeaController
+    private val generalIdeasController: GeneralIdeasController
 ) : FriendsInteractor {
 
     override fun initialize() {
         myWishlistController.initialize()
-        generalIdeaController.initialize()
+        generalIdeasController.initialize()
     }
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
         friendsDataSource.friendsFlow,
         contactsDataSource.contactsFlow,
         myWishlistController.wishlistFlow,
-        generalIdeaController.generalIdeaFlow
+        generalIdeasController.generalIdeaFlow
     ) { friends, contacts, myWishlistEnabled, myGeneralIdeaEnabled ->
         // map Contacts to Friends
         val friendModelItems = friends
@@ -137,6 +137,6 @@ class FriendsInteractorImpl @Inject constructor(
 
     override fun destroy() {
         myWishlistController.destroy()
-        generalIdeaController.destroy()
+        generalIdeasController.destroy()
     }
 }

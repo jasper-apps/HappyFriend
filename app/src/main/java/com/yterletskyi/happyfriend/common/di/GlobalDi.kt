@@ -37,7 +37,7 @@ object GlobalDi {
         return Room
             .databaseBuilder(context, AppDatabase::class.java, "happy-friend")
             .addCallback(PrepopulateMyWishlistFriend())
-            .addCallback(PrepopulateMyGlobalIdeaList())
+            .addCallback(PrepopulateGeneralIdeasList())
             .build()
     }
 

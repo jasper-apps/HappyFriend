@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 
-class PrepopulateMyGlobalIdeaList : RoomDatabase.Callback() {
+class PrepopulateGeneralIdeasList : RoomDatabase.Callback() {
 
     private val generalIdeas = GlobalFriends.GeneralIdeas
 

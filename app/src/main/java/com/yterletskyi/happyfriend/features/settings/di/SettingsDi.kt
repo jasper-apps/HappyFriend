@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.settings.domain.AppVersionController
-import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeaController
-import com.yterletskyi.happyfriend.features.settings.domain.InternalGeneralIdeaController
+import com.yterletskyi.happyfriend.features.settings.domain.GeneralIdeasController
+import com.yterletskyi.happyfriend.features.settings.domain.InternalGeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.InternalMyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.MyWishlistController
 import com.yterletskyi.happyfriend.features.settings.domain.RealAppVersionController
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractor
 import com.yterletskyi.happyfriend.features.settings.domain.SettingsInteractorImpl
-import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefGeneralIdeaController
+import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefGeneralIdeasController
 import com.yterletskyi.happyfriend.features.settings.domain.SharedPrefsMyWishlistController
 import dagger.Module
 import dagger.Provides
@@ -28,10 +28,10 @@ object SettingsDi {
         @ApplicationContext context: Context,
         myWishlistController: InternalMyWishlistController,
         appVersionController: AppVersionController,
-        generalIdeaController: InternalGeneralIdeaController,
+        generalIdeasController: InternalGeneralIdeasController,
         friendsDao: FriendsDao,
     ): SettingsInteractor {
-        return SettingsInteractorImpl(context, myWishlistController, appVersionController, generalIdeaController, friendsDao)
+        return SettingsInteractorImpl(context, myWishlistController, appVersionController, generalIdeasController, friendsDao)
     }
 
     @Provides
@@ -40,8 +40,8 @@ object SettingsDi {
     }
 
     @Provides
-    fun provideGlobalIdeasControllerInternal(sharedPreferences: SharedPreferences): InternalGeneralIdeaController {
-        return SharedPrefGeneralIdeaController(sharedPreferences)
+    fun provideGlobalIdeasControllerInternal(sharedPreferences: SharedPreferences): InternalGeneralIdeasController {
+        return SharedPrefGeneralIdeasController(sharedPreferences)
     }
 
     @Provides
@@ -50,8 +50,8 @@ object SettingsDi {
     }
 
     @Provides
-    fun provideGeneralIdeasController(generalIdeaController: InternalGeneralIdeaController): GeneralIdeaController {
-        return generalIdeaController
+    fun provideGeneralIdeasController(generalIdeasController: InternalGeneralIdeasController): GeneralIdeasController {
+        return generalIdeasController
     }
 
     @Provides

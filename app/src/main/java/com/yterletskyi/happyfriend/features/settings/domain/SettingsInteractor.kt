@@ -20,12 +20,12 @@ class SettingsInteractorImpl @Inject constructor(
     private val context: Context,
     private val myWishlistController: InternalMyWishlistController,
     private val appVersionController: AppVersionController,
-    private val generalIdeaController: InternalGeneralIdeaController,
+    private val generalIdeasController: InternalGeneralIdeasController,
     private val friendsDao: FriendsDao,
 ) : SettingsInteractor {
 
     private val myWishlistFlow = myWishlistController.wishlistFlow
-    private val generalIdeaFlow = generalIdeaController.generalIdeaFlow
+    private val generalIdeaFlow = generalIdeasController.generalIdeaFlow
 
     override val items: Flow<List<ModelItem>> =
         combine(myWishlistFlow, generalIdeaFlow) { myWishListEnabled, generalIdeaEnabled ->
@@ -50,7 +50,7 @@ class SettingsInteractorImpl @Inject constructor(
 
     override fun initialize() {
         myWishlistController.initialize()
-        generalIdeaController.initialize()
+        generalIdeasController.initialize()
     }
 
     override suspend fun enableMyWishlist(enable: Boolean) {
@@ -64,11 +64,11 @@ class SettingsInteractorImpl @Inject constructor(
     }
 
     override suspend fun enableMyGlobalIdealList(enable: Boolean) {
-        generalIdeaController.setListEnabled(enable)
+        generalIdeasController.setListEnabled(enable)
     }
 
     override fun destroy() {
         myWishlistController.destroy()
-        generalIdeaController.destroy()
+        generalIdeasController.destroy()
     }
 }
