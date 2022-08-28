@@ -3,6 +3,7 @@ package com.yterletskyi.happyfriend.common.drawable
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.graphics.drawable.PaintDrawable
 import androidx.annotation.ColorInt
 import com.yterletskyi.happyfriend.common.x.sp
@@ -13,12 +14,14 @@ import com.yterletskyi.happyfriend.common.x.sp
 class AvatarDrawable(
     private val text: String,
     private val textSize: Float = 18.sp,
-    @ColorInt private val bgColor: Int = Color.parseColor("#FF6200EE"),
+    @ColorInt private val bgColor: Int = Color.parseColor("#3700B3"),
+    @ColorInt private val textColor: Int = Color.parseColor("#ffffff"),
     cornerRadius: Float = Float.MAX_VALUE,
 ) : PaintDrawable(bgColor) {
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = textColor
+        typeface = Typeface.DEFAULT
         textSize = this@AvatarDrawable.textSize
     }
 

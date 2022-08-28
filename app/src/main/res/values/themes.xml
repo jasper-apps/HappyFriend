@@ -2,14 +2,23 @@
     <!-- Base application theme. -->
     <style name="Theme.HappyFriend" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorAccent">@color/purple_700</item>
+        <item name="colorPrimary">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/s1</item>
+        <item name="colorSecondaryVariant">@color/s2</item>
+        <item name="colorOnSecondary">@android:color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
         <item name="textColorPrimary">@color/black</item>
         <item name="textColorSecondary">@color/silver</item>
+
+        <item name="colorOnSurface">@color/silver</item>
 
     </style>
 
