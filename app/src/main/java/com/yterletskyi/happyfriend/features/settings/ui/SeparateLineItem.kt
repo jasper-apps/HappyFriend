@@ -5,14 +5,16 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.x.dp
 
-class SeparateLineItem : RecyclerView.ItemDecoration() {
+class SeparateLineItem(@ColorInt private val lineColor: Int = Color.parseColor("#E8E8E8")) :
+    RecyclerView.ItemDecoration() {
 
     private val paint = Paint().apply {
-        color = Color.parseColor("#E8E8E8")
+        color = lineColor
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -20,10 +22,10 @@ class SeparateLineItem : RecyclerView.ItemDecoration() {
         val width = lastChild.width.toFloat()
         val y = lastChild.y
         c.drawLine(
-            0f + SEPARATE_LINE_INDENT,
-            y - SEPARATE_LINE_POSITION,
-            width - SEPARATE_LINE_INDENT,
-            y - SEPARATE_LINE_POSITION,
+            SEPARATOR_MARGIN_HORIZONTAL,
+            y - SEPARATOR_MARGIN_VERTICAL,
+            width - SEPARATOR_MARGIN_HORIZONTAL,
+            y - SEPARATOR_MARGIN_VERTICAL,
             paint
         )
     }
@@ -37,13 +39,13 @@ class SeparateLineItem : RecyclerView.ItemDecoration() {
         val adapter = parent.adapter ?: return
 
         when (parent.getChildAdapterPosition(view)) {
-            adapter.itemCount - 2 -> outRect.bottom = 8.dp
-            adapter.itemCount - 1 -> outRect.top = 8.dp
+            adapter.itemCount - 2 -> outRect.bottom = SEPARATOR_MARGIN_VERTICAL
+            adapter.itemCount - 1 -> outRect.top = SEPARATOR_MARGIN_VERTICAL
         }
     }
 
     companion object {
-        private const val SEPARATE_LINE_POSITION = 8f
-        private var SEPARATE_LINE_INDENT = 8.dp
+        private val SEPARATOR_MARGIN_VERTICAL = 16.dp
+        private val SEPARATOR_MARGIN_HORIZONTAL = 16f.dp
     }
 }
