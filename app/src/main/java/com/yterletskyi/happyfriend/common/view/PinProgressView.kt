@@ -29,8 +29,17 @@ class PinProgressView @JvmOverloads constructor(
             invalidate()
         }
 
-    var step: Int = 3
-    var steps: Int = 4
+    var step: Int = 1
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var steps: Int = 2
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     private val defaultCirclePaint: Paint by lazy {
         Paint().apply { color = defaultCircleColor }
