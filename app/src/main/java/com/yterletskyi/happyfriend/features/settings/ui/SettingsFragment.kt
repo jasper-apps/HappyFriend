@@ -25,13 +25,15 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
                 addDelegate(
                     SwitchSettingAdapter(viewModel::changeBooleanSetting)
                 )
+                addItemDecoration(
+                    SettingsLineItemDecoration()
+                )
                 addDelegate(
                     TextSettingAdapter()
                 )
                 rvItemsAdapter = this
             }
         }
-
         viewModel.settingsItems.observe(viewLifecycleOwner) {
             rvItemsAdapter.setItems(it)
         }
