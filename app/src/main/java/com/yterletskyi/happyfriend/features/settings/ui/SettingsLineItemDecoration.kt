@@ -10,8 +10,9 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.x.dp
 
-class SeparateLineItem(@ColorInt private val lineColor: Int = Color.parseColor("#E8E8E8")) :
-    RecyclerView.ItemDecoration() {
+class SettingsLineItemDecoration(
+    @ColorInt private val lineColor: Int = Color.parseColor("#E8E8E8")
+) : RecyclerView.ItemDecoration() {
 
     private val paint = Paint().apply {
         color = lineColor
