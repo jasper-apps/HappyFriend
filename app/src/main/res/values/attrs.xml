@@ -6,4 +6,9 @@
         <attr name="actionSrc" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="PinProgressView">
+        <attr name="defaultCircleColor" format="color" />
+        <attr name="progressCircleColor" format="color|reference" />
+    </declare-styleable>
+
 </resources>
