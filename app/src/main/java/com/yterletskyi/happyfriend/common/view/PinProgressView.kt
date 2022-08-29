@@ -88,7 +88,7 @@ class PinProgressView @JvmOverloads constructor(
     }
 
     companion object {
-        private val CIRCLE_DIAMETER = 8.dp
-        private val BETWEEN_CIRCLE_SPACE = 6.dp
+        private val CIRCLE_DIAMETER = 12.dp
+        private val BETWEEN_CIRCLE_SPACE = 12.dp
     }
 }
