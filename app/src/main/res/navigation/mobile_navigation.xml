@@ -3,7 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/friendsScreen">
+    app:startDestination="@+id/pin">
+
+    <fragment
+        android:id="@+id/pin"
+        android:name="com.yterletskyi.happyfriend.features.pin.ui.PinFragment"
+        android:label="@string/pin"
+        tools:layout="@layout/fragment_pin">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="error"
+            app:argType="string"/>
+    </fragment>
 
     <fragment
         android:label="@string/title_contacts"
