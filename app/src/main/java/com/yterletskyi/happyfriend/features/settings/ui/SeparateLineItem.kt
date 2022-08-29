@@ -9,23 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 class SeparateLineItem : RecyclerView.ItemDecoration() {
 
     private val paint = Paint().apply {
-        color = Color.parseColor("#d3d3d3")
+        color = Color.parseColor("#E8E8E8")
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        val width = parent[parent.childCount - 1].width.toFloat()
-        val y = parent[parent.childCount - 1].y
+        val lastChild = parent[parent.childCount - 1]
+        val width = lastChild.width.toFloat()
+        val y = lastChild.y
         c.drawLine(
-            0f + separator_line_width,
-            y - separator_line_height,
-            width - separator_line_width,
-            y - separator_line_height,
+            0f + SEPARATE_LINE_INDENT,
+            y - SEPARATE_LINE_POSITION,
+            width - SEPARATE_LINE_INDENT,
+            y - SEPARATE_LINE_POSITION,
             paint
         )
     }
 
     companion object {
-        const val separator_line_height = 8f
-        const val separator_line_width = 45f
+        private const val SEPARATE_LINE_POSITION = 8f
+        private const val SEPARATE_LINE_INDENT = 45f
     }
 }
