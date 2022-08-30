@@ -5,10 +5,10 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.getColorOrThrow
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.common.x.sp
 import com.yterletskyi.happyfriend.databinding.ViewPinKeyboardButtonBinding
@@ -44,7 +44,7 @@ class PinKeyboardButtonView @JvmOverloads constructor(
     var textSize: Float = 16.sp
         set(value) {
             field = value
-            binding.textView.textSize = value
+            binding.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
         }
 
     var drawable: Drawable? = null
@@ -67,12 +67,15 @@ class PinKeyboardButtonView @JvmOverloads constructor(
         ).apply {
 
             try {
-                btnBackgroundColor = getColorOrThrow(
-                    R.styleable.PinKeyboardButtonView_btnBackgroundColor
+                btnBackgroundColor = getColor(
+                    R.styleable.PinKeyboardButtonView_btnBackgroundColor,
+                    btnBackgroundColor
                 )
                 text = getString(R.styleable.PinKeyboardButtonView_android_text).orEmpty()
-                textColor = getColorOrThrow(R.styleable.PinKeyboardButtonView_android_textColor)
-                textSize = getFloat(R.styleable.PinKeyboardButtonView_android_textSize, textSize)
+                textColor = getColor(R.styleable.PinKeyboardButtonView_android_textColor, textColor)
+                textSize = getDimension(
+                    R.styleable.PinKeyboardButtonView_android_textSize, textSize
+                )
                 drawable = getDrawable(R.styleable.PinKeyboardButtonView_android_src)
             } finally {
                 recycle()
