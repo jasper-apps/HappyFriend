@@ -72,11 +72,14 @@ class PinKeyboardButtonView @JvmOverloads constructor(
                     .takeIf { it != -1 }
                     ?.let { btnBackgroundColor = it }
                 text = getString(R.styleable.PinKeyboardButtonView_android_text).orEmpty()
-                textColor = getColor(R.styleable.PinKeyboardButtonView_android_textColor, textColor)
-                textSize = getDimension(
-                    R.styleable.PinKeyboardButtonView_android_textSize, textSize
-                )
-                drawable = getDrawable(R.styleable.PinKeyboardButtonView_android_src)
+                getColor(R.styleable.PinKeyboardButtonView_android_textColor, -1)
+                    .takeIf { it != -1 }
+                    ?.let { textColor = it }
+                getDimension(R.styleable.PinKeyboardButtonView_android_textSize, -1f)
+                    .takeIf { it != -1f }
+                    ?.let { textSize = it }
+                getDrawable(R.styleable.PinKeyboardButtonView_android_src)
+                    ?.let { drawable = it }
             } finally {
                 recycle()
             }
