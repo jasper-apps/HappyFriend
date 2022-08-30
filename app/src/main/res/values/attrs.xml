@@ -9,7 +9,7 @@
     <declare-styleable name="PinProgressView">
         <attr name="steps" format="integer" />
         <attr name="defaultCircleColor" format="color" />
-        <attr name="progressCircleColor" format="color|reference" />
+        <attr name="progressCircleColor" format="color" />
     </declare-styleable>
 
 </resources>
