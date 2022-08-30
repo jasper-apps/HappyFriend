@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="pin">PIN</string>
+    <string name="setupPin">PIN Setup</string>
+    <string name="phrase1">Let’s create a PIN code to</string>
+    <string name="phrase2">secure your ideas.</string>
+    <string name="phrase3">We will ask for it every time you open</string>
+    <string name="phrase4">the app.</string>
+    <string name="phrase5">Be attentive, there is no way to restore a</string>
+    <string name="phrase6">lost PIN so far.</string>
+    <string name="button_text">Next</string>
 </resources>

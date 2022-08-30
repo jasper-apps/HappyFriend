@@ -21,6 +21,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/setupPinScreen"
+        android:name="com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragment"
+        android:label="@string/setupPin"
+        tools:layout="@layout/fragment_pinsetup" />
+
+    <fragment
         android:label="@string/title_contacts"
         android:id="@+id/contactsScreen"
         android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
