@@ -1,9 +1,11 @@
 package com.yterletskyi.happyfriend.common.view
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
+import android.graphics.drawable.RippleDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -24,9 +26,7 @@ class PinKeyboardButtonView @JvmOverloads constructor(
     var btnBackgroundColor: Int = Color.BLACK
         set(value) {
             field = value
-            val drawable = PaintDrawable(value)
-                .also { it.setCornerRadius(Float.MAX_VALUE) }
-            background = drawable
+            setBackgroundColor(value)
         }
 
     var text: String = ""
@@ -67,10 +67,9 @@ class PinKeyboardButtonView @JvmOverloads constructor(
         ).apply {
 
             try {
-                btnBackgroundColor = getColor(
-                    R.styleable.PinKeyboardButtonView_btnBackgroundColor,
-                    btnBackgroundColor
-                )
+                getColor(R.styleable.PinKeyboardButtonView_btnBackgroundColor, -1)
+                    .takeIf { it != -1 }
+                    ?.let { btnBackgroundColor = it }
                 text = getString(R.styleable.PinKeyboardButtonView_android_text).orEmpty()
                 textColor = getColor(R.styleable.PinKeyboardButtonView_android_textColor, textColor)
                 textSize = getDimension(
@@ -81,5 +80,16 @@ class PinKeyboardButtonView @JvmOverloads constructor(
                 recycle()
             }
         }
+    }
+
+    override fun setBackgroundColor(color: Int) {
+        val roundColorDrawable = PaintDrawable(color)
+            .also { it.setCornerRadius(Float.MAX_VALUE) }
+
+        background = RippleDrawable(
+            ColorStateList.valueOf(Color.TRANSPARENT),
+            roundColorDrawable,
+            roundColorDrawable
+        )
     }
 }
