@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/pin">
+    app:startDestination="@+id/pinScreen">
 
     <fragment
-        android:id="@+id/pin"
+        android:id="@+id/pinScreen"
         android:name="com.yterletskyi.happyfriend.features.pin.ui.PinFragment"
         android:label="@string/pin"
         tools:layout="@layout/fragment_pin">
