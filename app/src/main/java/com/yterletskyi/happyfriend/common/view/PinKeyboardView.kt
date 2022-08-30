@@ -7,7 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.yterletskyi.happyfriend.databinding.ViewPinKeyboardBinding
 
 class PinKeyboardView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
     private var _binding: ViewPinKeyboardBinding? = null

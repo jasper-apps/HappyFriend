@@ -16,7 +16,8 @@ import com.yterletskyi.happyfriend.common.x.sp
 import com.yterletskyi.happyfriend.databinding.ViewPinKeyboardButtonBinding
 
 class PinKeyboardButtonView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
     private var _binding: ViewPinKeyboardButtonBinding? = null
