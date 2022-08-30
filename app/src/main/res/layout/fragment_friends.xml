@@ -16,18 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/title_friends" />
 
-    <com.yterletskyi.happyfriend.common.view.PinProgressView
-        android:id="@+id/pp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:defaultCircleColor="@color/mercury"
-        app:layout_constraintBottom_toTopOf="@id/rvItems"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:progressCircleColor="@color/teal_200" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvItems"
         android:layout_width="0dp"
@@ -35,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pp" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <include
         android:id="@+id/incEmptyState"
