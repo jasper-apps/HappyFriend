@@ -29,13 +29,13 @@ class PinProgressView @JvmOverloads constructor(
             invalidate()
         }
 
-    var step: Int = 1
+    var step: Int = 0
         set(value) {
             field = value
             invalidate()
         }
 
-    var steps: Int = 2
+    var steps: Int = 1
         set(value) {
             field = value
             invalidate()
@@ -57,6 +57,7 @@ class PinProgressView @JvmOverloads constructor(
             0
         ).apply {
             try {
+                steps = getInt(R.styleable.PinProgressView_steps, steps)
                 defaultCircleColor = getColorOrThrow(
                     R.styleable.PinProgressView_defaultCircleColor
                 )
