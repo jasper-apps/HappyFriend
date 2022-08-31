@@ -9,9 +9,4 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="NextButtonStyle">
-        <item name="android:backgroundTint">#F48FB1</item>
-        <item name="cornerRadius">100dp</item>
-    </style>
-
 </resources>

@@ -15,12 +15,11 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
 
         with(binding.textButton) {
             setOnClickListener {
-                val action =
-                    com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragmentDirections.toPinScreen(
-                        getString(
-                            R.string.title
-                        ), ""
-                    )
+                val action = SetupPinFragmentDirections.toPinScreen(
+                    getString(
+                        R.string.title
+                    ), ""
+                )
                 findNavController().navigate(action)
             }
         }
