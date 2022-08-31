@@ -17,7 +17,7 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
             setOnClickListener {
                 val action = SetupPinFragmentDirections.toPinScreen(
                     getString(
-                        R.string.title
+                        R.string.pin_enter_title
                     ),
                     ""
                 )
