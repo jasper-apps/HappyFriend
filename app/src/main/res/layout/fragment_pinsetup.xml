@@ -72,14 +72,15 @@
 
     <Button
         android:id="@+id/text_button"
-        android:layout_width="311dp"
-        android:layout_height="51dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/action_button_next"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:layout_marginTop="29dp"
         android:backgroundTint="@color/pink"
         android:textAllCaps="false"
+        app:layout_constraintWidth_percent="0.75"
         app:cornerRadius="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

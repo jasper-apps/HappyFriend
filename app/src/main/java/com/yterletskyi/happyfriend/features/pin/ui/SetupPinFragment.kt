@@ -18,12 +18,11 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
                 val action = SetupPinFragmentDirections.toPinScreen(
                     getString(
                         R.string.title
-                    ), ""
+                    ),
+                    ""
                 )
                 findNavController().navigate(action)
             }
         }
     }
 }
-
-
