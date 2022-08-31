@@ -71,7 +71,7 @@
 
 
     <include
-        android:id="@+id/container_header_lyt"
+        android:id="@+id/next_button"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout="@layout/view_next_button"

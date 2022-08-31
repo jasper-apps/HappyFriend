@@ -6,4 +6,5 @@
     <string name="phrase2">We will ask for it every time you open \n the app.</string>
     <string name="phrase3">Be attentive, there is no way to restore a \n lost PIN so far.</string>
     <string name="action_button_next">Next</string>
+    <string name="title">Enter a pin</string>
 </resources>
