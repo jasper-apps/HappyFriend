@@ -11,9 +11,18 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
     FragmentPinsetupBinding::inflate
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.nextButton.setOnClickListener {
-            val action = SetupPinFragmentDirections.toPinScreen(getString(R.string.title), "")
-            findNavController().navigate(action)
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding.textButton) {
+            setOnClickListener {
+                val action =
+                    com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragmentDirections.toPinScreen(
+                        getString(
+                            R.string.title
+                        ), ""
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 }
