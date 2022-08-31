@@ -74,7 +74,6 @@
         android:id="@+id/text_button"
         android:layout_width="311dp"
         android:layout_height="51dp"
-        android:background="@drawable/button_background"
         android:text="@string/action_button_next"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -82,6 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line3"
+        style="@style/NextButtonStyle"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
