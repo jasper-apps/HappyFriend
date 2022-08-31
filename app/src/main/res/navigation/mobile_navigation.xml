@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/pinScreen">
+    app:startDestination="@+id/setupPinScreen">
+
+    <fragment
+        android:id="@+id/setupPinScreen"
+        android:name="com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragment"
+        android:label="@string/setupPin"
+        tools:layout="@layout/fragment_pinsetup">
+        <action
+            android:id="@+id/toPinScreen"
+            app:destination="@id/pinScreen" />
+    </fragment>
 
     <fragment
         android:id="@+id/pinScreen"
@@ -19,6 +29,7 @@
             android:name="error"
             app:argType="string"/>
     </fragment>
+
 
     <fragment
         android:label="@string/title_contacts"

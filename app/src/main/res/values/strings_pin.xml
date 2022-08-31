@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="pin">PIN</string>
+    <string name="setupPin">PIN Setup</string>
+    <string name="phrase1">Let’s create a PIN code to \n secure your ideas.</string>
+    <string name="phrase2">We will ask for it every time you open \n the app.</string>
+    <string name="phrase3">Be attentive, there is no way to restore a \n lost PIN so far.</string>
+    <string name="action_button_next">Next</string>
+    <string name="pin_enter_title">Enter a pin</string>
 </resources>
