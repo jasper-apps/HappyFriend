@@ -8,7 +8,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.yterletskyi.happyfriend.databinding.ActivityMainBinding
+import com.yterletskyi.happyfriend.features.pin.data.PinCodeController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -18,12 +20,16 @@ class MainActivity : AppCompatActivity() {
         R.id.settingsScreen,
     )
 
-    private val navController by lazy {
-        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
-            .navController
-    }
+    @Inject
+    lateinit var pinCodeController: PinCodeController
 
     private lateinit var onDestinationChangeListener: NavController.OnDestinationChangedListener
+
+    private val navController: NavController by lazy {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +41,8 @@ class MainActivity : AppCompatActivity() {
             }
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
+
+        inflateGraph()
     }
 
     override fun onDestroy() {
@@ -47,5 +55,16 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(inflater)
         setContentView(binding.root)
         return binding
+    }
+
+    private fun inflateGraph() {
+        val graph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+
+        val startDestination = pinCodeController.getPinCode()
+            ?.let { R.id.pinScreen }
+            ?: R.id.setupPinScreen
+
+        graph.setStartDestination(startDestination)
+        navController.setGraph(graph, intent.extras)
     }
 }
