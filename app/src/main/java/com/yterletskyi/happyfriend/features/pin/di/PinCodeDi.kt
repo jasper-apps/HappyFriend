@@ -10,9 +10,8 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object PinCodeDi {
-
     @Provides
-    fun providePinCodeController(sharedPreferences: SharedPreferences) : SharedPrefPinCodeController {
+    fun providePinCodeController(sharedPreferences: SharedPreferences): SharedPrefPinCodeController {
         return SharedPrefPinCodeController(sharedPreferences)
     }
 }
