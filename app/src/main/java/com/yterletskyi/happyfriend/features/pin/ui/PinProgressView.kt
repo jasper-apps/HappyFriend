@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.common.view
+package com.yterletskyi.happyfriend.features.pin.ui
 
 import android.content.Context
 import android.graphics.Canvas
