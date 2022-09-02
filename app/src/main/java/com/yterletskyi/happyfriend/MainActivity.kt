@@ -44,9 +44,8 @@ class MainActivity @Inject constructor(pinCodeController: PinCodeController) : A
 
         if (pinCodeController_.pinCode.pin.equals(null)) {
             navGraph.setStartDestination(R.id.setupPinScreen)
-            navController.setGraph(navGraph.id);
-        }
-        else {
+            navController.setGraph(navGraph.id)
+        } else {
             navGraph.setStartDestination(R.id.pinScreen)
             navController.setGraph(navGraph.id)
         }
