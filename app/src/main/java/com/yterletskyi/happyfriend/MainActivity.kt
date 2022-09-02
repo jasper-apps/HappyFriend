@@ -13,7 +13,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity @Inject constructor(pinCodeController: PinCodeController) : AppCompatActivity() {
+class MainActivity @Inject constructor(
+    pinCodeController: PinCodeController
+) : AppCompatActivity() {
 
     private val bottomTabIds = setOf(
         R.id.friendsScreen,
@@ -26,6 +28,8 @@ class MainActivity @Inject constructor(pinCodeController: PinCodeController) : A
         (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
             .navController
     }
+    val inflater = navController.navInflater
+    private val graph = inflater.inflate(R.navigation.mobile_navigation)
 
     private lateinit var onDestinationChangeListener: NavController.OnDestinationChangedListener
 
@@ -40,15 +44,12 @@ class MainActivity @Inject constructor(pinCodeController: PinCodeController) : A
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
 
-        val navGraph = navController.graph
-
         if (pinCodeController_.pinCode.pin.equals(null)) {
-            navGraph.setStartDestination(R.id.setupPinScreen)
-            navController.setGraph(navGraph.id)
+            graph.setStartDestination(R.id.setupPinScreen)
         } else {
-            navGraph.setStartDestination(R.id.pinScreen)
-            navController.setGraph(navGraph.id)
+            graph.setStartDestination(R.id.pinScreen)
         }
+        navController.setGraph(graph, intent.extras)
     }
 
     override fun onDestroy() {
