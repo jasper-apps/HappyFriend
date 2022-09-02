@@ -13,29 +13,32 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity @Inject constructor(
-    pinCodeController: PinCodeController
-) : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val bottomTabIds = setOf(
         R.id.friendsScreen,
         R.id.settingsScreen,
     )
 
-    private val pinCodeController_ = pinCodeController
-
-    private val navController by lazy {
-        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
-            .navController
-    }
-    val inflater = navController.navInflater
-    private val graph = inflater.inflate(R.navigation.mobile_navigation)
+    @Inject
+    lateinit var pinCodeController: PinCodeController
 
     private lateinit var onDestinationChangeListener: NavController.OnDestinationChangedListener
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view = inflateView()
+
+        pinCodeController.initialize()
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        navController = navHostFragment.navController
+
+        val inflater = navController.navInflater
+        val graph = inflater.inflate(R.navigation.mobile_navigation)
 
         onDestinationChangeListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -44,7 +47,7 @@ class MainActivity @Inject constructor(
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
 
-        if (pinCodeController_.pinCode.pin.equals(null)) {
+        if (pinCodeController.pinCode?.pin.equals(null)) {
             graph.setStartDestination(R.id.setupPinScreen)
         } else {
             graph.setStartDestination(R.id.pinScreen)
@@ -54,6 +57,7 @@ class MainActivity @Inject constructor(
 
     override fun onDestroy() {
         super.onDestroy()
+        pinCodeController.destroy()
         navController.removeOnDestinationChangedListener(onDestinationChangeListener)
     }
 

@@ -4,30 +4,22 @@ import android.content.SharedPreferences
 import com.yterletskyi.happyfriend.common.LifecycleComponent
 
 interface PinCodeController : LifecycleComponent {
-    val pinCode: PinCode
-}
-
-interface InternalPinCodeController : PinCodeController {
-    fun getPin(): PinCode?
+    val pinCode: PinCode?
     fun savePinCode(pinCode: PinCode?)
 }
 
 class SharedPrefPinCodeController(
     private val sharedPreferences: SharedPreferences
-) : InternalPinCodeController {
+) : PinCodeController {
 
-    override lateinit var pinCode: PinCode
+    override var pinCode: PinCode = PinCode("")
 
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { prefs: SharedPreferences, key: String ->
             if (key == KEY) {
-                pinCode.pin = prefs.toString()
+                pinCode.pin = prefs.getString(key, "")!!
             }
         }
-
-    override fun getPin(): PinCode {
-        return pinCode
-    }
 
     override fun savePinCode(pinCode: PinCode?) {
         sharedPreferences.edit()
