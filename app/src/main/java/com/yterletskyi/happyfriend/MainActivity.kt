@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val view = inflateView()
 
-        pinCodeController.initialize()
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
 
-        if (pinCodeController.pinCode?.pin.equals(null)) {
+        if (pinCodeController.getPinCode() == null) {
             graph.setStartDestination(R.id.setupPinScreen)
         } else {
             graph.setStartDestination(R.id.pinScreen)
@@ -57,7 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        pinCodeController.destroy()
         navController.removeOnDestinationChangedListener(onDestinationChangeListener)
     }
 
