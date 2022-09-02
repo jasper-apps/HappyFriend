@@ -24,19 +24,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var pinCodeController: PinCodeController
 
     private lateinit var onDestinationChangeListener: NavController.OnDestinationChangedListener
-    private lateinit var navController: NavController
+
+    private val navController: NavController by lazy {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view = inflateView()
-
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        navController = navHostFragment.navController
-
-        val inflater = navController.navInflater
-        val graph = inflater.inflate(R.navigation.mobile_navigation)
 
         onDestinationChangeListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -45,12 +42,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener(onDestinationChangeListener)
         view.navBar.setupWithNavController(navController)
 
-        if (pinCodeController.getPinCode() == null) {
-            graph.setStartDestination(R.id.setupPinScreen)
-        } else {
-            graph.setStartDestination(R.id.pinScreen)
-        }
-        navController.setGraph(graph, intent.extras)
+        inflateGraph()
     }
 
     override fun onDestroy() {
@@ -63,5 +55,16 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(inflater)
         setContentView(binding.root)
         return binding
+    }
+
+    private fun inflateGraph() {
+        val graph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+
+        val startDestination = pinCodeController.getPinCode()
+            ?.let { R.id.pinScreen }
+            ?: R.id.setupPinScreen
+
+        graph.setStartDestination(startDestination)
+        navController.setGraph(graph, intent.extras)
     }
 }

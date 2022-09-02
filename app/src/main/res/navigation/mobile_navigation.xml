@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/setupPinScreen">
+    android:id="@+id/mobile_navigation">
 
     <fragment
         android:id="@+id/setupPinScreen"
@@ -27,14 +26,14 @@
 
         <argument
             android:name="error"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 
 
     <fragment
-        android:label="@string/title_contacts"
         android:id="@+id/contactsScreen"
         android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
+        android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
 
     <fragment
@@ -49,9 +48,9 @@
     </fragment>
 
     <fragment
-        android:label="@string/title_friends"
         android:id="@+id/friendsScreen"
         android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
+        android:label="@string/title_friends"
         tools:layout="@layout/fragment_friends">
 
         <action
@@ -71,8 +70,8 @@
     </fragment>
 
     <fragment
-        android:label="@string/title_settings"
         android:id="@+id/settingsScreen"
         android:name="com.yterletskyi.happyfriend.features.settings.ui.SettingsFragment"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
