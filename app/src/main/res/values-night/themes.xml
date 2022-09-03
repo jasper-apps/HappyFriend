@@ -15,7 +15,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Customize your theme here. -->
-        <item name="textColorPrimary">@android:color/white</item>
+        <item name="textColorPrimary">@color/mercury</item>
         <item name="textColorSecondary">@color/silver</item>
         
         <item name="colorOnSurface">@color/mine_shaft</item>
