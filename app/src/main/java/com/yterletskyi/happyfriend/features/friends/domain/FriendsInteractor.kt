@@ -79,7 +79,7 @@ class FriendsInteractorImpl @Inject constructor(
             friendModelItems
                 .apply {
                     val title = context.getString(R.string.title_my_wishlist_item)
-                    val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
+                    val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_round_self_improvement_24)
                     add(
                         FriendModelItem(
                             id = myWishlistModel.id,
@@ -97,7 +97,7 @@ class FriendsInteractorImpl @Inject constructor(
             val generalIdeasModel = friends.single { it.id == GlobalFriends.GeneralIdeas.id }
             friendModelItems.apply {
                 val title = context.getString(R.string.title_general_ideas_item)
-                val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_gift_box)
+                val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_outline_lightbulb_24)
                 add(
                     FriendModelItem(
                         id = generalIdeasModel.id,
