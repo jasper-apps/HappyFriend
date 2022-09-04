@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="?attr/actionBarSize"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <ImageButton
@@ -9,24 +10,28 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@null"
+        android:paddingHorizontal="24dp"
         android:src="@drawable/item_menu_friends"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@id/btnSettings"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap"
+        tools:background="#112233" />
 
     <ImageButton
         android:id="@+id/btnSettings"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@null"
+        android:paddingHorizontal="24dp"
         android:src="@drawable/item_menu_settings"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnFriends"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap"
+        tools:background="#112233" />
 
     <View
         android:layout_width="0dp"
