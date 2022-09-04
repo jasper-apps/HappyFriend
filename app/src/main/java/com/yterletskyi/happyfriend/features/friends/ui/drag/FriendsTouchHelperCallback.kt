@@ -3,10 +3,13 @@ package com.yterletskyi.happyfriend.features.friends.ui.drag
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
-import androidx.recyclerview.widget.ItemTouchHelper.LEFT
+import androidx.recyclerview.widget.ItemTouchHelper.START
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
+import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.common.x.dp
+import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
+import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.ui.FriendsAdapterDelegate
 
 class FriendsTouchHelperCallback(
@@ -14,7 +17,7 @@ class FriendsTouchHelperCallback(
     private val onFriendSwiped: (index: Int) -> Unit,
     private val onSwipeEnded: () -> Unit,
     private val onDragEnded: () -> Unit,
-) : ItemTouchHelper.SimpleCallback(UP or DOWN, LEFT) {
+) : ItemTouchHelper.SimpleCallback(0, 0) {
 
     private var lastActionState: Int = ItemTouchHelper.ACTION_STATE_DRAG
 
@@ -30,6 +33,30 @@ class FriendsTouchHelperCallback(
         super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
         recyclerView.adapter?.notifyItemMoved(fromPos, toPos)
         onFriendMoved(fromPos, toPos)
+    }
+
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        val adapter = recyclerView.adapter as? RecyclerDelegationAdapter
+            ?: throw IllegalStateException(
+                "Adapter cannot be cast to RecyclerDelegationAdapter or not set"
+            )
+
+        val model = adapter.getItem(viewHolder.adapterPosition) as? FriendModelItem
+            ?: throw IllegalStateException(
+                "Only FriendModelItem view type is supported by this class"
+            )
+
+        val dragFlags = UP or DOWN
+        val swipeFlats = when (model.id) {
+            GlobalFriends.MyWishlistFriend.id,
+            GlobalFriends.GeneralIdeas.id -> 0
+            else -> START
+        }
+
+        return makeMovementFlags(dragFlags, swipeFlats)
     }
 
     override fun onMove(
