@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.yterletskyi.happyfriend.databinding.ActivityMainBinding
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .setLaunchSingleTop(true)
                 .setRestoreState(true)
                 .setPopUpTo(
-                    navController.graph.findStartDestination().id,
+                    navController.graph.id,
                     inclusive = true,
                     saveState = true
                 )
