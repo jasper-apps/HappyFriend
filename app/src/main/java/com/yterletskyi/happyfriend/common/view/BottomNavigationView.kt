@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
-import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.databinding.ViewBottomNavBinding
 
 class BottomNavigationView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
     private var _binding: ViewBottomNavBinding? = null
