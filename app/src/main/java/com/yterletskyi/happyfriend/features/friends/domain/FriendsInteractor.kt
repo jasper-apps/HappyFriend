@@ -7,7 +7,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LifecycleComponent
-import com.yterletskyi.happyfriend.common.drawable.AvatarDrawable
+import com.yterletskyi.happyfriend.common.drawable.AvatarInitialsDrawable
+import com.yterletskyi.happyfriend.common.drawable.RoundDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.Friend
@@ -64,7 +65,9 @@ class FriendsInteractorImpl @Inject constructor(
                 FriendModelItem(
                     id = fr.id,
                     contactId = fr.contactId,
-                    image = co!!.image ?: AvatarDrawable(co.initials),
+                    image = RoundDrawable(
+                        co!!.image ?: AvatarInitialsDrawable(co.initials)
+                    ),
                     fullName = co.name,
                     birthday = birthdayFormatter.format(co.birthday),
                     position = fr.position,
@@ -79,7 +82,10 @@ class FriendsInteractorImpl @Inject constructor(
             friendModelItems
                 .apply {
                     val title = context.getString(R.string.title_my_wishlist_item)
-                    val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_round_self_improvement_24)
+                    val drawable = AppCompatResources.getDrawable(
+                        context,
+                        R.drawable.ic_round_self_improvement_24
+                    )
                     add(
                         FriendModelItem(
                             id = myWishlistModel.id,
@@ -97,7 +103,8 @@ class FriendsInteractorImpl @Inject constructor(
             val generalIdeasModel = friends.single { it.id == GlobalFriends.GeneralIdeas.id }
             friendModelItems.apply {
                 val title = context.getString(R.string.title_general_ideas_item)
-                val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_outline_lightbulb_24)
+                val drawable =
+                    AppCompatResources.getDrawable(context, R.drawable.ic_outline_lightbulb_24)
                 add(
                     FriendModelItem(
                         id = generalIdeasModel.id,

@@ -8,29 +8,21 @@ import android.graphics.drawable.PaintDrawable
 import androidx.annotation.ColorInt
 import com.yterletskyi.happyfriend.common.x.sp
 
-/**
- * @param cornerRadius - set [Float.MAX_VALUE] to make the drawable round
- */
-class AvatarDrawable(
-    private val text: String,
+class AvatarInitialsDrawable(
+    private val initials: String,
     private val textSize: Float = 18.sp,
     @ColorInt private val bgColor: Int = Color.parseColor("#3700B3"),
     @ColorInt private val textColor: Int = Color.parseColor("#ffffff"),
-    cornerRadius: Float = Float.MAX_VALUE,
 ) : PaintDrawable(bgColor) {
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = textColor
         typeface = Typeface.DEFAULT
-        textSize = this@AvatarDrawable.textSize
+        textSize = this@AvatarInitialsDrawable.textSize
     }
 
     private val fontHeight by lazy { textPaint.fontMetrics.run { top + bottom }.toInt() }
-    private val fontWidth by lazy { textPaint.measureText(text).toInt() }
-
-    init {
-        setCornerRadius(cornerRadius)
-    }
+    private val fontWidth by lazy { textPaint.measureText(initials).toInt() }
 
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
@@ -41,7 +33,7 @@ class AvatarDrawable(
         val x = (w - fontWidth) / 2f
         val y = (h - fontHeight) / 2f
 
-        canvas.drawText(text, x, y, textPaint)
+        canvas.drawText(initials, x, y, textPaint)
     }
 
     override fun getIntrinsicWidth(): Int = SIZE

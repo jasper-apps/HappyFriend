@@ -1,7 +1,8 @@
 package com.yterletskyi.happyfriend.features.contacts.domain
 
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
-import com.yterletskyi.happyfriend.common.drawable.AvatarDrawable
+import com.yterletskyi.happyfriend.common.drawable.AvatarInitialsDrawable
+import com.yterletskyi.happyfriend.common.drawable.RoundDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.initials
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
@@ -28,7 +29,9 @@ class ContactsInteractorImpl @Inject constructor(
             .map { co ->
                 ContactModelItem(
                     id = co.id,
-                    image = co.image ?: AvatarDrawable(co.initials),
+                    image = RoundDrawable(
+                        co.image ?: AvatarInitialsDrawable(co.initials)
+                    ),
                     fullName = co.name,
                     birthday = birthdayFormatter.format(co.birthday),
                     isFriend = friends.find { fr -> fr.contactId == co.id } != null
