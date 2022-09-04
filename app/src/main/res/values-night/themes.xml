@@ -16,7 +16,7 @@
 
         <!-- Customize your theme here. -->
         <item name="textColorPrimary">@color/mercury</item>
-        <item name="textColorSecondary">@color/silver</item>
+        <item name="textColorSecondary">@color/silver_chalice</item>
         
         <item name="colorOnSurface">@color/mine_shaft</item>
         
