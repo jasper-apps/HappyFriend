@@ -5,9 +5,10 @@ import android.database.Cursor
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.ContactsContract
-import android.util.Log
 import androidx.core.net.toUri
 import com.yterletskyi.happyfriend.common.BirthdayParser
+import com.yterletskyi.happyfriend.common.logger.Logger
+import com.yterletskyi.happyfriend.common.logger.loggers
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,8 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
     private val initialContactsFlow: MutableStateFlow<List<Contact>>,
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
+
+    private val logger: Logger by loggers()
 
     private var contactBirthdayMap = queryBirthdays()
 
@@ -49,7 +52,7 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
                 list.add(contact)
             }
         }
-        Log.i("info23", "returned ${list.size} contacts")
+        logger.info("returned ${list.size} contacts")
         initialContactsFlow.value = list
     }
 
