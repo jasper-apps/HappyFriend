@@ -9,6 +9,9 @@ import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happyfriend.common.data.AppDatabase
+import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
+import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
+import com.yterletskyi.happyfriend.features.friends.data.DemoFriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.RoomFriendsDataSource
@@ -53,9 +56,25 @@ object GlobalDi {
 
     @Provides
     @Singleton
-    fun provideFriendsDataSource(friendsDao: FriendsDao): FriendsDataSource {
-        return RoomFriendsDataSource(friendsDao)
+    fun provideContactsDataSource(
+        @ApplicationContext context: Context,
+    ): ContactsDataSource {
+        return DemoContactsDataSource(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideFriendsDataSource(
+        contactsDataSource: ContactsDataSource,
+    ): FriendsDataSource {
+        return DemoFriendsDataSource(contactsDataSource)
+    }
+
+    // @Provides
+    // @Singleton
+    // fun provideFriendsDataSource(friendsDao: FriendsDao): FriendsDataSource {
+    //     return RoomFriendsDataSource(friendsDao)
+    // }
 
     @Provides
     @Singleton
