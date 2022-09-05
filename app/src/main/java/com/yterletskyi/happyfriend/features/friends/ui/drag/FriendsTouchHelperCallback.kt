@@ -1,13 +1,11 @@
 package com.yterletskyi.happyfriend.features.friends.ui.drag
 
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.START
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
-import com.yterletskyi.happyfriend.common.x.dp
 import com.yterletskyi.happyfriend.features.friends.data.GlobalFriends
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.ui.FriendsAdapterDelegate
@@ -73,27 +71,12 @@ class FriendsTouchHelperCallback(
         onFriendSwiped(viewHolder.adapterPosition)
     }
 
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        super.onSelectedChanged(viewHolder, actionState)
-
-        if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-            viewHolder?.itemView?.let {
-                ViewCompat.setElevation(it, DRAG_HIGHLIGHT_ELEVATION)
-            }
-        }
-    }
-
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        ViewCompat.setElevation(viewHolder.itemView, 0f)
         when (lastActionState) {
             ItemTouchHelper.ACTION_STATE_DRAG -> onDragEnded()
             ItemTouchHelper.ACTION_STATE_SWIPE -> onSwipeEnded()
         }
         lastActionState = ItemTouchHelper.ACTION_STATE_IDLE
-    }
-
-    companion object {
-        private val DRAG_HIGHLIGHT_ELEVATION = 8f.dp
     }
 }

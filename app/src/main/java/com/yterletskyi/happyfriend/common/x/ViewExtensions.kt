@@ -1,7 +1,10 @@
 package com.yterletskyi.happyfriend.common.x
 
+import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 
 val Int.dp: Int get() = (Resources.getSystem().displayMetrics.density * this).toInt()
 
@@ -20,3 +23,8 @@ inline val Int.sp: Float
         this.toFloat(),
         Resources.getSystem().displayMetrics
     )
+
+@ColorInt
+fun Context.getThemeColor(@AttrRes attrRes: Int): Int = TypedValue()
+    .apply { theme.resolveAttribute(attrRes, this, true) }
+    .data

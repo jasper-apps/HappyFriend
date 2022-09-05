@@ -26,7 +26,7 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
                     SwitchSettingAdapter(viewModel::changeBooleanSetting)
                 )
                 addItemDecoration(
-                    SettingsLineItemDecoration()
+                    SettingsLineItemDecoration(view.context)
                 )
                 addDelegate(
                     TextSettingAdapter()
