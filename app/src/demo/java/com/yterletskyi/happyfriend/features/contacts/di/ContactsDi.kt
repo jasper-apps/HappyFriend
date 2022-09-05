@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.features.contacts
+package com.yterletskyi.happyfriend.features.contacts.di
 
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.BirthdayParser
