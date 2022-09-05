@@ -8,6 +8,7 @@
     <string name="phrase3">Be attentive, there is no way to restore a \n lost PIN so far.</string>
     <string name="action_button_next">Next</string>
     <string name="pin_enter_title">Enter a pin</string>
+    <string name="pin_enter_error">Wrong PIN</string>
 
     <string name="pin_button_one">1</string>
     <string name="pin_button_two">2</string>
