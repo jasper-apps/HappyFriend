@@ -19,9 +19,9 @@ class DemoContactsDataSource(
         listOf(
             Contact(
                 id = id.getAndIncrement(),
-                name = "Bryan Weaver",
-                image = AppCompatResources.getDrawable(context, R.drawable.ic_man_1),
-                birthday = LocalDate.of(0, 6, 21)
+                name = "Galen Truitt",
+                image = AppCompatResources.getDrawable(context, R.drawable.ic_man_2),
+                birthday = LocalDate.of(0, 3, 17)
             ),
             Contact(
                 id = id.getAndIncrement(),
@@ -43,9 +43,9 @@ class DemoContactsDataSource(
             ),
             Contact(
                 id = id.getAndIncrement(),
-                name = "Galen Truitt",
-                image = AppCompatResources.getDrawable(context, R.drawable.ic_man_2),
-                birthday = LocalDate.of(0, 3, 17)
+                name = "Bryan Weaver",
+                image = AppCompatResources.getDrawable(context, R.drawable.ic_man_1),
+                birthday = LocalDate.of(0, 6, 21)
             ),
             Contact(
                 id = id.getAndIncrement(),
