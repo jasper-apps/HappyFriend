@@ -10,7 +10,6 @@
         android:id="@+id/pin_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pin_enter_title"
         android:textSize="20sp"
         android:textColor="?attr/textColorPrimary"
         app:layout_constraintTop_toTopOf="parent"
