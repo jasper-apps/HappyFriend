@@ -1,6 +1,7 @@
 package com.yterletskyi.happyfriend.features.contacts.data
 
-import android.util.Log
+import com.yterletskyi.happyfriend.common.logger.Logger
+import com.yterletskyi.happyfriend.common.logger.logcatLogger
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -9,13 +10,15 @@ class TimeMeasuredContactsDataSource(
     private val impl: ContactsDataSource
 ) : ContactsDataSource by impl {
 
+    private val logger: Logger by logcatLogger()
+
     init {
-        Log.i("info23", "initializing contacts data source")
+        logger.info("initializing contacts data source")
     }
 
     override fun search(query: String) {
-        Log.i("info23", "searching for <$query>")
+        logger.info("searching for <$query>")
         val time = measureTime { impl.search(query) }
-        Log.i("info23", "getContacts with query=<$query> took <${time.inSeconds}> sec")
+        logger.info("getContacts with query=<$query> took <${time.inSeconds}> sec")
     }
 }
