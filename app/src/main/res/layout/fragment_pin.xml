@@ -6,16 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".features.pin.ui.PinFragment">
 
+    <TextView
+        android:id="@+id/pin_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="?attr/textColorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/pinProgressView"
+        tools:text="@string/pin_enter_title"/>
+
+
     <com.yterletskyi.happyfriend.features.pin.ui.PinProgressView
         android:id="@+id/pinProgressView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:defaultCircleColor="@color/mercury"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:progressCircleColor="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/pin_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/colorError"
+        app:layout_constraintTop_toBottomOf="@id/pinProgressView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/pin_enter_error" />
 
     <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardView
         android:id="@+id/pinKeyboardView"
@@ -25,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pinProgressView"
+        app:layout_constraintTop_toBottomOf="@id/pin_error"
         app:layout_constraintVertical_bias="0.9"
         app:layout_constraintWidth_percent="0.75" />
 
