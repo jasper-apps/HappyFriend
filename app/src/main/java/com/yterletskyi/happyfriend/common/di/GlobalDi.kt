@@ -14,10 +14,9 @@ import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.DemoFriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
-import com.yterletskyi.happyfriend.features.friends.data.RoomFriendsDataSource
+import com.yterletskyi.happyfriend.features.ideas.data.DemoIdeasDataSource
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDao
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDataSource
-import com.yterletskyi.happyfriend.features.ideas.data.RoomIdeasDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -78,9 +77,15 @@ object GlobalDi {
 
     @Provides
     @Singleton
-    fun provideIdeasDataSource(ideasDao: IdeasDao): IdeasDataSource {
-        return RoomIdeasDataSource(ideasDao)
+    fun provideIdeasDataSource(): IdeasDataSource {
+        return DemoIdeasDataSource()
     }
+    //
+    // @Provides
+    // @Singleton
+    // fun provideIdeasDataSource(ideasDao: IdeasDao): IdeasDataSource {
+    //     return RoomIdeasDataSource(ideasDao)
+    // }
 
     @Provides
     fun provideBirthdayFormatter(): BirthdayFormatter =
