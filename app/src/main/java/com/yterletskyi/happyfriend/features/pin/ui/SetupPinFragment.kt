@@ -20,7 +20,7 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
                         R.string.pin_enter_title
                     ),
                     ""
-                )
+                ,"")
                 findNavController().navigate(action)
             }
         }

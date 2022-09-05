@@ -27,6 +27,28 @@
         <argument
             android:name="error"
             app:argType="string" />
+
+        <argument
+            android:name="pin_value"
+            app:argType="string"/>
+
+        <action
+            android:id="@+id/toPinScreen"
+            app:destination="@id/pinScreen">
+            <argument
+                android:name="title"
+                app:argType="string" />
+
+            <argument
+                android:name="error"
+                app:argType="string" />
+            <argument
+                android:name="pin_value"
+                app:argType="string"/>
+        </action>
+
+        <action android:id="@+id/toContactsScreen"
+            app:destination="@id/contactsScreen" />
     </fragment>
 
 

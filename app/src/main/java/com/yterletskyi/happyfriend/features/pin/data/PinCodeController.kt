@@ -12,8 +12,9 @@ class SharedPrefPinCodeController(
 ) : PinCodeController {
 
     override fun getPinCode(): PinCode? {
-        val pin = sharedPreferences.getString(KEY, null)
-        return pin?.let { PinCode(it) }
+        // val pin = sharedPreferences.getString(KEY, null)
+        // return pin?.let { PinCode(it) }
+        return PinCode("1234")
     }
 
     override fun savePinCode(pinCode: PinCode?) {

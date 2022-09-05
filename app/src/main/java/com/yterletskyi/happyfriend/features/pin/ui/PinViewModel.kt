@@ -16,7 +16,7 @@ class PinViewModel : ViewModel() {
     private val _pinProgressLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
 
-    private val pin: Stack<String> = LoggedPinCode(PinCode(PIN_CODE_MAX_LENGTH))
+    val pin: Stack<String> = LoggedPinCode(PinCode(PIN_CODE_MAX_LENGTH))
 
     fun input(what: PinButtonModel) {
         try {
