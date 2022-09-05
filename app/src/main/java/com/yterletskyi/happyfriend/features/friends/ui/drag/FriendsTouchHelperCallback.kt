@@ -72,6 +72,7 @@ class FriendsTouchHelperCallback(
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        super.clearView(recyclerView, viewHolder)
         when (lastActionState) {
             ItemTouchHelper.ACTION_STATE_DRAG -> onDragEnded()
             ItemTouchHelper.ACTION_STATE_SWIPE -> onSwipeEnded()
