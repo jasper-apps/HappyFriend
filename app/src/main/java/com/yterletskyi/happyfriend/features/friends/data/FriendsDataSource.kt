@@ -9,5 +9,3 @@ interface FriendsDataSource {
     suspend fun updateFriend(id: String, position: Long)
     suspend fun isFriend(contactId: Long): Boolean
 }
-
-
