@@ -47,16 +47,16 @@ android {
     flavorDimensions "version"
     productFlavors {
         full
-        demo
+        demoEng
     }
     sourceSets {
         full {
             java.srcDirs = ['src/full/java']
             res.srcDirs = ['src/full/java/res']
         }
-        demo {
-            java.srcDirs = ['src/demo/java']
-            res.srcDirs = ['src/demo/java/res']
+        demoEng {
+            java.srcDirs = ['src/demoEng/java']
+            res.srcDirs = ['src/demoEng/java/res']
         }
     }
 }
