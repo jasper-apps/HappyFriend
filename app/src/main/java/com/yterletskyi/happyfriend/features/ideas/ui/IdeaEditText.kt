@@ -6,7 +6,7 @@ import android.view.KeyEvent
 import android.view.View.OnFocusChangeListener
 import androidx.appcompat.widget.AppCompatEditText
 import com.yterletskyi.happyfriend.common.logger.Logger
-import com.yterletskyi.happyfriend.common.logger.loggers
+import com.yterletskyi.happyfriend.common.logger.logcatLogger
 import com.yterletskyi.happyfriend.common.x.setTextNoTextWatcher
 
 class IdeaEditText @JvmOverloads constructor(
@@ -14,7 +14,7 @@ class IdeaEditText @JvmOverloads constructor(
     attrs: AttributeSet? = null,
 ) : AppCompatEditText(context, attrs) {
 
-    private val logger: Logger by loggers()
+    private val logger: Logger by logcatLogger()
 
     var onNewIdeaRequested: ((String) -> Unit)? = null
     var onRemoveIdeaRequested: (() -> Unit)? = null

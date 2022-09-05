@@ -1,7 +1,7 @@
 package com.yterletskyi.happyfriend.features.contacts.data
 
 import com.yterletskyi.happyfriend.common.logger.Logger
-import com.yterletskyi.happyfriend.common.logger.loggers
+import com.yterletskyi.happyfriend.common.logger.logcatLogger
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -10,7 +10,7 @@ class TimeMeasuredContactsDataSource(
     private val impl: ContactsDataSource
 ) : ContactsDataSource by impl {
 
-    private val logger: Logger by loggers()
+    private val logger: Logger by logcatLogger()
 
     init {
         logger.info("initializing contacts data source")

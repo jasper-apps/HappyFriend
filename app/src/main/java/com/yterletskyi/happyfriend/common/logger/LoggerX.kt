@@ -1,6 +1,6 @@
 package com.yterletskyi.happyfriend.common.logger
 
-inline fun <reified C : Any> C.loggers(
+inline fun <reified C : Any> C.logcatLogger(
     noinline tag: () -> String? = { C::class.simpleName }
 ): Lazy<Logger> {
     return lazy {

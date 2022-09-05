@@ -8,7 +8,7 @@ import android.provider.ContactsContract
 import androidx.core.net.toUri
 import com.yterletskyi.happyfriend.common.BirthdayParser
 import com.yterletskyi.happyfriend.common.logger.Logger
-import com.yterletskyi.happyfriend.common.logger.loggers
+import com.yterletskyi.happyfriend.common.logger.logcatLogger
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
 
-    private val logger: Logger by loggers()
+    private val logger: Logger by logcatLogger()
 
     private var contactBirthdayMap = queryBirthdays()
 
