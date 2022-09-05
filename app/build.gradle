@@ -43,6 +43,20 @@ android {
             includeAndroidResources = true
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        full
+        demo
+    }
+    sourceSets {
+        full {
+            java.srcDirs = ['src/full/java']
+        }
+        demo {
+            java.srcDirs = ['src/demo/java']
+        }
+    }
 }
 
 dependencies {

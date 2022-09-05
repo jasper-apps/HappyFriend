@@ -10,11 +10,11 @@ import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happyfriend.common.data.AppDatabase
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
-import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.DemoFriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.ideas.data.DemoIdeasDataSource
+import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDao
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDataSource
 import dagger.Module
@@ -54,7 +54,6 @@ object GlobalDi {
     }
 
     @Provides
-    @Singleton
     fun provideContactsDataSource(
         @ApplicationContext context: Context,
     ): ContactsDataSource {
@@ -69,23 +68,11 @@ object GlobalDi {
         return DemoFriendsDataSource(contactsDataSource)
     }
 
-    // @Provides
-    // @Singleton
-    // fun provideFriendsDataSource(friendsDao: FriendsDao): FriendsDataSource {
-    //     return RoomFriendsDataSource(friendsDao)
-    // }
-
     @Provides
     @Singleton
     fun provideIdeasDataSource(): IdeasDataSource {
         return DemoIdeasDataSource()
     }
-    //
-    // @Provides
-    // @Singleton
-    // fun provideIdeasDataSource(ideasDao: IdeasDao): IdeasDataSource {
-    //     return RoomIdeasDataSource(ideasDao)
-    // }
 
     @Provides
     fun provideBirthdayFormatter(): BirthdayFormatter =
