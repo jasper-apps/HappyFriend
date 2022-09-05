@@ -64,6 +64,12 @@ class SettingsInteractorImpl @Inject constructor(
     }
 
     override suspend fun enableGeneralIdeas(enable: Boolean) {
+        if (!enable) {
+            friendsDao.updateFriend(
+                GlobalFriends.GeneralIdeas.id,
+                GlobalFriends.GeneralIdeas.position
+            )
+        }
         generalIdeasController.setGeneralIdeasEnabled(enable)
     }
 
