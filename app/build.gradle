@@ -26,6 +26,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,16 +52,37 @@ android {
     flavorDimensions "version"
     productFlavors {
         full
-        demoEng
+        demo {
+            buildConfigField "String", "ASSET_NAME_IDEAS", "\"placeholder\""
+            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"placeholder\""
+        }
+        demoEng {
+            buildConfigField "String", "ASSET_NAME_IDEAS", "\"ideas.json\""
+            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"contacts.json\""
+        }
+        demoUkr {
+            buildConfigField "String", "ASSET_NAME_IDEAS", "\"ideas.json\""
+            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"contacts.json\""
+        }
     }
     sourceSets {
         full {
             java.srcDirs = ['src/full/java']
             res.srcDirs = ['src/full/java/res']
         }
+        demo {
+            java.srcDirs = ['src/demo/java']
+            res.srcDirs = ['src/demo/java/res']
+        }
         demoEng {
-            java.srcDirs = ['src/demoEng/java']
-            res.srcDirs = ['src/demoEng/java/res']
+            java.srcDirs = ['src/demo/java']
+            res.srcDirs = ['src/demo/java/res']
+            assets.srcDirs 'src/demoEng/assets'
+        }
+        demoUkr {
+            java.srcDirs = ['src/demo/java']
+            res.srcDirs = ['src/demo/java/res']
+            assets.srcDirs 'src/demoUkr/assets'
         }
     }
 }

@@ -1,15 +1,20 @@
-package com.yterletskyi.happyfriend.common.di
+package com.yterletskyi.happyfriend.features.contacts.di
 
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.AssetManager
 import android.preference.PreferenceManager
 import androidx.room.Room
 import com.yterletskyi.happyfriend.App
+import com.yterletskyi.happyfriend.BuildConfig
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happyfriend.common.data.AppDatabase
+import com.yterletskyi.happyfriend.common.data.FromAssetsDataSource
+import com.yterletskyi.happyfriend.common.di.PrepopulateGeneralIdeasList
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
+import com.yterletskyi.happyfriend.common.di.PrepopulateMyWishlistFriend
 import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.DemoFriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
@@ -27,7 +32,24 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object GlobalDi {
+object GlobalAi {
+
+    @Provides
+    fun provideContactsDataSource(
+        assetManager: AssetManager
+    ): ContactsDataSource {
+        return DemoContactsDataSource(
+            fromAssetsDataSource = FromAssetsDataSource(
+                path = BuildConfig.ASSET_NAME_CONTACTS,
+                assets = assetManager,
+            )
+        )
+    }
+
+    @Provides
+    fun provideAssetsManager(@ApplicationContext context: Context): AssetManager {
+        return context.assets
+    }
 
     @Provides
     @Singleton
@@ -54,13 +76,6 @@ object GlobalDi {
     }
 
     @Provides
-    fun provideContactsDataSource(
-        @ApplicationContext context: Context,
-    ): ContactsDataSource {
-        return DemoContactsDataSource(context)
-    }
-
-    @Provides
     @Singleton
     fun provideFriendsDataSource(
         contactsDataSource: ContactsDataSource,
@@ -70,8 +85,13 @@ object GlobalDi {
 
     @Provides
     @Singleton
-    fun provideIdeasDataSource(): IdeasDataSource {
-        return DemoIdeasDataSource()
+    fun provideIdeasDataSource(assetManager: AssetManager): IdeasDataSource {
+        return DemoIdeasDataSource(
+            fromAssetsDataSource = FromAssetsDataSource(
+                path = BuildConfig.ASSET_NAME_IDEAS,
+                assets = assetManager,
+            )
+        )
     }
 
     @Provides

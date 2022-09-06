@@ -32,7 +32,7 @@ class ContactsDi {
         return ContactsInteractorImpl(
             contactsDataSource,
             friendsDataSource,
-            birthdayFormatter
+            birthdayFormatter,
         )
     }
 }
