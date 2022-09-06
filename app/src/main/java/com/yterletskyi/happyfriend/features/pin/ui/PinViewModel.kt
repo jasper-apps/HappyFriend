@@ -21,8 +21,8 @@ class PinViewModel @Inject constructor(
 
     private val _pinProgressLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
-    val errorLiveData : MutableLiveData<Int> = MutableLiveData()
-    val directionsData : MutableLiveData<NavDirections> = MutableLiveData()
+    val errorLiveData: MutableLiveData<Int> = MutableLiveData()
+    val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
 
     val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
 
@@ -62,8 +62,3 @@ class PinViewModel @Inject constructor(
         const val PIN_CODE_MAX_LENGTH = 4
     }
 }
-
-
-
-
-

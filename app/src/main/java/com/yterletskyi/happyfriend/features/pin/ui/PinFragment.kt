@@ -28,7 +28,6 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
 
         viewModel.pinMaxLengthLiveData.observe(viewLifecycleOwner) { length ->
             binding.pinProgressView.steps = length
-
         }
 
         viewModel.pinProgressLiveData.observe(viewLifecycleOwner) { progress ->

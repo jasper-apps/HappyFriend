@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.yterletskyi.happyfriend.features.pin.domain.PinCode
 
 interface PinCodeController {
-    fun getPinCode() : PinCode?
+    fun getPinCode(): PinCode?
     fun savePinCode(pinCode: PinCode?)
 }
 
