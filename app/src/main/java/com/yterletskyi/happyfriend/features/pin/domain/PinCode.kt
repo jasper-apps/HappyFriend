@@ -31,6 +31,20 @@ class LoggedPinCode(
 
 class PinCode(private val maxLength: Int) : Stack<String>() {
 
+    constructor(pin : String) : this(pin.length) {
+        pin.forEach {
+            push(it.toString())
+        }
+    }
+
+    fun getPinCode() : String {
+        val pinCode : StringBuilder = StringBuilder()
+        super.elements().toList().forEach {
+            pinCode.append(it)
+        }
+        return pinCode.toString()
+    }
+
     override fun push(item: String): String {
         if (elementCount < maxLength) {
             return super.push(item)

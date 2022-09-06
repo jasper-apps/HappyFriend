@@ -1,9 +1,10 @@
 package com.yterletskyi.happyfriend.features.pin.data
 
 import android.content.SharedPreferences
+import com.yterletskyi.happyfriend.features.pin.domain.PinCode
 
 interface PinCodeController {
-    fun getPinCode(): PinCode?
+    fun getPinCode() : PinCode?
     fun savePinCode(pinCode: PinCode?)
 }
 
@@ -12,14 +13,13 @@ class SharedPrefPinCodeController(
 ) : PinCodeController {
 
     override fun getPinCode(): PinCode? {
-        // val pin = sharedPreferences.getString(KEY, null)
-        // return pin?.let { PinCode(it) }
-        return PinCode("1234")
+        val pin = sharedPreferences.getString(KEY, null)
+        return pin?.let { PinCode(it) }
     }
 
     override fun savePinCode(pinCode: PinCode?) {
         sharedPreferences.edit()
-            .putString(KEY, pinCode?.pin)
+            .putString(KEY, pinCode?.getPinCode())
             .apply()
     }
 
