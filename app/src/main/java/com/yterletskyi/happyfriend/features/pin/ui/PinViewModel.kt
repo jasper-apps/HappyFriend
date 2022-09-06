@@ -52,6 +52,7 @@ class PinViewModel @Inject constructor(
                 }
                 else -> {
                     errorLiveData.value = R.string.pin_enter_error
+                    pin.clear()
                 }
             }
         }
