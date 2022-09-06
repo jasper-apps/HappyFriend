@@ -52,37 +52,35 @@ android {
     flavorDimensions "version"
     productFlavors {
         full
-        demo {
-            buildConfigField "String", "ASSET_NAME_IDEAS", "\"placeholder\""
-            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"placeholder\""
-        }
-        demoEng {
-            buildConfigField "String", "ASSET_NAME_IDEAS", "\"ideas.json\""
-            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"contacts.json\""
-        }
-        demoUkr {
-            buildConfigField "String", "ASSET_NAME_IDEAS", "\"ideas.json\""
-            buildConfigField "String", "ASSET_NAME_CONTACTS", "\"contacts.json\""
-        }
+        demoAbstract
+        demoEng
+        demoUkr
     }
     sourceSets {
         full {
             java.srcDirs = ['src/full/java']
             res.srcDirs = ['src/full/java/res']
         }
-        demo {
-            java.srcDirs = ['src/demo/java']
-            res.srcDirs = ['src/demo/java/res']
+        demoAbstract {
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
         }
         demoEng {
-            java.srcDirs = ['src/demo/java']
-            res.srcDirs = ['src/demo/java/res']
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
             assets.srcDirs 'src/demoEng/assets'
         }
         demoUkr {
-            java.srcDirs = ['src/demo/java']
-            res.srcDirs = ['src/demo/java/res']
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
             assets.srcDirs 'src/demoUkr/assets'
+        }
+    }
+    variantFilter { variant ->
+        variant.getFlavors().each { flavor ->
+            if (flavor.name == 'demoAbstract') {
+                variant.setIgnore(true)
+            }
         }
     }
 }

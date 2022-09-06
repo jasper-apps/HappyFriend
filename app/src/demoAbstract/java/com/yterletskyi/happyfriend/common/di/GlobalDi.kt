@@ -40,7 +40,7 @@ object GlobalAi {
     ): ContactsDataSource {
         return DemoContactsDataSource(
             fromAssetsDataSource = FromAssetsDataSource(
-                path = BuildConfig.ASSET_NAME_CONTACTS,
+                path = "contacts.json",
                 assets = assetManager,
             )
         )
@@ -88,7 +88,7 @@ object GlobalAi {
     fun provideIdeasDataSource(assetManager: AssetManager): IdeasDataSource {
         return DemoIdeasDataSource(
             fromAssetsDataSource = FromAssetsDataSource(
-                path = BuildConfig.ASSET_NAME_IDEAS,
+                path = "ideas.json",
                 assets = assetManager,
             )
         )
