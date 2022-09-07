@@ -24,7 +24,7 @@ class PinViewModel @Inject constructor(
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
     val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
 
-    val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
+    private val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
 
     fun input(what: PinButtonModel) {
         try {
@@ -46,8 +46,8 @@ class PinViewModel @Inject constructor(
             pinCodeController.savePinCode(pin)
             directionsData.value = PinFragmentDirections.toPinScreen(R.string.pin_repeat_title)
         } else {
-            when (pinCodeController.getPinCode()?.getPinCode()) {
-                pin.getPinCode() -> {
+            when (pinCodeController.getPinCode()?.toString()) {
+                pin.toString() -> {
                     directionsData.value = PinFragmentDirections.toFriendScreen()
                 }
                 else -> {

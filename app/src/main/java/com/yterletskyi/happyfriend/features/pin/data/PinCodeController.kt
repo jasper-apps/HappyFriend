@@ -19,7 +19,7 @@ class SharedPrefPinCodeController(
 
     override fun savePinCode(pinCode: PinCode?) {
         sharedPreferences.edit()
-            .putString(KEY, pinCode?.getPinCode())
+            .putString(KEY, pinCode?.toString())
             .apply()
     }
 

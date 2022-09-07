@@ -35,6 +35,7 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { error ->
+            binding.pinProgressView.step = 0
             binding.pinError.text = getString(error)
         }
         viewModel.directionsData.observe(viewLifecycleOwner) { direction ->

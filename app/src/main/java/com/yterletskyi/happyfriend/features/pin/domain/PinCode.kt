@@ -37,9 +37,9 @@ class PinCode(private val maxLength: Int) : Stack<String>() {
         }
     }
 
-    fun getPinCode(): String {
+    override fun toString(): String {
         val pinCode: StringBuilder = StringBuilder()
-        super.elements().toList().forEach {
+        elements().toList().forEach {
             pinCode.append(it)
         }
         return pinCode.toString()
