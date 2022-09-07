@@ -26,10 +26,6 @@ class FriendsViewModel @Inject constructor(
 
     private var removeFriendRequestMap: MutableMap<FriendModelItem, Job> = mutableMapOf()
 
-    private val friends: StateFlow<List<FriendModelItem>> = interactor.friendsFlow
-        .onEach { _friendsLiveData.value = it }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-
     private val _friendsLiveData: MutableLiveData<List<FriendModelItem>> = MutableLiveData()
     val friendsLiveData: LiveData<List<FriendModelItem>> = _friendsLiveData
         .map { items ->
@@ -38,6 +34,10 @@ class FriendsViewModel @Inject constructor(
                 it.id !in removePendingIds
             }
         }
+
+    private val friends: StateFlow<List<FriendModelItem>> = interactor.friendsFlow
+        .onEach { _friendsLiveData.value = it }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val showEmptyState: LiveData<Boolean> = friendsLiveData
         .map { it.isEmpty() }

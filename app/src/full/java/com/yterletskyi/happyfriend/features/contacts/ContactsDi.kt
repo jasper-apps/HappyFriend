@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.features.contacts.di
+package com.yterletskyi.happyfriend.features.contacts
 
 import android.content.ContentResolver
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
@@ -6,7 +6,6 @@ import com.yterletskyi.happyfriend.common.BirthdayParser
 import com.yterletskyi.happyfriend.features.contacts.data.Contact
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
-import com.yterletskyi.happyfriend.features.contacts.data.TimeMeasuredContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.domain.ContactsInteractor
 import com.yterletskyi.happyfriend.features.contacts.domain.ContactsInteractorImpl
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
@@ -26,12 +25,10 @@ class ContactsDi {
         initialContactsFlow: MutableStateFlow<List<Contact>>,
         birthdayParser: BirthdayParser
     ): ContactsDataSource {
-        return TimeMeasuredContactsDataSource(
-            FetchBirthdaysOnInitContactsDataSource(
-                contentResolver,
-                initialContactsFlow,
-                birthdayParser
-            )
+        return FetchBirthdaysOnInitContactsDataSource(
+            contentResolver,
+            initialContactsFlow,
+            birthdayParser
         )
     }
 
