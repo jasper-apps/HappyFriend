@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "1",
+    "name": "Григорій Многогрішний",
+    "image": "ic_man_2",
+    "birthday": "0,3,17"
+  },
+  {
+    "id": "2",
+    "name": "Мавка",
+    "image": "ic_woman_3",
+    "birthday": "0,10,24"
+  },
+  {
+    "id": "3",
+    "name": "Герасим Никодимович",
+    "image": "ic_man_3",
+    "birthday": null
+  },
+  {
+    "id": "4",
+    "name": "Марфа Яркова",
+    "image": "ic_woman_2",
+    "birthday": null
+  },
+  {
+    "id": "5",
+    "name": "Моя Утома",
+    "image": "ic_man_1",
+    "birthday": "0,6,21"
+  },
+  {
+    "id": "6",
+    "name": "Степан Радченко",
+    "image": "ic_woman_1",
+    "birthday": null
+  }
+]

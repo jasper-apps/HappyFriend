@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.features.contacts.di
+package com.yterletskyi.happyfriend.common.di
 
 import android.content.ContentResolver
 import android.content.Context
@@ -7,14 +7,11 @@ import android.content.res.AssetManager
 import android.preference.PreferenceManager
 import androidx.room.Room
 import com.yterletskyi.happyfriend.App
-import com.yterletskyi.happyfriend.BuildConfig
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
 import com.yterletskyi.happyfriend.common.data.AppDatabase
-import com.yterletskyi.happyfriend.common.data.FromAssetsDataSource
-import com.yterletskyi.happyfriend.common.di.PrepopulateGeneralIdeasList
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
-import com.yterletskyi.happyfriend.common.di.PrepopulateMyWishlistFriend
+import com.yterletskyi.happyfriend.features.contacts.data.ContactsFromAssetsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.DemoContactsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.DemoFriendsDataSource
 import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
@@ -22,6 +19,7 @@ import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
 import com.yterletskyi.happyfriend.features.ideas.data.DemoIdeasDataSource
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDao
 import com.yterletskyi.happyfriend.features.ideas.data.IdeasDataSource
+import com.yterletskyi.happyfriend.features.ideas.data.IdeasFromAssetsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,28 +30,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object GlobalAi {
+object GlobalDi {
 
     @Provides
-    fun provideContactsDataSource(
-        assetManager: AssetManager
-    ): ContactsDataSource {
-        return DemoContactsDataSource(
-            fromAssetsDataSource = FromAssetsDataSource(
-                path = "contacts.json",
-                assets = assetManager,
-            )
-        )
-    }
+    @Singleton
+    fun provideApp(@ApplicationContext context: Context): App = context as App
 
     @Provides
     fun provideAssetsManager(@ApplicationContext context: Context): AssetManager {
         return context.assets
     }
-
-    @Provides
-    @Singleton
-    fun provideApp(@ApplicationContext context: Context): App = context as App
 
     @Provides
     @Singleton
@@ -76,6 +62,16 @@ object GlobalAi {
     }
 
     @Provides
+    fun provideContactsDataSource(@ApplicationContext context: Context): ContactsDataSource {
+        return DemoContactsDataSource(
+            ContactsFromAssetsDataSource(
+                context = context,
+                jsonFilename = "contacts.json",
+            )
+        )
+    }
+
+    @Provides
     @Singleton
     fun provideFriendsDataSource(
         contactsDataSource: ContactsDataSource,
@@ -87,9 +83,9 @@ object GlobalAi {
     @Singleton
     fun provideIdeasDataSource(assetManager: AssetManager): IdeasDataSource {
         return DemoIdeasDataSource(
-            fromAssetsDataSource = FromAssetsDataSource(
-                path = "ideas.json",
-                assets = assetManager,
+            fromAssetsDataSource = IdeasFromAssetsDataSource(
+                assetManager = assetManager,
+                jsonFilename = "ideas.json",
             )
         )
     }

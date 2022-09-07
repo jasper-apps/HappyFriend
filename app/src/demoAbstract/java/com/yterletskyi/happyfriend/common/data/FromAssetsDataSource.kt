@@ -2,18 +2,13 @@ package com.yterletskyi.happyfriend.common.data
 
 import android.content.res.AssetManager
 
-class FromAssetsDataSource<T>(
-    private val path: String,
-    private val assets: AssetManager,
+abstract class FromAssetsDataSource<T>(
+    protected val path: String,
 ) {
 
-    fun retrieve(): List<T> {
-        val json = assets.readAssetsFile(path)
-        // TODO: deserialize
-        return listOf()
-    }
+    abstract fun retrieve(): List<T>
 
-    private fun AssetManager.readAssetsFile(fileName: String): String =
+    protected fun AssetManager.readAssetsFile(fileName: String): String =
         open(fileName)
             .bufferedReader()
             .use { it.readText() }
