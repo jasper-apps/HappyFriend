@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_friends">Друзі</string>
+    <string name="empty_state_friends">Ви ще не додали жодного друга. Перейдіть у контакти, щоб почати.</string>
+    <string name="action_browse">Перейти</string>
+
+    <string name="action_friend_removed">Видалено</string>
+    <string name="action_undo_remove_friend">Повернути</string>
+
+    <string name="title_my_wishlist_item">Мій список бажань</string>
+    <string name="title_general_ideas_item">Ідеї для всіх</string>
+</resources>
