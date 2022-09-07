@@ -30,7 +30,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object GlobalDi {
+object CommonDi {
 
     @Provides
     @Singleton
