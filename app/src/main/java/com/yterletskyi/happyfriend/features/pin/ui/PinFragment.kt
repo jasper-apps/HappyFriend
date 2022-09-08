@@ -21,6 +21,7 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         binding.pinKeyboardView.onButtonClicked = viewModel::input
+        viewModel.tempPin.value = args.pin
 
         with(binding.pinTitle) {
             text = getString(args.title)

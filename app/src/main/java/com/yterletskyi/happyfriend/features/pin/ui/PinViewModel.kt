@@ -23,6 +23,7 @@ class PinViewModel @Inject constructor(
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
     val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
+    val tempPin: MutableLiveData<String?> = MutableLiveData()
 
     private val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
 
@@ -42,17 +43,30 @@ class PinViewModel @Inject constructor(
     }
 
     private fun authorize() {
-        if (pinCodeController.getPinCode() == null) {
-            pinCodeController.savePinCode(pin)
-            directionsData.value = PinFragmentDirections.toPinScreen(R.string.pin_repeat_title)
+        if (tempPin.value == "") {
+            directionsData.value = PinFragmentDirections.toPinScreen(R.string.pin_repeat_title, pin.toString())
         } else {
-            when (pinCodeController.getPinCode()?.toString()) {
-                pin.toString() -> {
-                    directionsData.value = PinFragmentDirections.toFriendScreen()
+            if (pinCodeController.getPinCode() == null) {
+                when (tempPin.value) {
+                    pin.toString() -> {
+                        pinCodeController.savePinCode(pin)
+                        tempPin.value = null
+                        directionsData.value = PinFragmentDirections.toFriendScreen()
+                    }
+                    else -> {
+                        errorLiveData.value = R.string.pin_enter_error
+                        pin.clear()
+                    }
                 }
-                else -> {
-                    errorLiveData.value = R.string.pin_enter_error
-                    pin.clear()
+            } else {
+                when (pinCodeController.getPinCode()?.toString()) {
+                    pin.toString() -> {
+                        directionsData.value = PinFragmentDirections.toFriendScreen()
+                    }
+                    else -> {
+                        errorLiveData.value = R.string.pin_enter_error
+                        pin.clear()
+                    }
                 }
             }
         }

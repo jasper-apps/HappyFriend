@@ -24,12 +24,19 @@
             android:name="title"
             app:argType="integer" />
 
+        <argument
+            android:name="pin"
+            app:argType="string" />
+
         <action
             android:id="@+id/toPinScreen"
             app:destination="@id/pinScreen">
             <argument
                 android:name="title"
                 app:argType="integer" />
+            <argument
+                android:name="pin"
+                app:argType="string" />
         </action>
 
         <action android:id="@+id/toFriendScreen"
