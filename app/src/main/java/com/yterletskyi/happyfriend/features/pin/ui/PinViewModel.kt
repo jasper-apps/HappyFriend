@@ -2,6 +2,7 @@ package com.yterletskyi.happyfriend.features.pin.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.yterletskyi.happyfriend.R
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PinViewModel @Inject constructor(
-    private val pinCodeController: PinCodeController
+    private val pinCodeController: PinCodeController,
+    private val handle: SavedStateHandle
 ) : ViewModel() {
 
     val pinMaxLengthLiveData: LiveData<Int> = MutableLiveData(PIN_CODE_MAX_LENGTH)
@@ -23,7 +25,9 @@ class PinViewModel @Inject constructor(
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
     val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
-    val tempPin: MutableLiveData<String?> = MutableLiveData()
+
+    private var tempPin: String? = handle["pin"]
+        ?: error("pin is not passed")
 
     private val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
 
@@ -43,14 +47,14 @@ class PinViewModel @Inject constructor(
     }
 
     private fun authorize() {
-        if (tempPin.value == "") {
+        if (tempPin == "") {
             directionsData.value = PinFragmentDirections.toPinScreen(R.string.pin_repeat_title, pin.toString())
         } else {
             if (pinCodeController.getPinCode() == null) {
-                when (tempPin.value) {
+                when (tempPin) {
                     pin.toString() -> {
                         pinCodeController.savePinCode(pin)
-                        tempPin.value = null
+                        tempPin = null
                         directionsData.value = PinFragmentDirections.toFriendScreen()
                     }
                     else -> {
