@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PinViewModel @Inject constructor(
     private val pinCodeController: PinCodeController,
-    private val handle: SavedStateHandle
+    handle: SavedStateHandle
 ) : ViewModel() {
 
     val pinMaxLengthLiveData: LiveData<Int> = MutableLiveData(PIN_CODE_MAX_LENGTH)
@@ -26,54 +26,65 @@ class PinViewModel @Inject constructor(
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
     val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
 
-    private var tempPin: String? = handle["pin"]
-        ?: error("pin is not passed")
+    private val isRepeatPinMode: Boolean = handle["isRepeatPinMode"]
+        ?: error("isRepeatPinMode is not passed")
 
-    private val pin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
+    private val previousPin: PinCode? = handle.get<String>("pin")
+        ?.let { PinCode(it) }
+
+    private val currentPin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
 
     fun input(what: PinButtonModel) {
         try {
             when (what) {
-                is PinButtonModel.Number -> pin.push(what.value.toString())
-                PinButtonModel.Erase -> pin.pop()
+                is PinButtonModel.Number -> currentPin.push(what.value.toString())
+                PinButtonModel.Erase -> currentPin.pop()
             }
-            _pinProgressLiveData.value = pin.size
+            _pinProgressLiveData.value = currentPin.size
         } catch (e: PinSizeExceededException) {
             // just ignore
         }
-        if (pin.size == PIN_CODE_MAX_LENGTH) {
+        if (currentPin.size == PIN_CODE_MAX_LENGTH) {
             authorize()
         }
     }
 
     private fun authorize() {
-        if (tempPin == "") {
-            directionsData.value = PinFragmentDirections.toPinScreen(R.string.pin_repeat_title, pin.toString())
-        } else {
-            if (pinCodeController.getPinCode() == null) {
-                when (tempPin) {
-                    pin.toString() -> {
-                        pinCodeController.savePinCode(pin)
-                        tempPin = null
-                        directionsData.value = PinFragmentDirections.toFriendScreen()
-                    }
-                    else -> {
-                        errorLiveData.value = R.string.pin_enter_error
-                        pin.clear()
-                    }
+        val usersPin = pinCodeController.getPinCode()
+        if (usersPin == null) {  // creating new pin
+            if (isRepeatPinMode) {
+                // verify
+                val pinsMatch = previousPin == currentPin
+                // show friends
+                if (pinsMatch) {
+                    pinCodeController.savePinCode(currentPin)
+                    directionsData.value = PinFragmentDirections.toFriendScreen()
+                } else {
+                    showError()
                 }
             } else {
-                when (pinCodeController.getPinCode()?.toString()) {
-                    pin.toString() -> {
-                        directionsData.value = PinFragmentDirections.toFriendScreen()
-                    }
-                    else -> {
-                        errorLiveData.value = R.string.pin_enter_error
-                        pin.clear()
-                    }
-                }
+                // show repeat pin
+                directionsData.value = PinFragmentDirections.toPinScreen(
+                    R.string.pin_repeat_title,
+                    isRepeatPinMode = true,
+                    pin = currentPin.toString()
+                )
+            }
+        } else {  // authorizing with existing pin
+            // verify
+            val pinsMatch = usersPin == currentPin
+            // show friends
+            if (pinsMatch) {
+                directionsData.value = PinFragmentDirections.toFriendScreen()
+            } else {
+                showError()
             }
         }
+    }
+
+    private fun showError() {
+        errorLiveData.value = R.string.pin_enter_error
+        currentPin.clear()
     }
 
     companion object {

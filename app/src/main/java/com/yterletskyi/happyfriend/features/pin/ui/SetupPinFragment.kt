@@ -16,10 +16,7 @@ class SetupPinFragment : BaseBindingFragment<FragmentPinsetupBinding>(
         with(binding.textButton) {
             setOnClickListener {
                 findNavController().navigate(
-                    SetupPinFragmentDirections.toPinScreen(
-                        R.string.pin_enter_title,
-                        ""
-                    )
+                    SetupPinFragmentDirections.toPinScreen(R.string.pin_enter_title)
                 )
             }
         }

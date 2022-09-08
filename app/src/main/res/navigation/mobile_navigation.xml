@@ -26,7 +26,14 @@
 
         <argument
             android:name="pin"
-            app:argType="string" />
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="isRepeatPinMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
 
         <action
             android:id="@+id/toPinScreen"
@@ -36,10 +43,17 @@
                 app:argType="integer" />
             <argument
                 android:name="pin"
-                app:argType="string" />
+                android:defaultValue="null"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="isRepeatPinMode"
+                android:defaultValue="false"
+                app:argType="boolean" />
         </action>
 
-        <action android:id="@+id/toFriendScreen"
+        <action
+            android:id="@+id/toFriendScreen"
             app:destination="@id/friendsScreen" />
     </fragment>
 

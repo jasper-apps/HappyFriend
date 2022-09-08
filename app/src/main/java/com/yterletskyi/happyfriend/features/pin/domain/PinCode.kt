@@ -58,4 +58,19 @@ class PinCode(private val maxLength: Int) : Stack<String>() {
             throw PinSizeExceededException("PinCode is already empty")
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as PinCode
+        return toString() == other.toString()
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + maxLength
+        return result
+    }
 }
