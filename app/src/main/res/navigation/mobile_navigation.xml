@@ -21,10 +21,6 @@
         tools:layout="@layout/fragment_pin">
 
         <argument
-            android:name="title"
-            app:argType="integer" />
-
-        <argument
             android:name="pin"
             android:defaultValue="null"
             app:argType="string"
@@ -38,9 +34,7 @@
         <action
             android:id="@+id/toPinScreen"
             app:destination="@id/pinScreen">
-            <argument
-                android:name="title"
-                app:argType="integer" />
+
             <argument
                 android:name="pin"
                 android:defaultValue="null"

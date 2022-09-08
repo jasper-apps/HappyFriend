@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.navigation.NavDirections
 import com.yterletskyi.happyfriend.R
 import com.yterletskyi.happyfriend.features.pin.data.PinCodeController
@@ -23,6 +24,14 @@ class PinViewModel @Inject constructor(
 
     private val _pinProgressLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
+
+    val titleLiveData: LiveData<Int> = liveData {
+        val title =
+            if (isRepeatPinMode) R.string.pin_repeat_title
+            else R.string.pin_enter_title
+        emit(title)
+    }
+
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
     val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
 
@@ -65,7 +74,6 @@ class PinViewModel @Inject constructor(
             } else {
                 // show repeat pin
                 directionsData.value = PinFragmentDirections.toPinScreen(
-                    R.string.pin_repeat_title,
                     isRepeatPinMode = true,
                     pin = currentPin.toString()
                 )

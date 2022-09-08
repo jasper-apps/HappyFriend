@@ -59,14 +59,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun inflateGraph() {
         val graph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        val args = Bundle()
-        args.putInt("title", R.string.pin_enter_title)
-        args.putBoolean("isRepeatPinMode", false)
         val startDestination = pinCodeController.getPinCode()
             ?.let { R.id.pinScreen }
             ?: R.id.setupPinScreen
 
         graph.setStartDestination(startDestination)
-        navController.setGraph(graph, args)
+        navController.setGraph(graph, null)
     }
 }
