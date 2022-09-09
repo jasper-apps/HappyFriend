@@ -87,8 +87,8 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
         }
         with(binding.toolbar) {
             onBackClicked = {
-                activity?.finish();
-                System.exit(0);
+                activity?.finish()
+                System.exit(0)
             }
         }
 
