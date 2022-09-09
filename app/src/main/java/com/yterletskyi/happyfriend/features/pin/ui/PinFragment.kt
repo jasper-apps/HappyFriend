@@ -3,6 +3,7 @@ package com.yterletskyi.happyfriend.features.pin.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.databinding.FragmentPinBinding
@@ -39,5 +40,9 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
         viewModel.directionsData.observe(viewLifecycleOwner) { direction ->
             findNavController().navigate(direction)
         }
+        with(binding.toolbar) {
+            onBackClicked = { findNavController().popBackStack() }
+        }
+
     }
 }

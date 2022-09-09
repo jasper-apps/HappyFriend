@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".features.pin.ui.PinFragment">
 
+    <com.yterletskyi.happyfriend.common.view.HappyToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:title="@string/app_name" />
+
     <TextView
         android:id="@+id/pin_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="?attr/textColorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/pinProgressView"
@@ -25,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:defaultCircleColor="@color/mercury"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
