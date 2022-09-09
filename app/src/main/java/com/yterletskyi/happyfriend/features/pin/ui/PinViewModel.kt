@@ -60,7 +60,7 @@ class PinViewModel @Inject constructor(
 
     private fun authorize() {
         val usersPin = pinCodeController.getPinCode()
-        if (usersPin == null) {  // creating new pin
+        if (usersPin == null) { // creating new pin
             if (isRepeatPinMode) {
                 // verify
                 val pinsMatch = previousPin == currentPin
@@ -78,7 +78,7 @@ class PinViewModel @Inject constructor(
                     pin = currentPin.toString()
                 )
             }
-        } else {  // authorizing with existing pin
+        } else { // authorizing with existing pin
             // verify
             val pinsMatch = usersPin == currentPin
             // show friends

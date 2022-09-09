@@ -47,8 +47,7 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
                 if (args.isRepeatPinMode) {
                     findNavController()
                         .navigate(PinFragmentDirections.toPinScreen("", false))
-                }
-                else {
+                } else {
                     activity?.finish()
                     System.exit(0)
                 }
