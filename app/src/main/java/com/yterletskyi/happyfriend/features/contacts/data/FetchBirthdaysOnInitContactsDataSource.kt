@@ -19,7 +19,7 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
 
-    private var contactBirthdayMap = queryBirthdays()
+    private val contactBirthdayMap by lazy { queryBirthdays() }
 
     override val contactsFlow: Flow<List<Contact>> = initialContactsFlow
 

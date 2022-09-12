@@ -31,6 +31,20 @@ class LoggedPinCode(
 
 class PinCode(private val maxLength: Int) : Stack<String>() {
 
+    constructor(pin: String) : this(pin.length) {
+        pin.forEach {
+            push(it.toString())
+        }
+    }
+
+    override fun toString(): String {
+        val pinCode: StringBuilder = StringBuilder()
+        elements().toList().forEach {
+            pinCode.append(it)
+        }
+        return pinCode.toString()
+    }
+
     override fun push(item: String): String {
         if (elementCount < maxLength) {
             return super.push(item)
@@ -43,5 +57,20 @@ class PinCode(private val maxLength: Int) : Stack<String>() {
         } catch (e: EmptyStackException) {
             throw PinSizeExceededException("PinCode is already empty")
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as PinCode
+        return toString() == other.toString()
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + maxLength
+        return result
     }
 }

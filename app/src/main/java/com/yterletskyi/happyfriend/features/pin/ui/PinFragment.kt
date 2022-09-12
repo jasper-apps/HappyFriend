@@ -3,10 +3,12 @@ package com.yterletskyi.happyfriend.features.pin.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.yterletskyi.happyfriend.R
+import androidx.navigation.fragment.findNavController
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.databinding.FragmentPinBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PinFragment : BaseBindingFragment<FragmentPinBinding>(
     FragmentPinBinding::inflate
 ) {
@@ -18,6 +20,10 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
 
         binding.pinKeyboardView.onButtonClicked = viewModel::input
 
+        viewModel.titleLiveData.observe(viewLifecycleOwner) { titleResId ->
+            binding.pinTitle.text = getString(titleResId)
+        }
+
         viewModel.pinMaxLengthLiveData.observe(viewLifecycleOwner) { length ->
             binding.pinProgressView.steps = length
         }
@@ -26,8 +32,12 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
             binding.pinProgressView.step = progress
         }
 
-        with(binding.pinTitle) {
-            text = getString(R.string.pin_enter_title)
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { error ->
+            binding.pinProgressView.step = 0
+            binding.pinError.text = getString(error)
+        }
+        viewModel.directionsLiveData.observe(viewLifecycleOwner) { direction ->
+            findNavController().navigate(direction)
         }
     }
 }
