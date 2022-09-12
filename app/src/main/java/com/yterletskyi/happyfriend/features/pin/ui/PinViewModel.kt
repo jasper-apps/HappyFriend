@@ -11,6 +11,7 @@ import com.yterletskyi.happyfriend.features.pin.data.PinCodeController
 import com.yterletskyi.happyfriend.features.pin.domain.PinButtonModel
 import com.yterletskyi.happyfriend.features.pin.domain.PinCode
 import com.yterletskyi.happyfriend.features.pin.domain.PinSizeExceededException
+import com.yterletskyi.happyfriend.features.pin.domain.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -33,7 +34,7 @@ class PinViewModel @Inject constructor(
     }
 
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
-    val directionsData: MutableLiveData<NavDirections> = MutableLiveData()
+    val directionsData: SingleLiveEvent<NavDirections> = SingleLiveEvent()
 
     private val isRepeatPinMode: Boolean = handle["isRepeatPinMode"]
         ?: error("isRepeatPinMode is not passed")
@@ -77,6 +78,8 @@ class PinViewModel @Inject constructor(
                     isRepeatPinMode = true,
                     pin = currentPin.toString()
                 )
+                _pinProgressLiveData.value = 0
+                currentPin.clear()
             }
         } else { // authorizing with existing pin
             // verify

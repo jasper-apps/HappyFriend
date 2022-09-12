@@ -42,16 +42,5 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
         viewModel.directionsData.observe(viewLifecycleOwner) { direction ->
             findNavController().navigate(direction)
         }
-        with(binding.toolbar) {
-            onBackClicked = {
-                if (args.isRepeatPinMode) {
-                    findNavController()
-                        .navigate(PinFragmentDirections.toPinScreen("", false))
-                } else {
-                    activity?.finish()
-                    System.exit(0)
-                }
-            }
-        }
     }
 }
