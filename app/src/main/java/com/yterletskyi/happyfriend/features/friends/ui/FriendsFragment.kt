@@ -1,13 +1,10 @@
 package com.yterletskyi.happyfriend.features.friends.ui
 
-import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +15,7 @@ import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.common.list.SpaceItemDecoration
 import com.yterletskyi.happyfriend.common.x.dp
+import com.yterletskyi.happyfriend.common.x.requestContactsPermission
 import com.yterletskyi.happyfriend.databinding.FragmentFriendsBinding
 import com.yterletskyi.happyfriend.features.friends.domain.FriendModelItem
 import com.yterletskyi.happyfriend.features.friends.domain.FriendsDiffUtil
@@ -42,7 +40,7 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requestPermissions()
+        requestContactsPermission({ viewModel.onContactsPermissionGranted() })
 
         with(binding.rvItems) {
             layoutManager = LinearLayoutManager(context)
@@ -102,16 +100,6 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             binding.incEmptyState.root.isVisible = it
             binding.rvItems.isVisible = !it
         }
-    }
-
-    private fun requestPermissions() {
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                viewModel.onContactsPermissionGranted()
-            } else {
-                Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
-            }
-        }.launch(Manifest.permission.READ_CONTACTS)
     }
 
     private fun showIdeasScreen(index: Int) {
