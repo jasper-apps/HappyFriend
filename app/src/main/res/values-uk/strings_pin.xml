@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pin">Пароль</string>
+
+    <string name="setupPin">Налаштування паролю</string>
+    <string name="phrase1">Давайте створимо PIN-код, щоб \n захистити ваші ідеї.</string>
+    <string name="phrase2">Ми запитуватимемо його кожного разу, коли ви \n відкриватимете програму.</string>
+    <string name="phrase3">Будьте уважні, відновити \n втрачений ПІН наразі неможливо.</string>
+    <string name="action_button_next">Далі</string>
+    <string name="pin_enter_title">Введіть пароль</string>
+    <string name="pin_repeat_title">Повторіть пароль</string>
+    <string name="pin_not_match_error">Пароль не співпадає</string>
+    <string name="pin_enter_error">Неправильний пароль</string>
+
+    <string name="pin_button_one">1</string>
+    <string name="pin_button_two">2</string>
+    <string name="pin_button_three">3</string>
+    <string name="pin_button_four">4</string>
+    <string name="pin_button_five">5</string>
+    <string name="pin_button_six">6</string>
+    <string name="pin_button_seven">7</string>
+    <string name="pin_button_eight">8</string>
+    <string name="pin_button_nine">9</string>
+    <string name="pin_button_zero">0</string>
+</resources>
