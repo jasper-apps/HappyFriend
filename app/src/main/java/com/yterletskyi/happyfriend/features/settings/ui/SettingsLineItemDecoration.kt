@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.yterletskyi.happyfriend.R
@@ -14,11 +15,13 @@ import com.yterletskyi.happyfriend.common.x.getThemeColor
 
 class SettingsLineItemDecoration(
     private val context: Context,
-    @ColorInt private val lineColor: Int = context.getThemeColor(R.attr.colorOnSurface)
+    @ColorInt private val lineColor: Int = context.getThemeColor(R.attr.colorOnSurface),
+    @Dimension private val lineWidth: Float = context.resources.getDimension(R.dimen.separator_line_width),
 ) : RecyclerView.ItemDecoration() {
 
     private val paint = Paint().apply {
         color = lineColor
+        strokeWidth = lineWidth
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
