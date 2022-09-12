@@ -85,12 +85,6 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
         with(binding.toolbar) {
             onActionClicked = { showSearchFragment() }
         }
-        with(binding.toolbar) {
-            onBackClicked = {
-                activity?.finish()
-                System.exit(0)
-            }
-        }
 
         with(binding.incEmptyState.btnAddFriend) {
             setOnClickListener { showSearchFragment() }

@@ -11,7 +11,7 @@ import com.yterletskyi.happyfriend.features.pin.data.PinCodeController
 import com.yterletskyi.happyfriend.features.pin.domain.PinButtonModel
 import com.yterletskyi.happyfriend.features.pin.domain.PinCode
 import com.yterletskyi.happyfriend.features.pin.domain.PinSizeExceededException
-import com.yterletskyi.happyfriend.features.pin.domain.SingleLiveEvent
+import com.yterletskyi.happyfriend.common.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -34,7 +34,8 @@ class PinViewModel @Inject constructor(
     }
 
     val errorLiveData: MutableLiveData<Int> = MutableLiveData()
-    val directionsData: SingleLiveEvent<NavDirections> = SingleLiveEvent()
+    val directionsLiveData: SingleLiveEvent<NavDirections> =
+        SingleLiveEvent()
 
     private val isRepeatPinMode: Boolean = handle["isRepeatPinMode"]
         ?: error("isRepeatPinMode is not passed")
@@ -68,13 +69,13 @@ class PinViewModel @Inject constructor(
                 // show friends
                 if (pinsMatch) {
                     pinCodeController.savePinCode(currentPin)
-                    directionsData.value = PinFragmentDirections.toFriendScreen()
+                    directionsLiveData.value = PinFragmentDirections.toFriendScreen()
                 } else {
                     showError()
                 }
             } else {
                 // show repeat pin
-                directionsData.value = PinFragmentDirections.toPinScreen(
+                directionsLiveData.value = PinFragmentDirections.toPinScreen(
                     isRepeatPinMode = true,
                     pin = currentPin.toString()
                 )
@@ -86,7 +87,7 @@ class PinViewModel @Inject constructor(
             val pinsMatch = usersPin == currentPin
             // show friends
             if (pinsMatch) {
-                directionsData.value = PinFragmentDirections.toFriendScreen()
+                directionsLiveData.value = PinFragmentDirections.toFriendScreen()
             } else {
                 showError()
             }

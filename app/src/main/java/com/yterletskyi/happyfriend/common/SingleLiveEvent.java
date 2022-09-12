@@ -1,4 +1,4 @@
-package com.yterletskyi.happyfriend.features.pin.domain;
+package com.yterletskyi.happyfriend.common;
 
 import android.util.Log;
 

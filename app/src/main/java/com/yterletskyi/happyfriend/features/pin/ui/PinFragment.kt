@@ -3,7 +3,6 @@ package com.yterletskyi.happyfriend.features.pin.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
@@ -39,7 +38,7 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
             binding.pinProgressView.step = 0
             binding.pinError.text = getString(error)
         }
-        viewModel.directionsData.observe(viewLifecycleOwner) { direction ->
+        viewModel.directionsLiveData.observe(viewLifecycleOwner) { direction ->
             findNavController().navigate(direction)
         }
     }
