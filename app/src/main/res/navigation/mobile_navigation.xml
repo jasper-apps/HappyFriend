@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/setupPinScreen"
         android:name="com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragment"
-        android:label="@string/setupPin"
+        android:label="@string/setup_pin"
         tools:layout="@layout/fragment_pinsetup">
         <action
             android:id="@+id/toPinScreen"
@@ -17,7 +17,6 @@
     <fragment
         android:id="@+id/pinScreen"
         android:name="com.yterletskyi.happyfriend.features.pin.ui.PinFragment"
-        android:label="@string/pin"
         tools:layout="@layout/fragment_pin">
 
         <argument
