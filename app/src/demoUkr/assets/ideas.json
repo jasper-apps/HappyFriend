@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "text": "Сережка",
+    "done": true,
+    "friend_id": "0",
+    "created_at": 0,
+    "position": 1
+  },
+  {
+    "id": "2",
+    "text": "Футболка РусніПи**а",
+    "done": false,
+    "friend_id": "0",
+    "created_at": 0,
+    "position": 2
+  },
+  {
+    "id": "3",
+    "text": "Курси екстремального водіння",
+    "done": true,
+    "friend_id": "0",
+    "created_at": 0,
+    "position": 3
+  },
+  {
+    "id": "4",
+    "text": "Пазл Говерла",
+    "done": false,
+    "friend_id": "0",
+    "created_at": 0,
+    "position": 4
+  }
+]

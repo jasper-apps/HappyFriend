@@ -4,11 +4,6 @@
     <attr name="textColorPrimary" type="reference|color" />
     <attr name="textColorSecondary" type="reference|color" />
 
-    <style name="RoundImageViewStyle" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
     <style name="PinKeyboardButtonStyle">
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>

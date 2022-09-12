@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -26,6 +27,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,6 +47,41 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        full
+        demoAbstract
+        demoEng
+        demoUkr
+    }
+    sourceSets {
+        full {
+            java.srcDirs = ['src/full/java']
+            res.srcDirs = ['src/full/java/res']
+        }
+        demoAbstract {
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
+        }
+        demoEng {
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
+            assets.srcDirs 'src/demoEng/assets'
+        }
+        demoUkr {
+            java.srcDirs = ['src/demoAbstract/java']
+            res.srcDirs = ['src/demoAbstract/java/res']
+            assets.srcDirs 'src/demoUkr/assets'
+        }
+    }
+    variantFilter { variant ->
+        variant.getFlavors().each { flavor ->
+            if (flavor.name == 'demoAbstract') {
+                variant.setIgnore(true)
+            }
         }
     }
 }
@@ -80,6 +121,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.4.0'

@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/checkbox"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorOnSurface" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox"
@@ -32,6 +33,7 @@
         android:background="@null"
         android:focusableInTouchMode="true"
         android:importantForAutofill="no"
+        android:inputType="textCapSentences|textMultiLine"
         android:paddingHorizontal="8dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

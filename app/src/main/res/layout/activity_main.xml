@@ -14,10 +14,9 @@
         android:layout_weight="1"
         app:defaultNavHost="true" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.yterletskyi.happyfriend.common.view.BottomNavigationView
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:menu="@menu/bottom_nav_menu" />
+        android:layout_height="?attr/actionBarSize" />
 
 </LinearLayout>

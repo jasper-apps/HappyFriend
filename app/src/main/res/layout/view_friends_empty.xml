@@ -11,6 +11,7 @@
         android:layout_marginHorizontal="24dp"
         android:text="@string/empty_state_friends"
         android:textAlignment="center"
+        android:textColor="?attr/textColorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/btnAddFriend"
         app:layout_constraintEnd_toEndOf="parent"
