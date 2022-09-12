@@ -42,15 +42,9 @@ class FriendsViewModel @Inject constructor(
     val showEmptyState: LiveData<Boolean> = friendsLiveData
         .map { it.isEmpty() }
 
-    init {
+    fun onContactsPermissionGranted() {
         interactor.initialize()
         friends.launchIn(viewModelScope)
-    }
-
-    private fun removeFriend(friendModelItem: FriendModelItem) {
-        viewModelScope.launch {
-            interactor.removeFriend(friendModelItem.contactId)
-        }
     }
 
     fun onFriendsMoved(newOrderFriends: List<FriendModelItem>) {
@@ -78,6 +72,12 @@ class FriendsViewModel @Inject constructor(
             ?.also { it.cancel() }
 
         _friendsLiveData.value = friends.value
+    }
+
+    private fun removeFriend(friendModelItem: FriendModelItem) {
+        viewModelScope.launch {
+            interactor.removeFriend(friendModelItem.contactId)
+        }
     }
 
     override fun onCleared() {

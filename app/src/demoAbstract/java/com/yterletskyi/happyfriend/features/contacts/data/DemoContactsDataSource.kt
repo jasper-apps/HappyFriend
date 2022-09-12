@@ -12,5 +12,9 @@ class DemoContactsDataSource(
         fromAssetsDataSource.retrieve()
     )
 
+    override fun initialize() {}
+
     override fun search(query: String) {}
+
+    override fun destroy() {}
 }

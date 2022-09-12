@@ -36,7 +36,7 @@ interface FriendsInteractor : LifecycleComponent {
 class FriendsInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val friendsDataSource: FriendsDataSource,
-    contactsDataSource: ContactsDataSource,
+    private val contactsDataSource: ContactsDataSource,
     private val birthdayFormatter: BirthdayFormatter,
     private val myWishlistController: MyWishlistController,
     private val generalIdeasController: GeneralIdeasController
@@ -45,6 +45,7 @@ class FriendsInteractorImpl @Inject constructor(
     override fun initialize() {
         myWishlistController.initialize()
         generalIdeasController.initialize()
+        contactsDataSource.initialize()
     }
 
     override val friendsFlow: Flow<List<FriendModelItem>> = combine(
@@ -145,5 +146,6 @@ class FriendsInteractorImpl @Inject constructor(
     override fun destroy() {
         myWishlistController.destroy()
         generalIdeasController.destroy()
+        contactsDataSource.destroy()
     }
 }

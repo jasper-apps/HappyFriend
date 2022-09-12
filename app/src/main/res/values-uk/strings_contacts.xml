@@ -3,4 +3,5 @@
     <string name="title_contacts">Контакти</string>
     <string name="search_hint_contacts">Пошук</string>
     <string name="action_search">Шукати</string>
+    <string name="info_grant_contacts_permission">Дозвольте доступ до контактів, щоб доступитись до телефонної книги</string>
 </resources>

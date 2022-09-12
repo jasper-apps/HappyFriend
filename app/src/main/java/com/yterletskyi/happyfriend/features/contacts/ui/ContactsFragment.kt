@@ -11,6 +11,7 @@ import com.yterletskyi.happyfriend.common.binding.BaseBindingFragment
 import com.yterletskyi.happyfriend.common.list.RecyclerDelegationAdapter
 import com.yterletskyi.happyfriend.common.list.SpaceItemDecoration
 import com.yterletskyi.happyfriend.common.x.dp
+import com.yterletskyi.happyfriend.common.x.requestContactsPermission
 import com.yterletskyi.happyfriend.databinding.FragmentContactsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,8 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestContactsPermission({ viewModel.onContactsPermissionGranted() })
 
         with(binding.rvItems) {
             layoutManager = LinearLayoutManager(context)
