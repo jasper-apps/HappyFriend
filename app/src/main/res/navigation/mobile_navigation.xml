@@ -48,7 +48,9 @@
 
         <action
             android:id="@+id/toFriendScreen"
-            app:destination="@id/friendsScreen" />
+            app:destination="@id/friendsScreen"
+            app:popUpTo="@+id/mobile_navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 
