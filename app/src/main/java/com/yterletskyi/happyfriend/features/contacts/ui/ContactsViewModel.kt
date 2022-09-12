@@ -28,7 +28,7 @@ class ContactsViewModel @Inject constructor(
 
     val contacts: LiveData<List<ContactModelItem>> = contactsFlow.asLiveData()
 
-    init {
+    fun onContactsPermissionGranted() {
         contactsInteractor.initialize()
         friendsInteractor.initialize()
     }

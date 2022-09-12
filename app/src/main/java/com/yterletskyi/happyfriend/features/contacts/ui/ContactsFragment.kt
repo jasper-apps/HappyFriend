@@ -1,7 +1,10 @@
 package com.yterletskyi.happyfriend.features.contacts.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -24,6 +27,8 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestPermissions()
 
         with(binding.rvItems) {
             layoutManager = LinearLayoutManager(context)
@@ -65,5 +70,15 @@ class ContactsFragment : BaseBindingFragment<FragmentContactsBinding>(
         }
 
         viewModel.contacts.observe(viewLifecycleOwner, rvItemsAdapter::setItems)
+    }
+
+    private fun requestPermissions() {
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                viewModel.onContactsPermissionGranted()
+            } else {
+                Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
+            }
+        }.launch(Manifest.permission.READ_CONTACTS)
     }
 }
