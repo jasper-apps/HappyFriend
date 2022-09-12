@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.navigation.NavDirections
 import com.yterletskyi.happyfriend.R
+import com.yterletskyi.happyfriend.common.SingleLiveEvent
 import com.yterletskyi.happyfriend.features.pin.data.PinCodeController
 import com.yterletskyi.happyfriend.features.pin.domain.PinButtonModel
 import com.yterletskyi.happyfriend.features.pin.domain.PinCode
 import com.yterletskyi.happyfriend.features.pin.domain.PinSizeExceededException
-import com.yterletskyi.happyfriend.common.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
