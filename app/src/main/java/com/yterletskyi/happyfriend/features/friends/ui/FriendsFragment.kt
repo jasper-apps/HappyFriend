@@ -90,6 +90,14 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
             setOnClickListener { showSearchFragment() }
         }
 
+        viewModel.friendsLiveData.observe(viewLifecycleOwner) {
+            val differ = FriendsDiffUtil(
+                oldList = rvItemsAdapter.getDataTyped(),
+                newList = it
+            )
+            rvItemsAdapter.setItemsWithDiff(it, differ)
+        }
+
         viewModel.showEmptyState.observe(viewLifecycleOwner) {
             binding.incEmptyState.root.isVisible = it
             binding.rvItems.isVisible = !it
@@ -99,13 +107,7 @@ class FriendsFragment : BaseBindingFragment<FragmentFriendsBinding>(
     private fun requestPermissions() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
-                viewModel.friendsLiveData.observe(viewLifecycleOwner) {
-                    val differ = FriendsDiffUtil(
-                        oldList = rvItemsAdapter.getDataTyped(),
-                        newList = it
-                    )
-                    rvItemsAdapter.setItemsWithDiff(it, differ)
-                }
+                viewModel.onContactsPermissionGranted()
             } else {
                 Toast.makeText(context, "Please grant permission", Toast.LENGTH_SHORT).show()
             }

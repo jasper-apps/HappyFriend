@@ -26,7 +26,7 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
 
     override val contactsFlow: Flow<List<Contact>> = initialContactsFlow
 
-    init {
+    override fun initialize() {
         search("")
     }
 
@@ -55,6 +55,8 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
         logger.info("returned ${list.size} contacts")
         initialContactsFlow.value = list
     }
+
+    override fun destroy() {}
 
     private fun queryBirthdays(): Map<Long, LocalDate?> {
         val map = mutableMapOf<Long, LocalDate?>()
