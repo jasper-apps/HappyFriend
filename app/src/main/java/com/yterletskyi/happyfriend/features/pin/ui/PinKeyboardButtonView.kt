@@ -36,10 +36,11 @@ class PinKeyboardButtonView @JvmOverloads constructor(
             binding.textView.text = value
         }
 
-    var textColor: Int = Color.BLACK
+    var btnForegroundColor: Int = Color.BLACK
         set(value) {
             field = value
             binding.textView.setTextColor(value)
+            binding.imageView.setColorFilter(value)
         }
 
     var textSize: Float = 16.sp
@@ -51,7 +52,7 @@ class PinKeyboardButtonView @JvmOverloads constructor(
     var drawable: Drawable? = null
         set(value) {
             field = value
-            binding.imageView.background = value
+            binding.imageView.setImageDrawable(value)
         }
 
     init {
@@ -72,9 +73,11 @@ class PinKeyboardButtonView @JvmOverloads constructor(
                     .takeIf { it != -1 }
                     ?.let { btnBackgroundColor = it }
                 text = getString(R.styleable.PinKeyboardButtonView_android_text).orEmpty()
-                getColor(R.styleable.PinKeyboardButtonView_android_textColor, -1)
+
+                getColor(R.styleable.PinKeyboardButtonView_btnForegroundColor, -1)
                     .takeIf { it != -1 }
-                    ?.let { textColor = it }
+                    ?.let { btnForegroundColor = it }
+
                 getDimension(R.styleable.PinKeyboardButtonView_android_textSize, -1f)
                     .takeIf { it != -1f }
                     ?.let { textSize = it }

@@ -10,38 +10,42 @@
         android:id="@+id/pin_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:textColor="?attr/textColorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/pinProgressView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/pinProgressView"
-        tools:text="@string/pin_enter_title"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/pin_enter_title" />
 
     <com.yterletskyi.happyfriend.features.pin.ui.PinProgressView
         android:id="@+id/pinProgressView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         app:defaultCircleColor="@color/mercury"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintBottom_toTopOf="@id/pin_error"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pin_title"
+        app:layout_constraintVertical_chainStyle="packed"
         app:progressCircleColor="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/pin_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_marginTop="10dp"
         android:textColor="?attr/colorError"
-        app:layout_constraintTop_toBottomOf="@id/pinProgressView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/pinKeyboardView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pinProgressView"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="@string/pin_enter_error" />
 
     <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardView
@@ -52,8 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pin_error"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
         app:layout_constraintWidth_percent="0.75" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
