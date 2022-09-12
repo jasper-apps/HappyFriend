@@ -22,11 +22,11 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
 
     private val logger: Logger by logcatLogger()
 
-    private var contactBirthdayMap = queryBirthdays()
+    private val contactBirthdayMap by lazy { queryBirthdays() }
 
     override val contactsFlow: Flow<List<Contact>> = initialContactsFlow
 
-    init {
+    override fun initialize() {
         search("")
     }
 
@@ -55,6 +55,8 @@ class FetchBirthdaysOnInitContactsDataSource @Inject constructor(
         logger.info("returned ${list.size} contacts")
         initialContactsFlow.value = list
     }
+
+    override fun destroy() {}
 
     private fun queryBirthdays(): Map<Long, LocalDate?> {
         val map = mutableMapOf<Long, LocalDate?>()

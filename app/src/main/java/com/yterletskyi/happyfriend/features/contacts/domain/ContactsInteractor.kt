@@ -1,6 +1,7 @@
 package com.yterletskyi.happyfriend.features.contacts.domain
 
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
+import com.yterletskyi.happyfriend.common.LifecycleComponent
 import com.yterletskyi.happyfriend.common.drawable.AvatarInitialsDrawable
 import com.yterletskyi.happyfriend.common.drawable.RoundDrawable
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
@@ -10,14 +11,14 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
-interface ContactsInteractor {
+interface ContactsInteractor : LifecycleComponent {
     val contactsFlow: Flow<List<ContactModelItem>>
     fun search(query: String = "")
 }
 
 class ContactsInteractorImpl @Inject constructor(
     private val contactsDataSource: ContactsDataSource,
-    friendsDataSource: FriendsDataSource,
+    private val friendsDataSource: FriendsDataSource,
     private val birthdayFormatter: BirthdayFormatter
 ) : ContactsInteractor {
 
@@ -39,5 +40,11 @@ class ContactsInteractorImpl @Inject constructor(
             }
     }
 
+    override fun initialize() {
+        contactsDataSource.initialize()
+    }
+
     override fun search(query: String) = contactsDataSource.search(query)
+
+    override fun destroy() {}
 }

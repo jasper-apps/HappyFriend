@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn1"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_one"
+        app:layout_constraintBottom_toTopOf="@id/btn4"
+        app:layout_constraintEnd_toStartOf="@id/btn2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn2"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_two"
+        app:layout_constraintBottom_toTopOf="@id/btn5"
+        app:layout_constraintEnd_toStartOf="@id/btn3"
+        app:layout_constraintStart_toEndOf="@id/btn1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn3"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_three"
+        app:layout_constraintBottom_toTopOf="@id/btn6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn4"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_four"
+        app:layout_constraintBottom_toTopOf="@id/btn7"
+        app:layout_constraintEnd_toStartOf="@id/btn5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn1" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn5"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_five"
+        app:layout_constraintBottom_toTopOf="@id/btn8"
+        app:layout_constraintEnd_toStartOf="@id/btn6"
+        app:layout_constraintStart_toEndOf="@id/btn4"
+        app:layout_constraintTop_toBottomOf="@id/btn2" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn6"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_six"
+        app:layout_constraintBottom_toTopOf="@id/btn9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn5"
+        app:layout_constraintTop_toBottomOf="@id/btn3" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn7"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_seven"
+        app:layout_constraintBottom_toTopOf="@id/placeholderButton"
+        app:layout_constraintEnd_toStartOf="@id/btn8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn4" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn8"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_eight"
+        app:layout_constraintBottom_toTopOf="@id/btn0"
+        app:layout_constraintEnd_toStartOf="@id/btn9"
+        app:layout_constraintStart_toEndOf="@id/btn7"
+        app:layout_constraintTop_toBottomOf="@id/btn5" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn9"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_nine"
+        app:layout_constraintBottom_toTopOf="@id/btnErase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn8"
+        app:layout_constraintTop_toBottomOf="@id/btn6" />
+
+    <View
+        android:id="@+id/placeholderButton"
+        style="@style/PinKeyboardButtonStyle"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn7"
+        tools:background="#000" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btn0"
+        style="@style/PinKeyboardButtonStyle"
+        android:text="@string/pin_button_zero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn8"
+        app:layout_constraintStart_toStartOf="@id/btn8"
+        app:layout_constraintTop_toBottomOf="@id/btn7" />
+
+    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardButtonView
+        android:id="@+id/btnErase"
+        style="@style/PinKeyboardButtonStyle"
+        android:src="@drawable/ic_round_backspace_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn9"
+        app:layout_constraintStart_toStartOf="@id/btn9"
+        app:layout_constraintTop_toBottomOf="@id/btn7" />
+
+</merge>

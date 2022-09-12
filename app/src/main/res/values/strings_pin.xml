@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="setup_pin">PIN Setup</string>
+    <string name="phrase1">Let’s create a PIN code to \n secure your ideas.</string>
+    <string name="phrase2">We will ask for it every time you open \n the app.</string>
+    <string name="phrase3">Be attentive, there is no way to restore a \n lost PIN so far.</string>
+    <string name="action_button_next">Next</string>
+    <string name="pin_enter_title">Enter a PIN</string>
+    <string name="pin_repeat_title">Repeat your PIN</string>
+    <string name="pin_not_match_error">PINs do not match</string>
+    <string name="pin_enter_error">Wrong PIN</string>
+
+    <string name="pin_button_one">1</string>
+    <string name="pin_button_two">2</string>
+    <string name="pin_button_three">3</string>
+    <string name="pin_button_four">4</string>
+    <string name="pin_button_five">5</string>
+    <string name="pin_button_six">6</string>
+    <string name="pin_button_seven">7</string>
+    <string name="pin_button_eight">8</string>
+    <string name="pin_button_nine">9</string>
+    <string name="pin_button_zero">0</string>
+</resources>

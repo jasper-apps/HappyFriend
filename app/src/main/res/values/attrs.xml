@@ -6,4 +6,18 @@
         <attr name="actionSrc" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="PinProgressView">
+        <attr name="steps" format="integer" />
+        <attr name="defaultCircleColor" format="color" />
+        <attr name="progressCircleColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PinKeyboardButtonView">
+        <attr name="btnBackgroundColor" format="color" />
+        <attr name="btnForegroundColor" format="color" />
+        <attr name="android:text" format="string" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="android:src" format="reference" />
+    </declare-styleable>
+
 </resources>

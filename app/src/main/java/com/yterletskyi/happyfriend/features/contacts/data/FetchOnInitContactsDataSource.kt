@@ -16,16 +16,22 @@ class FetchOnInitContactsDataSource @Inject constructor(
     private val birthdayParser: BirthdayParser
 ) : ContactsDataSource {
 
-    private val fullContactList: List<Contact> = queryContacts().orEmpty()
+    private val fullContactList: List<Contact> by lazy { queryContacts().orEmpty() }
 
     private val _contactsFlow: MutableStateFlow<List<Contact>> = MutableStateFlow(fullContactList)
     override val contactsFlow: Flow<List<Contact>> = _contactsFlow
+
+    override fun initialize() {
+        search("")
+    }
 
     override fun search(query: String) {
         _contactsFlow.value = fullContactList.filter {
             it.name.contains(query, ignoreCase = true)
         }
     }
+
+    override fun destroy() {}
 
     private fun queryContacts(): List<Contact>? {
         return contentResolver.query(

@@ -19,16 +19,21 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
-    private val interactor: ContactsInteractor,
-    private val friendsInteractor: FriendsInteractor
+    private val contactsInteractor: ContactsInteractor,
+    private val friendsInteractor: FriendsInteractor,
 ) : ViewModel() {
 
-    private val contactsFlow: StateFlow<List<ContactModelItem>> = interactor.contactsFlow
+    private val contactsFlow: StateFlow<List<ContactModelItem>> = contactsInteractor.contactsFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val contacts: LiveData<List<ContactModelItem>> = contactsFlow.asLiveData()
 
-    fun search(query: String) = interactor.search(query)
+    fun onContactsPermissionGranted() {
+        contactsInteractor.initialize()
+        friendsInteractor.initialize()
+    }
+
+    fun search(query: String) = contactsInteractor.search(query)
 
     fun toggleFriend(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,5 +53,9 @@ class ContactsViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    override fun onCleared() {
+        contactsInteractor.destroy()
     }
 }

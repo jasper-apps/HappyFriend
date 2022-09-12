@@ -2,13 +2,61 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/friendsScreen">
+    android:id="@+id/mobile_navigation">
 
     <fragment
-        android:label="@string/title_contacts"
+        android:id="@+id/setupPinScreen"
+        android:name="com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragment"
+        android:label="@string/setup_pin"
+        tools:layout="@layout/fragment_pinsetup">
+        <action
+            android:id="@+id/toPinScreen"
+            app:destination="@id/pinScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pinScreen"
+        android:name="com.yterletskyi.happyfriend.features.pin.ui.PinFragment"
+        tools:layout="@layout/fragment_pin">
+
+        <argument
+            android:name="pin"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="isRepeatPinMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/toPinScreen"
+            app:destination="@id/pinScreen">
+
+            <argument
+                android:name="pin"
+                android:defaultValue="null"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="isRepeatPinMode"
+                android:defaultValue="false"
+                app:argType="boolean" />
+        </action>
+
+        <action
+            android:id="@+id/toFriendScreen"
+            app:destination="@id/friendsScreen"
+            app:popUpTo="@+id/mobile_navigation"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+
+    <fragment
         android:id="@+id/contactsScreen"
         android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
+        android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
 
     <fragment
@@ -23,9 +71,9 @@
     </fragment>
 
     <fragment
-        android:label="@string/title_friends"
         android:id="@+id/friendsScreen"
         android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
+        android:label="@string/title_friends"
         tools:layout="@layout/fragment_friends">
 
         <action
@@ -45,8 +93,8 @@
     </fragment>
 
     <fragment
-        android:label="@string/title_settings"
         android:id="@+id/settingsScreen"
         android:name="com.yterletskyi.happyfriend.features.settings.ui.SettingsFragment"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
