@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:499397378445:android:0bcd70b079bf939ef63dc4",
+        "mobilesdk_app_id": "1:499397378445:android:d0b32a313d882dfaf63dc4",
         "android_client_info": {
-          "package_name": "com.yterletskyi.happy_friend"
+          "package_name": "com.jasperapps.happyfriend"
         }
       },
       "oauth_client": [

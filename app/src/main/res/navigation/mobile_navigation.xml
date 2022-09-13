@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/setupPinScreen"
-        android:name="com.yterletskyi.happyfriend.features.pin.ui.SetupPinFragment"
+        android:name="com.jasperapps.happyfriend.features.pin.ui.SetupPinFragment"
         android:label="@string/setup_pin"
         tools:layout="@layout/fragment_pinsetup">
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/pinScreen"
-        android:name="com.yterletskyi.happyfriend.features.pin.ui.PinFragment"
+        android:name="com.jasperapps.happyfriend.features.pin.ui.PinFragment"
         tools:layout="@layout/fragment_pin">
 
         <argument
@@ -55,13 +55,13 @@
 
     <fragment
         android:id="@+id/contactsScreen"
-        android:name="com.yterletskyi.happyfriend.features.contacts.ui.ContactsFragment"
+        android:name="com.jasperapps.happyfriend.features.contacts.ui.ContactsFragment"
         android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
 
     <fragment
         android:id="@+id/ideasScreen"
-        android:name="com.yterletskyi.happyfriend.features.ideas.ui.IdeasFragment"
+        android:name="com.jasperapps.happyfriend.features.ideas.ui.IdeasFragment"
         tools:layout="@layout/fragment_ideas">
 
         <argument
@@ -72,7 +72,7 @@
 
     <fragment
         android:id="@+id/friendsScreen"
-        android:name="com.yterletskyi.happyfriend.features.friends.ui.FriendsFragment"
+        android:name="com.jasperapps.happyfriend.features.friends.ui.FriendsFragment"
         android:label="@string/title_friends"
         tools:layout="@layout/fragment_friends">
 
@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/settingsScreen"
-        android:name="com.yterletskyi.happyfriend.features.settings.ui.SettingsFragment"
+        android:name="com.jasperapps.happyfriend.features.settings.ui.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
