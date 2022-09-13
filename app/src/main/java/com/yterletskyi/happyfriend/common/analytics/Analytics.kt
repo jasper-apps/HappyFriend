@@ -1,4 +1,4 @@
- package com.yterletskyi.happyfriend.common.analytics
+package com.yterletskyi.happyfriend.common.analytics
 
 interface Analytics {
     fun setUserProperty(property: UserProperty<*>)
