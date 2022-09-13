@@ -9,7 +9,7 @@ import com.jasperapps.happyfriend.databinding.FragmentPinBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-classPinFragment : BaseBindingFragment<FragmentPinBinding>(
+class PinFragment : BaseBindingFragment<FragmentPinBinding>(
     FragmentPinBinding::inflate
 ) {
 
