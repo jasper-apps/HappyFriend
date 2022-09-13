@@ -1,14 +1,14 @@
-package com.yterletskyi.happyfriend.features.contacts
+package com.jasperapps.happyfriend.features.contacts
 
 import android.content.ContentResolver
-import com.yterletskyi.happyfriend.common.BirthdayFormatter
-import com.yterletskyi.happyfriend.common.BirthdayParser
-import com.yterletskyi.happyfriend.features.contacts.data.Contact
-import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
-import com.yterletskyi.happyfriend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
-import com.yterletskyi.happyfriend.features.contacts.domain.ContactsInteractor
-import com.yterletskyi.happyfriend.features.contacts.domain.ContactsInteractorImpl
-import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
+import com.jasperapps.happyfriend.common.BirthdayFormatter
+import com.jasperapps.happyfriend.common.BirthdayParser
+import com.jasperapps.happyfriend.features.contacts.data.Contact
+import com.jasperapps.happyfriend.features.contacts.data.ContactsDataSource
+import com.jasperapps.happyfriend.features.contacts.data.FetchBirthdaysOnInitContactsDataSource
+import com.jasperapps.happyfriend.features.contacts.domain.ContactsInteractor
+import com.jasperapps.happyfriend.features.contacts.domain.ContactsInteractorImpl
+import com.jasperapps.happyfriend.features.friends.data.FriendsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
