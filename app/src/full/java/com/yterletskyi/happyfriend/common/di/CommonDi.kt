@@ -27,7 +27,7 @@ import dagger.hilt.components.SingletonComponent
 import java.util.Locale
 import javax.inject.Singleton
 
-typealias OurFirebaseAnalytics = com.yterletskyi.happyfriend.common.analytics.FirebaseAnalytics
+typealias OurFirebaseAnalytics = com.jasperapps.happyfriend.common.analytics.FirebaseAnalytics
 typealias TheirFirebaseAnalytics = com.google.firebase.analytics.FirebaseAnalytics
 
 @Module
