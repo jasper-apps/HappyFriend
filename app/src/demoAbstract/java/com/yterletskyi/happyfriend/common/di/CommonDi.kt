@@ -9,6 +9,8 @@ import androidx.room.Room
 import com.yterletskyi.happyfriend.App
 import com.yterletskyi.happyfriend.common.BirthdayFormatter
 import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
+import com.yterletskyi.happyfriend.common.analytics.Analytics
+import com.yterletskyi.happyfriend.common.analytics.ToLogAnalytics
 import com.yterletskyi.happyfriend.common.data.AppDatabase
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsDataSource
 import com.yterletskyi.happyfriend.features.contacts.data.ContactsFromAssetsDataSource
@@ -101,5 +103,10 @@ object CommonDi {
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
+    @Provides
+    fun provideAnalytics(): Analytics {
+        return ToLogAnalytics()
     }
 }
