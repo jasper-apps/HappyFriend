@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".features.settings.ui.SettingsFragment">
 
-    <com.yterletskyi.happyfriend.common.view.HappyToolbarView
+    <com.jasperapps.happyfriend.common.view.HappyToolbarView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/title_settings" />

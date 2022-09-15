@@ -1,23 +1,23 @@
-package com.yterletskyi.happyfriend.common.di
+package com.jasperapps.happyfriend.common.di
 
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.room.Room
-import com.yterletskyi.happyfriend.App
-import com.yterletskyi.happyfriend.common.BirthdayFormatter
-import com.yterletskyi.happyfriend.common.LocalizedBirthdayFormatter
-import com.yterletskyi.happyfriend.common.analytics.Analytics
-import com.yterletskyi.happyfriend.common.analytics.CompoundAnalytics
-import com.yterletskyi.happyfriend.common.analytics.ToLogAnalytics
-import com.yterletskyi.happyfriend.common.data.AppDatabase
-import com.yterletskyi.happyfriend.features.friends.data.FriendsDao
-import com.yterletskyi.happyfriend.features.friends.data.FriendsDataSource
-import com.yterletskyi.happyfriend.features.friends.data.RoomFriendsDataSource
-import com.yterletskyi.happyfriend.features.ideas.data.IdeasDao
-import com.yterletskyi.happyfriend.features.ideas.data.IdeasDataSource
-import com.yterletskyi.happyfriend.features.ideas.data.RoomIdeasDataSource
+import com.jasperapps.happyfriend.App
+import com.jasperapps.happyfriend.common.BirthdayFormatter
+import com.jasperapps.happyfriend.common.LocalizedBirthdayFormatter
+import com.jasperapps.happyfriend.common.analytics.Analytics
+import com.jasperapps.happyfriend.common.analytics.CompoundAnalytics
+import com.jasperapps.happyfriend.common.analytics.ToLogAnalytics
+import com.jasperapps.happyfriend.common.data.AppDatabase
+import com.jasperapps.happyfriend.features.friends.data.FriendsDao
+import com.jasperapps.happyfriend.features.friends.data.FriendsDataSource
+import com.jasperapps.happyfriend.features.friends.data.RoomFriendsDataSource
+import com.jasperapps.happyfriend.features.ideas.data.IdeasDao
+import com.jasperapps.happyfriend.features.ideas.data.IdeasDataSource
+import com.jasperapps.happyfriend.features.ideas.data.RoomIdeasDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import java.util.Locale
 import javax.inject.Singleton
 
-typealias OurFirebaseAnalytics = com.yterletskyi.happyfriend.common.analytics.FirebaseAnalytics
+typealias OurFirebaseAnalytics = com.jasperapps.happyfriend.common.analytics.FirebaseAnalytics
 typealias TheirFirebaseAnalytics = com.google.firebase.analytics.FirebaseAnalytics
 
 @Module

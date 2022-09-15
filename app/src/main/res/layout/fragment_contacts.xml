@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.yterletskyi.happyfriend.common.view.HappyToolbarView
+    <com.jasperapps.happyfriend.common.view.HappyToolbarView
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/title_contacts" />
 
-    <com.yterletskyi.happyfriend.common.view.SearchView
+    <com.jasperapps.happyfriend.common.view.SearchView
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

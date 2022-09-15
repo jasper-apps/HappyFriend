@@ -21,7 +21,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@string/pin_enter_title" />
 
-    <com.yterletskyi.happyfriend.features.pin.ui.PinProgressView
+    <com.jasperapps.happyfriend.features.pin.ui.PinProgressView
         android:id="@+id/pinProgressView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@string/pin_enter_error" />
 
-    <com.yterletskyi.happyfriend.features.pin.ui.PinKeyboardView
+    <com.jasperapps.happyfriend.features.pin.ui.PinKeyboardView
         android:id="@+id/pinKeyboardView"
         android:layout_width="0dp"
         android:layout_height="0dp"

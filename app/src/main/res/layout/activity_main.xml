@@ -14,7 +14,7 @@
         android:layout_weight="1"
         app:defaultNavHost="true" />
 
-    <com.yterletskyi.happyfriend.common.view.BottomNavigationView
+    <com.jasperapps.happyfriend.common.view.BottomNavigationView
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />

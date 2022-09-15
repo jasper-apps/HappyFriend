@@ -26,7 +26,7 @@
         app:layout_constraintStart_toEndOf="@id/grip"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.yterletskyi.happyfriend.features.ideas.ui.IdeaEditText
+    <com.jasperapps.happyfriend.features.ideas.ui.IdeaEditText
         android:id="@+id/input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
