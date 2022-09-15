@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.yterletskyi.happy_friend", appContext.packageName)
+        assertEquals("com.jasperapps.happyfriend", appContext.packageName)
     }
 }
