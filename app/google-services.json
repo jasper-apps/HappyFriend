@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499397378445:android:d0b32a313d882dfaf63dc4",
+        "android_client_info": {
+          "package_name": "com.jasperapps.happyfriend.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499397378445-etik3lkiegcd6aofp5i63uodjsn835vu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY-4Fe6egDWeaReNlzXuKi177i5lEsMcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499397378445-etik3lkiegcd6aofp5i63uodjsn835vu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
