@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        inflateGraph()
+        // inflateGraph()
     }
 
     override fun onDestroy() {

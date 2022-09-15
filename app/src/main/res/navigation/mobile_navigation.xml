@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/friendsScreen">
 
     <fragment
         android:id="@+id/setupPinScreen"
@@ -49,7 +50,7 @@
             android:id="@+id/toFriendScreen"
             app:destination="@id/friendsScreen"
             app:popUpTo="@+id/mobile_navigation"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
 
