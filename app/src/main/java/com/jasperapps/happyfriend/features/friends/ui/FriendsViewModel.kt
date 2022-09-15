@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.jasperapps.happyfriend.common.analytics.Analytics
 import com.jasperapps.happyfriend.features.friends.domain.FriendModelItem
 import com.jasperapps.happyfriend.features.friends.domain.FriendsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FriendsViewModel @Inject constructor(
-    private val interactor: FriendsInteractor
+    private val interactor: FriendsInteractor,
+    private val analytics: Analytics,
 ) : ViewModel() {
 
     private var removeFriendRequestMap: MutableMap<FriendModelItem, Job> = mutableMapOf()
@@ -37,6 +39,10 @@ class FriendsViewModel @Inject constructor(
 
     private val friends: StateFlow<List<FriendModelItem>> = interactor.friendsFlow
         .onEach { _friendsLiveData.value = it }
+        .onEach {
+            val userProperty = Analytics.UserProperty.NumberOfFriends(it.size)
+            analytics.setUserProperty(userProperty)
+        }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val showEmptyState: LiveData<Boolean> = friendsLiveData

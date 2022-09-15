@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.jasperapps.happyfriend.common.analytics.Analytics
 import com.jasperapps.happyfriend.features.contacts.domain.ContactModelItem
 import com.jasperapps.happyfriend.features.contacts.domain.ContactsInteractor
 import com.jasperapps.happyfriend.features.friends.domain.FriendModelItem
@@ -14,6 +15,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -21,9 +23,14 @@ import kotlinx.coroutines.launch
 class ContactsViewModel @Inject constructor(
     private val contactsInteractor: ContactsInteractor,
     private val friendsInteractor: FriendsInteractor,
+    private val analytics: Analytics,
 ) : ViewModel() {
 
     private val contactsFlow: StateFlow<List<ContactModelItem>> = contactsInteractor.contactsFlow
+        .onEach {
+            val userProperty = Analytics.UserProperty.NumberOfContacts(it.size)
+            analytics.setUserProperty(userProperty)
+        }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val contacts: LiveData<List<ContactModelItem>> = contactsFlow.asLiveData()

@@ -9,6 +9,9 @@ import androidx.room.Room
 import com.jasperapps.happyfriend.App
 import com.jasperapps.happyfriend.common.BirthdayFormatter
 import com.jasperapps.happyfriend.common.LocalizedBirthdayFormatter
+import com.jasperapps.happyfriend.common.analytics.Analytics
+import com.jasperapps.happyfriend.common.analytics.ToLogAnalytics
+import com.jasperapps.happyfriend.common.analytics.CompoundAnalytics
 import com.jasperapps.happyfriend.common.data.AppDatabase
 import com.jasperapps.happyfriend.features.contacts.data.ContactsDataSource
 import com.jasperapps.happyfriend.features.contacts.data.ContactsFromAssetsDataSource
@@ -27,6 +30,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Locale
 import javax.inject.Singleton
+
+typealias OurFirebaseAnalytics = com.jasperapps.happyfriend.common.analytics.FirebaseAnalytics
+typealias TheirFirebaseAnalytics = com.google.firebase.analytics.FirebaseAnalytics
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -101,5 +107,23 @@ object CommonDi {
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
+    }
+    @Provides
+    fun provideToLogAnalytics(): ToLogAnalytics {
+        return ToLogAnalytics()
+    }
+
+    @Provides
+    fun provideFirebaseAnalytics(@ApplicationContext context: Context): TheirFirebaseAnalytics {
+        return TheirFirebaseAnalytics.getInstance(context)
+    }
+
+    @Provides
+    fun provideAnalytics(
+        toLogAnalytics: ToLogAnalytics,
+        theirFirebaseAnalytics: TheirFirebaseAnalytics,
+    ): Analytics {
+        val ourAnalytics = OurFirebaseAnalytics(theirFirebaseAnalytics)
+        return CompoundAnalytics(ourAnalytics, toLogAnalytics)
     }
 }
