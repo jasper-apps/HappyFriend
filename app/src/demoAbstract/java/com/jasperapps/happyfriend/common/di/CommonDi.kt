@@ -10,8 +10,8 @@ import com.jasperapps.happyfriend.App
 import com.jasperapps.happyfriend.common.BirthdayFormatter
 import com.jasperapps.happyfriend.common.LocalizedBirthdayFormatter
 import com.jasperapps.happyfriend.common.analytics.Analytics
-import com.jasperapps.happyfriend.common.analytics.ToLogAnalytics
 import com.jasperapps.happyfriend.common.analytics.CompoundAnalytics
+import com.jasperapps.happyfriend.common.analytics.ToLogAnalytics
 import com.jasperapps.happyfriend.common.data.AppDatabase
 import com.jasperapps.happyfriend.features.contacts.data.ContactsDataSource
 import com.jasperapps.happyfriend.features.contacts.data.ContactsFromAssetsDataSource

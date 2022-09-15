@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.room.Room
-
 import com.jasperapps.happyfriend.App
 import com.jasperapps.happyfriend.common.BirthdayFormatter
 import com.jasperapps.happyfriend.common.LocalizedBirthdayFormatter
