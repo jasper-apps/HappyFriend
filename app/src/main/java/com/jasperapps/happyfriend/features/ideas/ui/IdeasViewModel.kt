@@ -56,6 +56,10 @@ class IdeasViewModel @Inject constructor(
 
     private var lastAddedIdea: IdeaModelItem? = null
 
+    init {
+        friendsInteractor.initialize()
+    }
+
     fun addIdea(text: String = "") {
         viewModelScope.launch(Dispatchers.IO) {
             val idea = IdeaModelItem.withText(text)
@@ -108,6 +112,7 @@ class IdeasViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        friendsInteractor.destroy()
         lastAddedIdea = null
     }
 }
