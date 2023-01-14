@@ -9,9 +9,11 @@
         android:name="com.jasperapps.happyfriend.features.pin.ui.SetupPinFragment"
         android:label="@string/setup_pin"
         tools:layout="@layout/fragment_pinsetup">
+
         <action
             android:id="@+id/toPinScreen"
             app:destination="@id/pinScreen" />
+
     </fragment>
 
     <fragment
@@ -20,38 +22,38 @@
         tools:layout="@layout/fragment_pin">
 
         <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+
+        <argument
             android:name="pin"
-            android:defaultValue="null"
+            android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
 
         <argument
-            android:name="isRepeatPinMode"
+            android:name="isChangingPin"
             android:defaultValue="false"
-            app:argType="boolean" />
+            app:argType="boolean"
+            app:nullable="false" />
 
         <action
             android:id="@+id/toPinScreen"
-            app:destination="@id/pinScreen">
-
-            <argument
-                android:name="pin"
-                android:defaultValue="null"
-                app:argType="string"
-                app:nullable="true" />
-            <argument
-                android:name="isRepeatPinMode"
-                android:defaultValue="false"
-                app:argType="boolean" />
-        </action>
+            app:destination="@id/pinScreen" />
 
         <action
-            android:id="@+id/toFriendScreen"
+            android:id="@+id/toFriendsScreen"
             app:destination="@id/friendsScreen"
             app:popUpTo="@+id/mobile_navigation"
-            app:popUpToInclusive="true"/>
-    </fragment>
+            app:popUpToInclusive="false" />
 
+        <action
+            android:id="@+id/popToSettingsScreen"
+            app:popUpTo="@id/settingsScreen"
+            app:popUpToInclusive="false" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/contactsScreen"
@@ -96,5 +98,12 @@
         android:id="@+id/settingsScreen"
         android:name="com.jasperapps.happyfriend.features.settings.ui.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/toPinScreen"
+            app:destination="@id/pinScreen" />
+
+    </fragment>
+
 </navigation>
