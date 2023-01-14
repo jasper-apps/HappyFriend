@@ -22,14 +22,13 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
 
         with(binding.rvItems) {
             adapter = RecyclerDelegationAdapter(view.context).apply {
-                addDelegate(
-                    SwitchSettingAdapter(viewModel::changeBooleanSetting)
+                addDelegates(
+                    SwitchSettingAdapter(viewModel::changeBooleanSetting),
+                    TextSettingAdapter(),
+                    ButtonSettingAdapter(::showChangePin),
                 )
                 addItemDecoration(
                     SettingsLineItemDecoration(view.context)
-                )
-                addDelegate(
-                    TextSettingAdapter()
                 )
                 rvItemsAdapter = this
             }
@@ -37,5 +36,8 @@ class SettingsFragment : BaseBindingFragment<FragmentSettingsBinding>(
         viewModel.settingsItems.observe(viewLifecycleOwner) {
             rvItemsAdapter.setItems(it)
         }
+    }
+
+    private fun showChangePin(index: Int) {
     }
 }

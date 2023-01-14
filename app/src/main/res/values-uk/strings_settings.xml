@@ -5,5 +5,7 @@
     <string name="title_my_wishlist_setting">Показувати \'Мій список бажань\'</string>
     <string name="title_my_general_ideas">Показувати \'Ідеї для всіх\'</string>
 
+    <string name="title_change_pin_code_settings">Змінити PIN код</string>
+
     <string name="app_version_title">Версія додатку</string>
 </resources>
