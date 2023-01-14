@@ -74,19 +74,19 @@ class PinViewModel @Inject constructor(
 
         if (hasPin) {
             if (isChangingPin) {
-                if (previousPin == null) {
-                    directionsLiveData.value = PinFragmentDirections.toPinScreen(
-                        title = context.getString(R.string.pin_repeat_title),
-                        isChangingPin = true,
-                        pin = currentPin.toString(),
-                    )
-                } else {
-                    if (previousPin == currentPin) {
+                when (previousPin) {
+                    currentPin -> {
                         pinCodeController.savePinCode(currentPin)
                         directionsLiveData.value = PinFragmentDirections.popToSettingsScreen()
-                    } else {
-                        showError()
                     }
+                    null -> {
+                        directionsLiveData.value = PinFragmentDirections.toPinScreen(
+                            title = context.getString(R.string.pin_repeat_title),
+                            isChangingPin = true,
+                            pin = currentPin.toString(),
+                        )
+                    }
+                    else -> showError()
                 }
             } else {
                 if (existingPin == currentPin) {
@@ -96,21 +96,20 @@ class PinViewModel @Inject constructor(
                 }
             }
         } else {
-            val isRepeatPinMode = previousPin != null
-            if (isRepeatPinMode) {
-                if (previousPin == currentPin) {
+            when (previousPin) {
+                currentPin -> {
                     pinCodeController.savePinCode(currentPin)
                     directionsLiveData.value = PinFragmentDirections.toFriendsScreen()
-                } else {
-                    showError()
                 }
-            } else {
-                directionsLiveData.value = PinFragmentDirections.toPinScreen(
-                    title = context.getString(R.string.pin_repeat_title),
-                    pin = currentPin.toString(),
-                )
-                _pinProgressLiveData.value = 0
-                currentPin.clear()
+                null -> {
+                    directionsLiveData.value = PinFragmentDirections.toPinScreen(
+                        title = context.getString(R.string.pin_repeat_title),
+                        pin = currentPin.toString(),
+                    )
+                    _pinProgressLiveData.value = 0
+                    currentPin.clear()
+                }
+                else -> showError()
             }
         }
     }
