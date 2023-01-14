@@ -4,7 +4,6 @@ import com.jasperapps.happyfriend.common.list.AdapterDelegate
 import com.jasperapps.happyfriend.common.list.ModelItem
 import com.jasperapps.happyfriend.databinding.ItemSettingsButtonBinding
 import com.jasperapps.happyfriend.features.settings.domain.ButtonModelItem
-import com.jasperapps.happyfriend.features.settings.domain.VersionModelItem
 
 class ButtonSettingAdapter(
     private val onClicked: (Int) -> Unit,

@@ -1,7 +1,6 @@
 package com.jasperapps.happyfriend.features.settings.domain
 
 import android.content.Context
-import android.widget.Button
 import com.jasperapps.happyfriend.R
 import com.jasperapps.happyfriend.common.LifecycleComponent
 import com.jasperapps.happyfriend.common.list.ModelItem
