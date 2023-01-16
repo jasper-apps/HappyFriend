@@ -1,9 +1,10 @@
 package com.jasperapps.happyfriend.features.pin.ui
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.navigation.NavDirections
 import com.jasperapps.happyfriend.R
@@ -17,19 +18,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PinViewModel @Inject constructor(
+    private val context: Application,
     private val pinCodeController: PinCodeController,
     handle: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(context) {
 
     val pinMaxLengthLiveData: LiveData<Int> = MutableLiveData(PIN_CODE_MAX_LENGTH)
 
     private val _pinProgressLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val pinProgressLiveData: LiveData<Int> = _pinProgressLiveData
 
-    val titleLiveData: LiveData<Int> = liveData {
-        val title =
-            if (isRepeatPinMode) R.string.pin_repeat_title
-            else R.string.pin_enter_title
+    val titleLiveData: LiveData<String> = liveData {
         emit(title)
     }
 
@@ -37,10 +36,13 @@ class PinViewModel @Inject constructor(
     val directionsLiveData: SingleLiveEvent<NavDirections> =
         SingleLiveEvent()
 
-    private val isRepeatPinMode: Boolean = handle["isRepeatPinMode"]
-        ?: error("isRepeatPinMode is not passed")
+    private val isChangingPin: Boolean = handle["isChangingPin"]
+        ?: error("isChangingPin is not passed")
 
-    private val previousPin: PinCode? = handle.get<String>("pin")
+    private val title: String = handle["title"]
+        ?: error("title is not passed")
+
+    private val previousPin: PinCode? = handle.get<String?>("pin")
         ?.let { PinCode(it) }
 
     private val currentPin: PinCode = PinCode(PIN_CODE_MAX_LENGTH)
@@ -60,36 +62,54 @@ class PinViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Next cases should be covered:
+     * 1. no pin code -> create new
+     * 2. user has a pin code -> validate it
+     * 3. user wants to change the pin -> create new
+     */
     private fun authorize() {
-        val usersPin = pinCodeController.getPinCode()
-        if (usersPin == null) { // creating new pin
-            if (isRepeatPinMode) {
-                // verify
-                val pinsMatch = previousPin == currentPin
-                // show friends
-                if (pinsMatch) {
-                    pinCodeController.savePinCode(currentPin)
-                    directionsLiveData.value = PinFragmentDirections.toFriendScreen()
+        val existingPin = pinCodeController.getPinCode()
+        val hasPin = existingPin != null
+
+        if (hasPin) {
+            if (isChangingPin) {
+                when (previousPin) {
+                    currentPin -> {
+                        pinCodeController.savePinCode(currentPin)
+                        directionsLiveData.value = PinFragmentDirections.popToSettingsScreen()
+                    }
+                    null -> {
+                        directionsLiveData.value = PinFragmentDirections.toPinScreen(
+                            title = context.getString(R.string.pin_repeat_title),
+                            isChangingPin = true,
+                            pin = currentPin.toString(),
+                        )
+                    }
+                    else -> showError()
+                }
+            } else {
+                if (existingPin == currentPin) {
+                    directionsLiveData.value = PinFragmentDirections.toFriendsScreen()
                 } else {
                     showError()
                 }
-            } else {
-                // show repeat pin
-                directionsLiveData.value = PinFragmentDirections.toPinScreen(
-                    isRepeatPinMode = true,
-                    pin = currentPin.toString()
-                )
-                _pinProgressLiveData.value = 0
-                currentPin.clear()
             }
-        } else { // authorizing with existing pin
-            // verify
-            val pinsMatch = usersPin == currentPin
-            // show friends
-            if (pinsMatch) {
-                directionsLiveData.value = PinFragmentDirections.toFriendScreen()
-            } else {
-                showError()
+        } else {
+            when (previousPin) {
+                currentPin -> {
+                    pinCodeController.savePinCode(currentPin)
+                    directionsLiveData.value = PinFragmentDirections.toFriendsScreen()
+                }
+                null -> {
+                    directionsLiveData.value = PinFragmentDirections.toPinScreen(
+                        title = context.getString(R.string.pin_repeat_title),
+                        pin = currentPin.toString(),
+                    )
+                    _pinProgressLiveData.value = 0
+                    currentPin.clear()
+                }
+                else -> showError()
             }
         }
     }

@@ -5,5 +5,7 @@
     <string name="title_my_wishlist_setting">Show My Wishlist</string>
     <string name="title_my_general_ideas">Show General Ideas</string>
 
+    <string name="title_change_pin_code_settings">Change PIN code</string>
+
     <string name="app_version_title">App Version</string>
 </resources>

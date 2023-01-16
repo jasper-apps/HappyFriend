@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.jasperapps.happyfriend.common.list.ModelItem
-import com.jasperapps.happyfriend.features.settings.domain.SettingEnum
 import com.jasperapps.happyfriend.features.settings.domain.SettingsInteractor
+import com.jasperapps.happyfriend.features.settings.domain.SettingsModelItem
 import com.jasperapps.happyfriend.features.settings.domain.SwitchModelItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,12 +25,12 @@ class SettingsViewModel @Inject constructor(
 
     fun changeBooleanSetting(index: Int, value: Boolean) {
         val item = settingsItems.value?.get(index) ?: return
-        val switchItem = item as? SwitchModelItem ?: return
+        val switchItem = item as? SettingsModelItem ?: return
         viewModelScope.launch {
-            when (switchItem.type) {
-                SettingEnum.MY_WISHLIST -> interactor.enableMyWishlist(value)
-                SettingEnum.GENERAL_IDEAS -> interactor.enableGeneralIdeas(value)
-                else -> throw IllegalArgumentException("unsupported item type: ${switchItem.type}")
+            when (switchItem) {
+                is SwitchModelItem.MyWhishlist -> interactor.enableMyWishlist(value)
+                is SwitchModelItem.GeneralIdeas -> interactor.enableGeneralIdeas(value)
+                else -> throw IllegalArgumentException("unsupported item type: $switchItem")
             }
         }
     }

@@ -20,8 +20,8 @@ class PinFragment : BaseBindingFragment<FragmentPinBinding>(
 
         binding.pinKeyboardView.onButtonClicked = viewModel::input
 
-        viewModel.titleLiveData.observe(viewLifecycleOwner) { titleResId ->
-            binding.pinTitle.text = getString(titleResId)
+        viewModel.titleLiveData.observe(viewLifecycleOwner) { title ->
+            binding.pinTitle.text = title
         }
 
         viewModel.pinMaxLengthLiveData.observe(viewLifecycleOwner) { length ->
