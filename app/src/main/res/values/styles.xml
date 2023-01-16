@@ -7,7 +7,7 @@
     <style name="PinKeyboardButtonStyle">
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>
-        <item name="btnBackgroundColor">?attr/colorOnSurface</item>
+        <item name="btnBackgroundColor">?attr/colorOnBackground</item>
         <item name="btnForegroundColor">?attr/textColorPrimary</item>
         <item name="android:textSize">28sp</item>
     </style>
