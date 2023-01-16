@@ -30,20 +30,20 @@ class SettingsInteractorImpl @Inject constructor(
     override val items: Flow<List<ModelItem>> =
         combine(myWishlistFlow, generalIdeasFlow) { myWishListEnabled, generalIdeaEnabled ->
             listOf(
-                SwitchModelItem(
+                SwitchModelItem.MyWhishlist(
                     text = context.getString(R.string.title_my_wishlist_setting),
                     enabled = myWishListEnabled,
-                    type = SettingEnum.MY_WISHLIST,
                 ),
-                SwitchModelItem(
+                SwitchModelItem.GeneralIdeas(
                     text = context.getString(R.string.title_my_general_ideas),
                     enabled = generalIdeaEnabled,
-                    type = SettingEnum.GENERAL_IDEAS,
+                ),
+                ButtonModelItem(
+                    title = context.getString(R.string.title_change_pin_code_settings)
                 ),
                 VersionModelItem(
                     title = context.getString(R.string.app_version_title),
                     appVersion = appVersionController.getAppVersion(),
-                    type = SettingEnum.APP_VERSION,
                 )
             )
         }

@@ -3,6 +3,7 @@ package com.jasperapps.happyfriend
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -80,6 +81,10 @@ class MainActivity : AppCompatActivity() {
             ?: R.id.setupPinScreen
 
         graph.setStartDestination(startDestination)
-        navController.setGraph(graph, null)
+
+        val parameters = bundleOf(
+            "title" to getString(R.string.pin_enter_title)
+        )
+        navController.setGraph(graph, parameters)
     }
 }
